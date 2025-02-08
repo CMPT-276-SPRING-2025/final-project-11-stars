@@ -18,9 +18,9 @@ Beyzanur Kuyuk
 
 ![Link to Beyzanur's AI usage declaration form](docs/M0_AI_Declaration_Beyzanur_Kuyuk_301591586.pdf)
 
-
+## Description:
 BrainGoated is an interactive educational platform designed for children aged 8-16, offering fun and engaging trivia quizzes across various categories and difficulty levels.
-## How It Works:
+### How It Works:
 - Learn First – AI-generated learning materials help kids understand quiz topics before taking the test.
 - Test Knowledge – Engaging trivia quizzes allow students to challenge themselves and track progress.
 - AI-Powered Chatbot – Kids can ask follow-up questions about quiz topics and completed questions, getting instant AI-powered explanations.
