@@ -1,5 +1,5 @@
 # Project Title: BrainGoated
-![Link to the project proposal report](ProjectProposalReport_Group11.pdf)
+![Link to the project proposal report](docs/ProjectProposalReport_Group11.pdf)
 
 ## Group Members: 
 Manjari Prasad  
