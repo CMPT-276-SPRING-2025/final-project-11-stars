@@ -1,4 +1,6 @@
 # Project Title: BrainGoated
+![Link to the project proposal report](ProjectProposalReport_Group11.pdf)
+
 ## Group Members: 
 Manjari Prasad ![Link to Manjari's AI usage declaration form](docs/M0_AI_Declaration_Manjari_Prasad_Seeja_301587588.pdf)
 Alisha Mahebub Jesani ![Link to Alisha's AI usage declaration form](docs/M0_AI_Disclosure_Alisha_Mahebub_Jesani_301591998.pdf)
