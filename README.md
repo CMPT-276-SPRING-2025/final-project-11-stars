@@ -12,13 +12,13 @@
 [Link to Manjari's Milestone 0 AI usage declaration form](docs/M0_AI_Declaration_Manjari_Prasad_Seeja_301587588.pdf)  
 
 ### Alisha Mahebub Jesani  
-[Link to Alisha's Milestone 1 Report AI usage declaration form](docs/M0_AI_Disclosure_Alisha_Mahebub_Jesani_301591998.pdf)  
-[Link to Alisha's Milestone 1 Video AI usage declaration form](docs/M0_AI_Disclosure_Alisha_Mahebub_Jesani_301591998.pdf)  
+[Link to Alisha's Milestone 1 Report AI usage declaration form](docs/M1_Report_AI_Declaration_Alisha_Mahebub_Jesani_301591998.pdf)  
+[Link to Alisha's Milestone 1 Video AI usage declaration form](docs/M1_Video_AI_Declaration_Alisha_Mahebub_Jesani_301591998.pdf)  
 [Link to Alisha's Milestone 0 AI usage declaration form](docs/M0_AI_Disclosure_Alisha_Mahebub_Jesani_301591998.pdf)  
 
 ### Gurpreet Kaur  
-[Link to Gurpreet's Milestone 1 Report AI usage declaration form](docs/M0_AI_Disclosure_Gupreet_Kaur_301575453.pdf)  
-[Link to Gurpreet's Milestone 1 Video AI usage declaration form](docs/M0_AI_Disclosure_Gupreet_Kaur_301575453.pdf)  
+[Link to Gurpreet's Milestone 1 Report AI usage declaration form](docs/M1_Report_AI_Declaration_Gurpreet_Kaur_301575453.pdf)  
+[Link to Gurpreet's Milestone 1 Video AI usage declaration form](docs/M1_Video_AI_Declaration_Gurpreet_Kaur_301575453.pdf)  
 [Link to Gurpreet's Milestone 0 AI usage declaration form](docs/M0_AI_Disclosure_Gupreet_Kaur_301575453.pdf)  
 
 ### Beyzanur Kuyuk  
