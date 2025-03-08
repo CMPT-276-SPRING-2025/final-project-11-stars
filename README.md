@@ -1,6 +1,7 @@
 # Project Title: BrainGoated
 
-[Link to the project planning report](docs/ProjectPlanningReport_Group11.pdf)  
+[Link to the project planning report](docs/ProjectPlanningReport_Group11.pdf) 
+[Link to the project prototype](https://www.figma.com/proto/qPQ5OmbuZX0GfM0ORjTRY7/BrainGoated-High-Fidelity?node-id=1-7918&p=f&t=iyIZPMzAKc8B15mS-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A7918) 
 [Link to the project proposal report](docs/ProjectProposalReport_Group11.pdf)
 
 ## Group Members: 
