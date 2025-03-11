@@ -1,0 +1,38 @@
+.landing-page {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .main-heading {
+    font-size: 48px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  .logo {
+    margin-top: 20px;
+    width: 150px;
+  }
+  
+  .tagline {
+    font-size: 20px;
+    color: #666;
+    margin-top: 20px;
+  }
+  
+  .start-btn {
+    font-size: 18px;
+    background-color: #61DAFB;
+    border: none;
+    padding: 15px 30px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .start-btn:hover {
+    background-color: #4fa3d1;
+  }
+  
