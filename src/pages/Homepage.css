@@ -2,63 +2,84 @@
 
 .homepage-container {
     padding: 20px;
-  }
-  
-  .main-heading {
-    font-size: 3rem;
-    font-family: 'Arial', sans-serif; /* Update with the font you prefer */
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Adjust to start content from the top */
+    padding-top: 20px;
     text-align: center;
-  }
-  
-  .logo {
+    min-height: 100vh;
+}
+
+.quiz-category-space {
+    height: 100px;
+    background-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.main-heading {
+    font-size: 20rem; /* Increased size for the heading */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.logo {
     display: block;
-    margin: 0 auto;
-    width: 150px; /* Adjust as needed */
-    height: auto;
-  }
-  
-  .tagline {
-    font-size: 1.5rem;
+    margin: 40px auto;
+    width: 100%; /* Make sure the width is 100% of the container */
+    max-width: 600px; /* Cap the maximum size to prevent it from growing too large */
+    height: auto; /* Ensure aspect ratio is maintained */
+}
+
+.tagline {
+    font-size: 3rem;
     text-align: center;
-    margin-top: 10px;
-  }
-  
-  .category-selection {
+    margin-top: 40px;
+}
+
+.category-selection {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
-  }
-  
-  .quiz-type-button {
+}
+
+.quiz-type-button {
     padding: 10px 20px;
     font-size: 1.2rem;
     cursor: pointer;
-  }
-  
-  .category-dropdown {
+}
+
+.category-dropdown {
     padding: 10px;
     font-size: 1rem;
     width: 200px;
-  }
-  
-  .quiz-category-images {
+}
+
+.quiz-category-images {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-  }
-  
-  .custom-quiz-popup {
+}
+
+.custom-quiz-popup {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-  }
-  
-  .start-quiz-btn,
-  .start-quiz-button {
+}
+
+.start-quiz-btn,
+.start-quiz-button {
     background-color: #4CAF50;
     color: white;
     padding: 15px 32px;
@@ -67,14 +88,14 @@
     border: none;
     border-radius: 5px;
     margin-top: 20px;
-  }
-  
-  .start-quiz-btn:hover,
-  .start-quiz-button:hover {
+}
+
+.start-quiz-btn:hover,
+.start-quiz-button:hover {
     background-color: #45a049;
-  }
-  
-  .popup {
+}
+
+.popup {
     background-color: #28a745;
     color: white;
     padding: 10px;
@@ -84,19 +105,13 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-  }
-  
-  .quiz-category-space {
-    height: 600px; /* Adjust the height to create space for scrolling */
-    background-color: transparent; /* Just a transparent space */
-  }
-  
-  /* Optional: If you want to add smooth scroll behavior */
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  /* Add some bottom margin for better spacing */
-  .quiz-category-container {
+}
+
+.quiz-category-space {
+    height: 600px;
+    background-color: transparent;
+}
+
+.quiz-category-container {
     margin-top: 50px;
-  }
+}
