@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Quizcategories.css';
 
 const categories = [
@@ -19,12 +20,19 @@ const QuizCategory = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isImageQuiz, setIsImageQuiz] = useState(false); // Toggle between text and image quiz
   const [difficulty, setDifficulty] = useState("Easy"); // Difficulty level state
-
+  
   const handleToggle = () => {
     setIsImageQuiz(!isImageQuiz); // Toggle the isToggled state
   };
   const handleDifficultyChange = (event) => {
     setDifficulty(event.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handleStartQuiz = () => {
+    // Once the quiz category is selected, navigate to the quiz page
+    navigate('/quiz');
   };
 
   return (
@@ -82,7 +90,7 @@ const QuizCategory = () => {
               onClick={() => setSelectedCategory(null)}
             />
             <h2>{selectedCategory.name} Quiz</h2>
-            <button className="start-quiz-btn">Start Quiz</button>
+             <button className="start-quiz-btn" onClick={handleStartQuiz}>Start Quiz</button>
           </div>
         </div>
       )}
