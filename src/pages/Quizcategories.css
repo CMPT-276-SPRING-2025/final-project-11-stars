@@ -1,38 +1,193 @@
-.landing-page {
-    text-align: center;
-    padding: 50px;
+.quiz-category-container {
+  text-align: center;
+  background-color: #E9EED9;
+  padding: 20px;
+}
+
+.quiz-category-title {
+  display: inline-block;
+  padding: 10px 20px;  /* Adds some padding inside the box */
+  font-size: 2.5em;  /* Font size */
+  font-weight: bold;  /* Bold text */
+  border-radius: 8px; 
+  padding: 10px;
+  color: #54473F;
+  background-color: #CBD2A4;
+}
+
+.quiz-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.quiz-category-box {
+  background-color: #CBD2A4;
+  border: 1px solid #A3A692;
+  border-radius: 10px;
+  padding: 20px;
+  height:350px;
+  text-align: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+  font-size: 2.3rem;
+  color: #54473F;
+}
+
+.quiz-category-box:hover {
+  transform: scale(1.05);
+  border-color: #8C8F7E;
+}
+
+.category-image {
+  width: 230px;
+  height: 230px;
+  margin-bottom: 10px;
+  background-color: #E9EED9;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #E9EED9;
+  border: 1px solid #54473F;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 350px;
+  height: 300px;
+  text-align: center;
+}
+
+.popup-content h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #4A4A3F;
+}
+
+.start-quiz-btn {
+  background-color: #CBD2A4;
+  border: none;
+  padding: 20px 35px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #54473F;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.start-quiz-btn:hover {
+
+  transform: scale(1.05);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;  /* Smaller size */
+  height: 20px;  /* Smaller size */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Optional: Add animation for hover effect */
+}
+
+.close-btn:hover {
+  transform: scale(1.2);  /* Optional: Slightly increase the size on hover */
+}
+/* Quiz Option Toggle */
+.toggle-quiz-option {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.quiz-option {
+  display: left;
+  width: 100px;
+  align-items: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+
+.quiz-toggle {
+  display: flex;
+  align-items: center;
+  gap :10px;
+}
+
+/* Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 20px;
+
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CBD2A4;
+  border: 1px solid #54473F;
+  transition: 0.4s;
+  border-radius: 34px;
+  
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: #54473F ;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #A3A692;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+.difficulty-dropdown {
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #CBD2A4;
+  cursor: pointer;
+  transition: 0.3s;
+  }
+  .difficulty-dropdown:hover {
+  border-color: #007bff;
   }
   
-  .main-heading {
-    font-size: 48px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
+  .difficulty-dropdown:focus {
+  outline: none;
+  border-color: #4CAF50;
   }
-  
-  .logo {
-    margin-top: 20px;
-    width: 150px;
-  }
-  
-  .tagline {
-    font-size: 20px;
-    color: #666;
-    margin-top: 20px;
-  }
-  
-  .start-btn {
-    font-size: 18px;
-    background-color: #61DAFB;
-    border: none;
-    padding: 15px 30px;
-    color: #fff;
-    cursor: pointer;
-    margin-top: 30px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .start-btn:hover {
-    background-color: #4fa3d1;
-  }
-  
