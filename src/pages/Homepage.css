@@ -86,3 +86,17 @@
     z-index: 1000;
   }
   
+  .quiz-category-space {
+    height: 600px; /* Adjust the height to create space for scrolling */
+    background-color: transparent; /* Just a transparent space */
+  }
+  
+  /* Optional: If you want to add smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Add some bottom margin for better spacing */
+  .quiz-category-container {
+    margin-top: 50px;
+  }
