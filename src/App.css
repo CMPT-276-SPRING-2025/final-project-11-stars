@@ -1,38 +1,82 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
+  color: #54473F;
+  margin: 0;
+  padding: 0;
+  background-color: #E9EED9;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Container */
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+}
+
+/* Landing Page */
+.landing-page {
+  text-align: center;
+}
+
+.main-heading {
+  font-size: 5em;
+  font-weight: 700;
+  color: #54473F;
+  margin-bottom: 10px;
+}
+
+.logo {
+  width: 150px; /* Adjust size */
+  height: auto;
+  margin: 20px 0;
+}
+
+.tagline {
+  font-size: 2em;
+  color: #9A7E6F;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.select-category-btn {
+  position: fixed;
+  bottom: 20px; /* Adjust as necessary */
+  right: 20px; /* Adjust as necessary */
+  background-color: #CBD2A4;
+  color: #54473F;
+  border: 2px solid #9A7E6F;
+  padding: 12px 24px;
+  font-size: 1.5em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.select-category-btn:hover {
+  background-color: #9A7E6F;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Quiz Section */
+.quiz-container {
+  background-color: #CBD2A4;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error-message {
+  background-color: #F2D0D0;
+  color: #54473F;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
 }
