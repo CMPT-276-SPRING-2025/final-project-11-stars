@@ -6,6 +6,10 @@ import './Homepage.css';
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const startQuiz = () => {
+    navigate('/quiz-categories'); // Navigate to quiz categories
+  };
+
   return (
     <div className="landing-page">
       <h1 className="main-heading">BrainGoated</h1>

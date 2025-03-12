@@ -1,7 +1,10 @@
+// App.js
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/Homepage.js';
-import QuizCategories from './pages/Quizcategories.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Homepage';
+import QuizCategory from './pages/Quizcategories';
+import QuizPage from './pages/Quizpage';
+import ResultPage from './pages/Resultpage';
 import './App.css';
 
 const App = () => {
@@ -10,7 +13,9 @@ const App = () => {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/quiz-categories" element={<QuizCategories />} />
+          <Route path="/quiz-categories" element={<QuizCategory />} />
+          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/result" element={<ResultPage />} />
         </Routes>
       </div>
     </Router>
