@@ -17,9 +17,6 @@ const HomePage = ({ startQuiz }) => {
       <h1 className="main-heading">BrainGoated</h1>
       <img src="/bud-e.png" alt="BrainGoated Logo" className="logo" />
       <p className="tagline">Water your curiosity, Watch it grow!</p>
-      <Link to="/quiz-categories">
-        <button onClick={startQuiz} className="select-category-btn">Select Category</button>
-      </Link>
     </div>
   );
 };
