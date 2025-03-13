@@ -65,7 +65,7 @@ const QuizPage = () => {
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <button className="complete-button">Complete Quiz</button>
+            <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
           </div>
         </div>
       )}
@@ -80,7 +80,7 @@ const QuizPage = () => {
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <button className="complete-button">Complete Quiz</button>
+            <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
 
           </div>
         </div>
