@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Resultpage.css'; // Ensure to create and style this file accordingly
 
 const ResultPage = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="result-container">
@@ -19,7 +21,9 @@ const ResultPage = () => {
         
       </div>
       
-    
+      <button className="exit-button" onClick={() => navigate('/')}> 
+            Exit
+      </button>
     </div>
   );
 };
