@@ -18,12 +18,20 @@ const ResultPage = () => {
           <p>Congratulations! You are officially BrainGoated!</p>
         </div>
         
+        <div className="ai-assistant">
+          <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
+        </div>
         
+        <div className="result-buttons">
+          <button className="go-back-button" onClick={() => navigate('/quiz-categories')}>
+            Go back to Quiz Categories
+          </button>
+        </div>
       </div>
       
       <button className="exit-button" onClick={() => navigate('/')}> 
             Exit
-      </button>
+          </button>
     </div>
   );
 };
