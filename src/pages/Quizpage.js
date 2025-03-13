@@ -52,9 +52,40 @@ const QuizPage = () => {
           ))}
         </div>
       </div>
+      <button className="exit-button" onClick={() => navigate("/")}>Exit</button>
+      {showIncorrectPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h2 className="incorrect">Incorrect!</h2>
+            <p className="correct-answer">Correct Answer: {question.answer}</p>
+            <div className="explanation-box">
+              <p>{question.explanation}</p>
+            </div>
+            <div className="chatbot-container">
+              <p>Learn more with Bud-E!</p>
+              <input type="text" placeholder="Ask anything" />
+            </div>
+            <button className="complete-button">Complete Quiz</button>
+          </div>
+        </div>
+      )}
+      {showCorrectPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <h2 className="correct">Correct!</h2>
+            <div className="explanation-box">
+              <p>{question.explanation}</p>
+            </div>
+            <div className="chatbot-container">
+              <p>Learn more with Bud-E!</p>
+              <input type="text" placeholder="Ask anything" />
+            </div>
+            <button className="complete-button">Complete Quiz</button>
 
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 export default QuizPage;
