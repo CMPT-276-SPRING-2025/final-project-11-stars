@@ -1,20 +1,29 @@
-import React, { useState } from "react";
-import "./Quizpage.css";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { QuizContext } from "../context/QuizContext"; //import global state
+import "./Quizpage.css";
 
 const QuizPage = () => {
-  const [score, setScore] = useState(0);
+  const navigate = useNavigate();
+  // Global states: need to persist across multiple questions
+  const {score,setScore, selectedCategory, 
+    setSelectedCategory, difficulty, setDifficulty, questions, setQuestions,
+    questionType, setQuestionType, currentQuestion, setCurrentQuestion
+  } = useContext(QuizContext);
+  
+  // Keep separate in local state as these don't have to persist across multiple questions
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [showIncorrectPopup, setShowIncorrectPopup] = useState(false);
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   
-  const question = {
-    text: "Which city is the capital city of Turkey?",
-    options: ["A) Istanbul", "B) Izmir", "C) Ankara", "D) Antalya"],
-    answer: "C) Ankara",
-    explanation: "The Name Changed Over Time! Ankara wasn’t always called Ankara! In ancient times, it was known as Ancyra, which means 'anchor' in Greek."
-  };
+  //For debugging
+  if(questions.length == 0)
+  {
+    return <h2>Loading Questions...</h2>;
+  }
+
+  const question = questions[currentQuestion];
 
   const handleOptionClick = (option) => {
     if (!answered) {
@@ -28,8 +37,6 @@ const QuizPage = () => {
       setAnswered(true);
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="quiz-container">
