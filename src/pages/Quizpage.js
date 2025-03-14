@@ -73,6 +73,22 @@ const QuizPage = () => {
               <input type="text" placeholder="Ask anything" />
             </div>
             <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
+            <button className = "next-button" onClick={() => {
+              if(currentQuestion < questions.length-1)
+              {
+                setCurrentQuestion(prevQuesion => prevQuesion +1); // move to next question
+                //Reset question state
+                console.log("current question: ", currentQuestion);
+                setSelected(null);
+                setAnswered(false);
+                setShowCorrectPopup(false); //close popup
+                setShowIncorrectPopup(false);
+              }
+              else{
+                navigate("/result");
+              }
+            }}>Next
+            </button>
           </div>
         </div>
       )}
@@ -88,7 +104,22 @@ const QuizPage = () => {
               <input type="text" placeholder="Ask anything" />
             </div>
             <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
-
+            <button className = "next-button" onClick={() => {
+              if(currentQuestion < questions.length-1)
+              {
+                setCurrentQuestion(prevQuesion => prevQuesion +1); // move to next question
+                //Reset question state
+                console.log("current question: ", currentQuestion);
+                setSelected(null);
+                setAnswered(false);
+                setShowCorrectPopup(false); //close popup
+                setShowIncorrectPopup(false);
+              }
+              else{
+                navigate("/result");
+              }
+            }}>Next
+            </button>
           </div>
         </div>
       )}
