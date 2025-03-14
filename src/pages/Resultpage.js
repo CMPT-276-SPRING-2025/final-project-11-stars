@@ -8,8 +8,6 @@ const ResultPage = () => {
   return (
     <div className="result-container">
       <div className="result-header">
-        <div className="timer-box">Timer:</div>
-        <div className="score-box">Score:</div>
       </div>
       
       <div className="result-content">
@@ -28,10 +26,6 @@ const ResultPage = () => {
           </button>
         </div>
       </div>
-      
-      <button className="exit-button" onClick={() => navigate('/')}> 
-            Exit
-          </button>
     </div>
   );
 };

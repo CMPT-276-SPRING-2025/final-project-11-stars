@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext"; //import global state
 import "./Quizpage.css";
 
+
+
+//NOTE: YOU NEED TO RESET STATE FOR QUESTIONS AFTER CLICKING GO BACK TO QUIZ CATEGORIES AND SEE IF IT ALSO NEEDS TO BE THERE AFTRE DISPLAYING FINAL SCORE
+
 const QuizPage = () => {
   const navigate = useNavigate();
   // Global states: need to persist across multiple questions
