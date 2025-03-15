@@ -12,7 +12,7 @@ const QuizPage = () => {
   // Global states: need to persist across multiple questions
   const {score,setScore, selectedCategory, 
     setSelectedCategory, difficulty, setDifficulty, questions, setQuestions,
-    questionType, setQuestionType, currentQuestion, setCurrentQuestion
+    questionType, setQuestionType, currentQuestion, setCurrentQuestion, resetQuiz
   } = useContext(QuizContext);
   
   // Keep separate in local state as these don't have to persist across multiple questions
@@ -63,7 +63,12 @@ const QuizPage = () => {
           ))}
         </div>
       </div>
-      <button className="exit-button" onClick={() => navigate("/")}>Exit</button>
+      <button className="exit-button" onClick={() => 
+        {
+          resetQuiz();
+          navigate("/")}}>Exit
+
+      </button>
       {showIncorrectPopup && (
         <div className="popup-overlay">
           <div className="popup-box">

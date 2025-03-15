@@ -12,6 +12,15 @@ export const QuizProvider = ({ children }) => {
   const [questionType, setQuestionType] = useState("text");
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
+const resetQuiz = () => {
+  setScore(0);
+  setSelectedCategory(null);
+  setDifficulty("medium");
+  setQuestions([]);
+  setQuestionType("text");
+  setCurrentQuestion(0);
+}
+
   //For testing: will be replaced by the Trivia API fetched questions
   //*************
   useEffect(() => {
@@ -36,7 +45,7 @@ export const QuizProvider = ({ children }) => {
     // global states
     <QuizContext.Provider value={{score, setScore, selectedCategory, 
     setSelectedCategory, difficulty, setDifficulty, questions, setQuestions,
-     questionType, setQuestionType, currentQuestion, setCurrentQuestion}}>
+     questionType, setQuestionType, currentQuestion, setCurrentQuestion, resetQuiz}}>
       {children}
     </QuizContext.Provider>
   );

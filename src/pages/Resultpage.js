@@ -21,7 +21,7 @@ const ResultPage = () => {
         </div>
         
         <div className="result-buttons">
-          <button className="go-back-button" onClick={() => navigate('/quiz-categories')}>
+          <button className="go-back-button" onClick={() => navigate('/')}>
             Go back to Quiz Categories
           </button>
         </div>
