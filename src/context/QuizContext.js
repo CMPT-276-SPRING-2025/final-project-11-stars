@@ -24,6 +24,10 @@ const resetQuiz = () => {
   //For testing: will be replaced by the Trivia API fetched questions
   //*************
   useEffect(() => {
+    //NOTE: BELOW COMMENT IS TO HELP WITH THE TRIVIA API INTEGRATION
+    //const fetchQuestions = async () => {
+      //if (!selectedCategory || selectedCategory === 'custom_ai_quiz') return;  // if user has not selected a category yet or if they selected custom quiz, return (dont fetch)
+    if(!selectedCategory || selectedCategory === 'custom_ai_quiz') return;
     setQuestions([
       {
         text: "Test Question?",
@@ -36,9 +40,17 @@ const resetQuiz = () => {
         options: ["X", "Y", "Z", "W"],
         answer: "Z",
         explanation: "Another test question."
+      },
+      {
+        text: "Test Question 3?",
+        options: ["hello", "hi", "bye", "byebye"],
+        answer: "hello",
+        explanation: "Another test question."
       }
     ]);
-  }, []);
+    
+    
+  }, [selectedCategory]); // runs only when selected category changes, this prevents running on every render, avoiding unnecessary api calls
   //*************
 
   return (

@@ -21,6 +21,9 @@ const QuizCategory = () => {
   const{selectedCategory, setSelectedCategory, difficulty, setDifficulty, questionType, setQuestionType} = useContext(QuizContext);
   //const [isImageQuiz, setIsImageQuiz] = useState(false); // Toggle between text and image quiz
   
+  //locat state variables:
+  const [quizDisplayName, setQuizDisplayName] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleToggle = () => {
     setQuestionType(questionType==="text"?"image":"text");// Toggle between text and image quiz
@@ -35,7 +38,7 @@ const QuizCategory = () => {
     // Once the quiz category is selected, navigate to the quiz page
     navigate('/quiz');
   };
-
+  
   return (
     <div className="quiz-category-container">
       <h1 className="quiz-category-title">Quiz Categories</h1>
@@ -57,6 +60,14 @@ const QuizCategory = () => {
             Image Quiz
           </span>
         </div>
+        {/* Difficulty Dropdown on the right */}
+        <div>
+        <select className="difficulty-dropdown" value={difficulty} onChange={handleDifficultyChange}>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        </div>
       </div>
 
       {/* Quiz Categories Grid */}
@@ -65,32 +76,26 @@ const QuizCategory = () => {
           <div 
             key={index} 
             className="quiz-category-box" 
-            onClick={() => setSelectedCategory(category.categoryName)}
+            onClick={() => {setSelectedCategory(category.categoryName); setQuizDisplayName(category.name); setShowPopup(true)}}
           >
             <img src={category.image} alt= {category.alt_text} className="category-image" />
             <p className="category-name">{category.name}</p>
           </div>
         ))}
-        {/* Difficulty Dropdown on the right */}
-        <select className="difficulty-dropdown" value={difficulty} onChange={handleDifficultyChange}>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-        </select>
       </div>
 
       {/* Popup for Selected Category */}
-      {selectedCategory && (
-        <div className="popup">
-          <div className="popup-content">
+      {showPopup && (
+        <div className="start-popup">
+          <div className="start-popup-content">
             {/* Close Button */}
             <img 
-              className="close-btn" 
+              className="start-popup-close-btn" 
               src="/crossbtn.png" 
               alt="Close" 
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => {setSelectedCategory(null); setQuizDisplayName(null); setShowPopup(false)}}
             />
-            <h2>{selectedCategory.name} Quiz</h2>
+            <h2>{quizDisplayName} Quiz</h2>
              <button className="start-quiz-btn" onClick={handleStartQuiz}>Start Quiz</button>
           </div>
         </div>

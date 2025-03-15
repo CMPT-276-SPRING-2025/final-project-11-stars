@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { QuizContext } from "../context/QuizContext";
 import { useNavigate } from 'react-router-dom';
 import './Resultpage.css'; // Ensure to create and style this file accordingly
 
 const ResultPage = () => {
   const navigate = useNavigate();
+
+  const {score, resetQuiz} = useContext(QuizContext);
 
   return (
     <div className="result-container">
@@ -11,7 +14,7 @@ const ResultPage = () => {
       </div>
       
       <div className="result-content">
-        <div className="score-message">Score:</div>
+        <div className="score-message">Score: {score}/10</div>
         <div className="result-info">
           <p>Congratulations! You are officially BrainGoated!</p>
         </div>
@@ -21,7 +24,11 @@ const ResultPage = () => {
         </div>
         
         <div className="result-buttons">
-          <button className="go-back-button" onClick={() => navigate('/')}>
+          <button className="go-back-button" onClick={() => 
+            {
+              resetQuiz(); // reset global state variables when going back to home page
+              navigate('/')
+            }}>
             Go back to Quiz Categories
           </button>
         </div>

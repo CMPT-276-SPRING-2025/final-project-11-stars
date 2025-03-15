@@ -11,8 +11,8 @@ const QuizPage = () => {
   const navigate = useNavigate();
   // Global states: need to persist across multiple questions
   const {score,setScore, selectedCategory, 
-    setSelectedCategory, difficulty, setDifficulty, questions, setQuestions,
-    questionType, setQuestionType, currentQuestion, setCurrentQuestion, resetQuiz
+     difficulty, questions,questionType, 
+     currentQuestion, setCurrentQuestion, resetQuiz
   } = useContext(QuizContext);
   
   // Keep separate in local state as these don't have to persist across multiple questions
@@ -22,7 +22,7 @@ const QuizPage = () => {
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   
   //For debugging
-  if(questions.length == 0)
+  if(questions.length === 0)
   {
     return <h2>Loading Questions...</h2>;
   }
@@ -49,7 +49,7 @@ const QuizPage = () => {
         <div className="score-box">Score: {score}</div>
       </div>
       <div className="question-box">
-        <p className="question-text">Q1: {question.text}</p>
+        <p className="question-text">Q{currentQuestion + 1}: {question.text}</p>
         <div className="options-container">
           {question.options.map((option, index) => (
             <button
@@ -65,8 +65,9 @@ const QuizPage = () => {
       </div>
       <button className="exit-button" onClick={() => 
         {
-          resetQuiz();
-          navigate("/")}}>Exit
+          resetQuiz(); // reset global state variables
+          navigate("/")
+        }}>Exit
 
       </button>
       {showIncorrectPopup && (
@@ -85,9 +86,14 @@ const QuizPage = () => {
             <button className = "next-button" onClick={() => {
               if(currentQuestion < questions.length-1)
               {
-                setCurrentQuestion(prevQuesion => prevQuesion +1); // move to next question
+                setCurrentQuestion(currentQuestion + 1); // move to next question
                 //Reset question state
+                //testing **************
+                console.log("current quiz category type: ", selectedCategory);
+                console.log("current difficulty: ", difficulty);
                 console.log("current question: ", currentQuestion);
+                console.log("current question type: ", questionType);
+                //********************/
                 setSelected(null);
                 setAnswered(false);
                 setShowCorrectPopup(false); //close popup
@@ -116,9 +122,14 @@ const QuizPage = () => {
             <button className = "next-button" onClick={() => {
               if(currentQuestion < questions.length-1)
               {
-                setCurrentQuestion(prevQuesion => prevQuesion +1); // move to next question
+                setCurrentQuestion(currentQuestion + 1); // move to next question
                 //Reset question state
+                //testing ****************
+                console.log("current quiz category type: ", selectedCategory);
+                console.log("current difficulty: ", difficulty);
                 console.log("current question: ", currentQuestion);
+                console.log("current question type: ", questionType);
+                //****************/
                 setSelected(null);
                 setAnswered(false);
                 setShowCorrectPopup(false); //close popup
