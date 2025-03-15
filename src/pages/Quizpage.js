@@ -82,28 +82,30 @@ const QuizPage = () => {
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
-            <button className = "next-button" onClick={() => {
-              if(currentQuestion < questions.length-1)
-              {
-                setCurrentQuestion(currentQuestion + 1); // move to next question
-                //Reset question state
-                //testing **************
-                console.log("current quiz category type: ", selectedCategory);
-                console.log("current difficulty: ", difficulty);
-                console.log("current question: ", currentQuestion);
-                console.log("current question type: ", questionType);
-                //********************/
-                setSelected(null);
-                setAnswered(false);
-                setShowCorrectPopup(false); //close popup
-                setShowIncorrectPopup(false);
-              }
-              else{
-                navigate("/result");
-              }
-            }}>Next
-            </button>
+            <div className = "feedback-popup-buttons">
+              <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
+              <button className = "next-button" onClick={() => {
+                if(currentQuestion < questions.length-1)
+                {
+                  setCurrentQuestion(currentQuestion + 1); // move to next question
+                  //Reset question state
+                  //testing **************
+                  console.log("current quiz category type: ", selectedCategory);
+                  console.log("current difficulty: ", difficulty);
+                  console.log("current question: ", currentQuestion);
+                  console.log("current question type: ", questionType);
+                  //********************/
+                  setSelected(null);
+                  setAnswered(false);
+                  setShowCorrectPopup(false); //close popup
+                  setShowIncorrectPopup(false);
+                }
+                else{
+                  navigate("/result");
+                }
+              }}>Next
+              </button>
+              </div>
           </div>
         </div>
       )}
@@ -118,28 +120,30 @@ const QuizPage = () => {
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
-            <button className = "next-button" onClick={() => {
-              if(currentQuestion < questions.length-1)
-              {
-                setCurrentQuestion(currentQuestion + 1); // move to next question
-                //Reset question state
-                //testing ****************
-                console.log("current quiz category type: ", selectedCategory);
-                console.log("current difficulty: ", difficulty);
-                console.log("current question: ", currentQuestion);
-                console.log("current question type: ", questionType);
-                //****************/
-                setSelected(null);
-                setAnswered(false);
-                setShowCorrectPopup(false); //close popup
-                setShowIncorrectPopup(false);
-              }
-              else{
-                navigate("/result");
-              }
-            }}>Next
-            </button>
+            <div className = "feedback-popup-buttons">
+              <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
+              <button className="next-button" onClick={() => {
+                if(currentQuestion < questions.length-1)
+                {
+                  setCurrentQuestion(currentQuestion + 1); // move to next question
+                  //Reset question state
+                  //testing ****************
+                  console.log("current quiz category type: ", selectedCategory);
+                  console.log("current difficulty: ", difficulty);
+                  console.log("current question: ", currentQuestion);
+                  console.log("current question type: ", questionType);
+                  //****************/
+                  setSelected(null);
+                  setAnswered(false);
+                  setShowCorrectPopup(false); //close popup
+                  setShowIncorrectPopup(false);
+                }
+                else{
+                  navigate("/result");
+                }
+              }}>Next
+              </button>
+            </div>
           </div>
         </div>
       )}
