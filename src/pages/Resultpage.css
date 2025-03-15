@@ -27,33 +27,6 @@ body {
     position: relative;
 }
 
-/* Small Exit Button (Aligned Left) */
-.exit-button {
-    background-color: #9c8575;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative; /* Change from absolute */
-    margin-top: 20px;  /* Adds spacing from result box */
-    align-self: flex-start; /* Aligns to the left inside a flex container */
-}
-
-.exit-button:hover {
-    background-color: #816656;
-}
-
-/* Timer & Score Boxes */
-.timer-box, .score-box {
-    background-color: #9A7E6F;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: white;
-}
-
 /* Result Box */
 .result-content {
     background-color: #E9EED9;
