@@ -1,29 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { QuizContext } from "../context/QuizContext"; //import global state
+import { QuizContext } from "../context/QuizContext"; // Import global state
 import "./Quizpage.css";
-
-
-
-//NOTE: YOU NEED TO RESET STATE FOR QUESTIONS AFTER CLICKING GO BACK TO QUIZ CATEGORIES AND SEE IF IT ALSO NEEDS TO BE THERE AFTRE DISPLAYING FINAL SCORE
 
 const QuizPage = () => {
   const navigate = useNavigate();
+
   // Global states: need to persist across multiple questions
-  const {score,setScore, selectedCategory, 
-     difficulty, questions,questionType, 
-     currentQuestion, setCurrentQuestion, resetQuiz
+  const {
+    score, setScore, selectedCategory, 
+    difficulty, questions, questionType, 
+    currentQuestion, setCurrentQuestion, 
+    resetQuiz, getExplanation
   } = useContext(QuizContext);
-  
-  // Keep separate in local state as these don't have to persist across multiple questions
+
+  // Local state (specific to this component)
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [showIncorrectPopup, setShowIncorrectPopup] = useState(false);
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
-  
-  //For debugging
-  if(questions.length === 0)
-  {
+  const [explanation, setExplanation] = useState(null); // Stores explanation
+
+  // Handle fetching fun fact when user selects an answer
+  useEffect(() => {
+    if (answered && questions[currentQuestion]?.explanation === null) {
+      getExplanation(currentQuestion).then((fact) => setExplanation(fact)); // Fetch fun fact
+    } else {
+      setExplanation(questions[currentQuestion]?.explanation); // Set existing explanation
+    }
+  }, [answered, currentQuestion, questions, getExplanation]);
+
+  // If questions haven't loaded yet, show a loading message
+  if (questions.length === 0) {
     return <h2>Loading Questions...</h2>;
   }
 
@@ -39,6 +47,19 @@ const QuizPage = () => {
         setShowIncorrectPopup(true);
       }
       setAnswered(true);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1); // Move to next question
+      setSelected(null);
+      setAnswered(false);
+      setShowCorrectPopup(false);
+      setShowIncorrectPopup(false);
+      setExplanation(null); // Reset fun fact state
+    } else {
+      navigate("/result");
     }
   };
 
@@ -63,86 +84,47 @@ const QuizPage = () => {
           ))}
         </div>
       </div>
-      <button className="exit-button" onClick={() => 
-        {
-          resetQuiz(); // reset global state variables
-          navigate("/")
-        }}>Exit
+      <button className="exit-button" onClick={() => {
+        resetQuiz(); // Reset global state variables
+        navigate("/");
+      }}>Exit</button>
 
-      </button>
+      {/* Incorrect Answer Popup */}
       {showIncorrectPopup && (
         <div className="popup-overlay">
           <div className="popup-box">
             <h2 className="incorrect">Incorrect!</h2>
             <p className="correct-answer">Correct Answer: {question.answer}</p>
             <div className="explanation-box">
-              <p>{question.explanation}</p>
+              <p>{explanation || "Fetching fun fact..."}</p> {/* Displays fun fact */}
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <div className = "feedback-popup-buttons">
+            <div className="feedback-popup-buttons">
               <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
-              <button className = "next-button" onClick={() => {
-                if(currentQuestion < questions.length-1)
-                {
-                  setCurrentQuestion(currentQuestion + 1); // move to next question
-                  //Reset question state
-                  //testing **************
-                  console.log("current quiz category type: ", selectedCategory);
-                  console.log("current difficulty: ", difficulty);
-                  console.log("current question: ", currentQuestion);
-                  console.log("current question type: ", questionType);
-                  //********************/
-                  setSelected(null);
-                  setAnswered(false);
-                  setShowCorrectPopup(false); //close popup
-                  setShowIncorrectPopup(false);
-                }
-                else{
-                  navigate("/result");
-                }
-              }}>Next
-              </button>
-              </div>
+              <button className="next-button" onClick={handleNextQuestion}>Next</button>
+            </div>
           </div>
         </div>
       )}
+
+      {/* Correct Answer Popup */}
       {showCorrectPopup && (
         <div className="popup-overlay">
           <div className="popup-box">
             <h2 className="correct">Correct!</h2>
             <div className="explanation-box">
-              <p>{question.explanation}</p>
+              <p>{explanation || "Fetching fun fact..."}</p>
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
               <input type="text" placeholder="Ask anything" />
             </div>
-            <div className = "feedback-popup-buttons">
+            <div className="feedback-popup-buttons">
               <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
-              <button className="next-button" onClick={() => {
-                if(currentQuestion < questions.length-1)
-                {
-                  setCurrentQuestion(currentQuestion + 1); // move to next question
-                  //Reset question state
-                  //testing ****************
-                  console.log("current quiz category type: ", selectedCategory);
-                  console.log("current difficulty: ", difficulty);
-                  console.log("current question: ", currentQuestion);
-                  console.log("current question type: ", questionType);
-                  //****************/
-                  setSelected(null);
-                  setAnswered(false);
-                  setShowCorrectPopup(false); //close popup
-                  setShowIncorrectPopup(false);
-                }
-                else{
-                  navigate("/result");
-                }
-              }}>Next
-              </button>
+              <button className="next-button" onClick={handleNextQuestion}>Next</button>
             </div>
           </div>
         </div>
@@ -150,4 +132,5 @@ const QuizPage = () => {
     </div>
   );
 };
+
 export default QuizPage;
