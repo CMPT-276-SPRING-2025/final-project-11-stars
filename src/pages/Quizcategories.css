@@ -6,9 +6,9 @@
 
 .quiz-category-title {
   display: inline-block;
-  padding: 10px 20px;  /* Adds some padding inside the box */
-  font-size: 2.5em;  /* Font size */
-  font-weight: bold;  /* Bold text */
+  padding: 10px 20px;  
+  font-size: 2.5em; 
+  font-weight: bold; 
   border-radius: 8px; 
   padding: 10px;
   color: #54473F;
@@ -92,47 +92,76 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 20px;  /* Smaller size */
-  height: 20px;  /* Smaller size */
+  width: 20px; 
+  height: 20px;  
   cursor: pointer;
-  transition: transform 0.3s ease; /* Optional: Add animation for hover effect */
+  transition: transform 0.3s ease; 
 }
 
 .start-popup-close-btn:hover {
-  transform: scale(1.2);  /* Optional: Slightly increase the size on hover */
-}
-/* Quiz Option Toggle */
-.toggle-quiz-option {
-  display: flex;
-  justify-content: space-between;
-  align-items: left;
-  margin-bottom: 20px;
-  font-size: 18px;
+  transform: scale(1.2); 
 }
 
-.quiz-option {
-  display: left;
-  width: 100px;
+.toggle-difficulty-container {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  font-size: 22px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.toggle-quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.difficulty-dropdown {
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: transparent; 
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: 0.3s;
+}
+
+.difficulty-dropdown select {
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: #CBD2A4; 
+  color: #54473F; 
+  cursor: pointer;
+}
+
+.difficulty-dropdown:hover {
+  border-color: none;
+}
+
+.difficulty-dropdown:focus {
+  outline: none;
+  border-color: #4CAF50;
 }
 
 
 .quiz-toggle {
   display: flex;
   align-items: center;
-  gap :10px;
+  gap: 10px;
 }
 
-/* Switch */
+.quiz-option {
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+
 .switch {
   position: relative;
   display: inline-block;
   width: 44px;
   height: 20px;
-
 }
 
 .switch input {
@@ -152,7 +181,6 @@
   border: 1px solid #54473F;
   transition: 0.4s;
   border-radius: 34px;
-  
 }
 
 .slider:before {
@@ -163,7 +191,7 @@
   border-radius: 50%;
   left: 4px;
   bottom: 4px;
-  background-color: #54473F ;
+  background-color: #54473F;
   transition: 0.4s;
 }
 
@@ -174,20 +202,3 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(14px);
 }
-.difficulty-dropdown {
-  padding: 10px 10px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #CBD2A4;
-  cursor: pointer;
-  transition: 0.3s;
-  }
-  .difficulty-dropdown:hover {
-  border-color: #007bff;
-  }
-  
-  .difficulty-dropdown:focus {
-  outline: none;
-  border-color: #4CAF50;
-  }
