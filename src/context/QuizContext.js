@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import OpenAI from "openai";
+//import OpenAI from "openai";
 
 // Context
 export const QuizContext = createContext();
@@ -9,7 +9,7 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [difficulty, setDifficulty] = useState("medium");
+  const [difficulty, setDifficulty] = useState("easy");
   const [questions, setQuestions] = useState([]);
   const [questionType, setQuestionType] = useState("text");
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -19,7 +19,7 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
-    setDifficulty("medium");
+    setDifficulty("easy");
     setQuestions([]);
     setQuestionType("text");
     setCurrentQuestion(0);
@@ -75,6 +75,9 @@ export const QuizProvider = ({ children }) => {
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
 
+    // Temporarily commented out due to OpenAI API key requirement
+
+    /*
     const openai = new OpenAI({
       apiKey: process.env.REACT_APP_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
@@ -93,10 +96,10 @@ export const QuizProvider = ({ children }) => {
           {
             role: "user",
             content: `Give a **1 sentence** fun fact related to this trivia question and answer.
-            Make it short, engaging, and easy for kids to understand.\n\nQuestion: ${question.text}\nAnswer: ${question.answer}`
+            Make it short, engaging, and easy for kids to understand. Include a relevant emoji. Answer within 40 tokens.\n\nQuestion: ${question.text}\nAnswer: ${question.answer}`
           }
         ],
-        max_tokens: 30,
+        max_tokens: 40,
       });
 
       const newExplanation = response.choices?.[0]?.message?.content?.trim() || "No fun fact available.";
@@ -113,6 +116,7 @@ export const QuizProvider = ({ children }) => {
     } catch (error) {
       console.error("Error fetching fun fact:", error);
     }
+      */
   };
 
   return (

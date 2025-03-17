@@ -9,7 +9,6 @@ const HomePage = () => {
       <img src="/bud-e.png" alt="BrainGoated Logo" className="logo" />
       <p className="tagline">Water your curiosity, Watch it grow!</p>
 
-
       {/* Add a space to create scrolling effect */}
       <div className="quiz-category-space"></div>
 
@@ -20,3 +19,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+//Implement how to use page
