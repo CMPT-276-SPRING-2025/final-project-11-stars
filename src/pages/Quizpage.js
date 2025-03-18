@@ -8,8 +8,8 @@ const QuizPage = () => {
 
   // Global states: need to persist across multiple questions
   const {
-    score, setScore, selectedCategory, 
-    difficulty, questions, questionType, 
+    score, setScore, 
+    questions, 
     currentQuestion, setCurrentQuestion, 
     resetQuiz, getExplanation
   } = useContext(QuizContext);
@@ -36,6 +36,9 @@ const QuizPage = () => {
   }
 
   const question = questions[currentQuestion];
+
+  // Ensure question text is correctly accessed
+  const questionText = question?.text || "Question not available";
 
   const handleOptionClick = (option) => {
     if (!answered) {
@@ -70,7 +73,7 @@ const QuizPage = () => {
         <div className="score-box">Score: {score}</div>
       </div>
       <div className="question-box">
-        <p className="question-text">Q{currentQuestion + 1}: {question.text}</p>
+        <p className="question-text">Q{currentQuestion + 1}: {questionText}</p> {/* Ensure question text is displayed */}
         <div className="options-container">
           {question.options.map((option, index) => (
             <button

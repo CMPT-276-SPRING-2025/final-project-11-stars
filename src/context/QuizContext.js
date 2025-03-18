@@ -34,11 +34,11 @@ export const QuizProvider = ({ children }) => {
 
       try {
         const response = await axios.get(
-          `https://the-trivia-api.com/v2/questions`,
+          `https://the-trivia-api.com/api/questions`, // Ensure the base URL is correct
           {
             params: {
-              categories: selectedCategory,
-              difficulty: difficulty,
+              categories: selectedCategory.categoryName,
+              difficulty: difficulty, // Correct parameter name
               limit: 10,
             },
           }
@@ -51,7 +51,7 @@ export const QuizProvider = ({ children }) => {
         }
 
         const formattedQuestions = response.data.map((question) => ({
-          text: question.question.text,
+          text: question.question, // Ensure the text property is correctly set
           options: [...question.incorrectAnswers, question.correctAnswer].sort(
             () => Math.random() - 0.5
           ),
@@ -75,14 +75,13 @@ export const QuizProvider = ({ children }) => {
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
 
-    // Temporarily commented out due to OpenAI API key requirement
-
+// Temporarily commented out due to OpenAI API key requirement
     /*
     const openai = new OpenAI({
       apiKey: process.env.REACT_APP_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
     });
-
+    
     try {
       const question = questions[questionIndex];
 
@@ -117,6 +116,7 @@ export const QuizProvider = ({ children }) => {
       console.error("Error fetching fun fact:", error);
     }
       */
+      
   };
 
   return (

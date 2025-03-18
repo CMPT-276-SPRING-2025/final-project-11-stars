@@ -18,14 +18,14 @@ const categories = [
 ];
 
 const QuizCategory = () => {
-  const { setSelectedCategory, setSelectedDifficulty, difficulty, questionType, setQuestionType } = useContext(QuizContext);
+  const { setSelectedCategory, difficulty, setDifficulty, questionType, setQuestionType } = useContext(QuizContext); // Ensure correct state and setter
   const [quizDisplayName, setQuizDisplayName] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   
   const navigate = useNavigate();
 
   const handleDifficultyChange = (level) => {
-    setSelectedDifficulty(level);
+    setDifficulty(level); // Use setDifficulty to update the state
   };
 
   const handleCategoryClick = (category) => {

@@ -11,6 +11,7 @@
     "axios": "^1.8.3",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.4.10",
+    "http-proxy-middleware": "^3.0.3",
     "openai": "^4.87.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
