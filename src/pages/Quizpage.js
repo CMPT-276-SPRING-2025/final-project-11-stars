@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext"; // Import global state
 import "./Quizpage.css";
@@ -15,11 +15,37 @@ const QuizPage = () => {
   } = useContext(QuizContext);
 
   // Local state (specific to this component)
+  const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [showIncorrectPopup, setShowIncorrectPopup] = useState(false);
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   const [explanation, setExplanation] = useState(null); // Stores explanation
+  const timerRef = useRef(null);
+  
+  const handleTimeout = useCallback(() => {
+    if (!answered) {
+      setAnswered(true);
+      setShowIncorrectPopup(true);
+      clearInterval(timerRef.current);
+    }
+  }, [answered]);
+
+  useEffect(() => {
+    setTimeLeft(30);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === 1) {
+          clearInterval(timerRef.current);
+          handleTimeout();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerRef.current);
+  }, [currentQuestion, handleTimeout]);
 
   // Handle fetching fun fact when user selects an answer
   useEffect(() => {
@@ -43,6 +69,8 @@ const QuizPage = () => {
   const handleOptionClick = (option) => {
     if (!answered) {
       setSelected(option);
+      clearInterval(timerRef.current);
+
       if (option === question.answer) {
         setScore(score + 1);
         setShowCorrectPopup(true);
@@ -61,6 +89,7 @@ const QuizPage = () => {
       setShowCorrectPopup(false);
       setShowIncorrectPopup(false);
       setExplanation(null); // Reset fun fact state
+      setTimeLeft(30);
     } else {
       navigate("/result");
     }
@@ -69,7 +98,7 @@ const QuizPage = () => {
   return (
     <div className="quiz-container">
       <div className="header">
-        <div className="timer-box">Timer:</div>
+        <div className="timer-box">Timer: {timeLeft}s</div>
         <div className="score-box">Score: {score}</div>
       </div>
       <div className="question-box">
