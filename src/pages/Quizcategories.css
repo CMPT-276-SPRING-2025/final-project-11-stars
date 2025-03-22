@@ -49,7 +49,7 @@
   background-color: #E9EED9;
 }
 
-.start-popup {
+.start-popup{
   position: fixed;
   top: 50%;
   left: 50%;
@@ -80,11 +80,12 @@
   border-radius: 10px;
   cursor: pointer;
   color: #54473F;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .start-quiz-btn:hover {
-
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
 }
 
@@ -101,6 +102,114 @@
 .start-popup-close-btn:hover {
   transform: scale(1.2); 
 }
+.custom-quiz-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #E9EED9;
+  border: 1px solid #54473F;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 650px; 
+  height: 550px; 
+  text-align: center;
+}
+
+.popup-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.popup-icon {
+  width: 180px; 
+  height: 180px; 
+  margin-bottom: 10px;
+  background-color: #E9EED9;
+}
+
+.custom-quiz-title {
+  position: absolute;
+  top: 130px; 
+  left: 50%;
+  transform: translateX(-50%); 
+  font-size: 2rem; 
+  font-weight: bold;
+  color: #54473F;
+  background-color: #CBD2A4;
+  padding: 20px 15px;
+  border-radius: 8px;
+  white-space: nowrap;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2; 
+}
+
+.custom-quiz-popup-content {
+  margin-top: 10px;
+  font-size: 1.8rem;
+  color: #54473F;
+  padding-top: 20px; 
+  position: relative;
+}
+
+.custom-quiz-inputs {
+  display: flex; 
+  flex-direction: row; 
+  gap: 15px; 
+  margin: 15px 0;
+  justify-content: center;
+}
+.custom-quiz-inputs input:focus {
+  border: 2px solid #54473F; 
+  outline: none; 
+}
+
+.input-wrapper {
+  margin-top: 30px;
+  margin-bottom: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-size: 25px;
+  margin-bottom: 6px; 
+  color: #54473F;
+  font-weight: bold;
+  text-align: left;
+}
+.custom-quiz-inputs input {
+  padding: 10px; 
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #54473F;
+  width: 200px; 
+  margin-top: 10px;
+  background-color: #E9EED9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.popup-icon {
+  margin-bottom: 20px; 
+}
+
+ .popup-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px; 
+  height: 20px;  
+  cursor: pointer;
+  transition: transform 0.3s ease; 
+}
+
+.custom-quiz-popup .popup-close-btn:hover {
+  transform: scale(1.2); 
+}
+
 
 .toggle-difficulty-container {
   display: flex;
