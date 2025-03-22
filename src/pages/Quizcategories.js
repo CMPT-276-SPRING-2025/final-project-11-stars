@@ -132,13 +132,19 @@ const QuizCategory = () => {
             {/* Category Label and Input */}
             <div className="input-wrapper">
               <label htmlFor="category" className="input-label">Category</label>
-              <input 
-                id="category"
-                type="text" 
-                placeholder="Quiz Category" 
-                value={customCategory} 
-                onChange={(e) => setCustomCategory(e.target.value)} 
-              />
+              <div className="Difficulty-dropdown">
+                <select
+                  id="custom-difficulty"
+                  className="Difficulty-select"
+                  value={customTopic} 
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                >
+                  <option value="" disabled>Select Difficulty</option>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+            </div>
             </div>
             
             {/* Topic Label and Input */}
