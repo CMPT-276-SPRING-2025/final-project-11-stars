@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Jersey+20&display=swap');
-
 body {
   margin: 0;
-  font-family: 'Jersey 20', sans-serif;
   text-align: center;
   color: #54473F;
   margin: 0;
   padding: 0;
   background-color: #E9EED9;
+  line-height: 1.2;
 }
 
 /* Container */
@@ -46,8 +44,8 @@ body {
 /* Buttons */
 .select-category-btn {
   position: fixed;
-  bottom: 20px; /* Adjust as necessary */
-  right: 20px; /* Adjust as necessary */
+  bottom: 20px;
+  right: 20px; 
   background-color: #CBD2A4;
   color: #54473F;
   border: 2px solid #9A7E6F;

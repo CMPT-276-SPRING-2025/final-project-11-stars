@@ -132,6 +132,7 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
+              <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
               <input type="text" placeholder="Ask anything" />
             </div>
             <div className="feedback-popup-buttons">
@@ -152,6 +153,7 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
+              <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
               <input type="text" placeholder="Ask anything" />
             </div>
             <div className="feedback-popup-buttons">

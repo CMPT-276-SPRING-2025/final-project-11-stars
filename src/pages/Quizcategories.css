@@ -1,3 +1,5 @@
+@import url('https://fonts.google.com/share?selection.family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
+
 .quiz-category-container {
   text-align: center;
   background-color: #E9EED9;
@@ -49,7 +51,7 @@
   background-color: #E9EED9;
 }
 
-.start-popup{
+.start-popup {
   position: fixed;
   top: 50%;
   left: 50%;

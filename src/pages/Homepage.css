@@ -1,14 +1,17 @@
 /* HomePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+20&display=swap');
 
 .homepage-container {
-    padding: 20px;
+    padding: 50px;
+    text-align: center;
+    font-size: 10vw;
 }
 
 .landing-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Adjust to start content from the top */
+    justify-content: center; /* Adjust to start content from the top */
     padding-top: 20px;
     text-align: center;
     min-height: 100vh;
@@ -24,7 +27,7 @@ html {
 }
 
 .main-heading {
-    font-size: 80rem; /* Increased size for the heading */
+    font-size: 10rem !important; /* Increased size for the heading */
     font-family: 'Jersey 20', sans-serif;
     text-align: center;
     margin-top: 40px;
@@ -33,14 +36,15 @@ html {
 .logo {
     display: block;
     margin: 40px auto;
-    width: 100%; /* Make sure the width is 100% of the container */
-    max-width: 600px; /* Cap the maximum size to prevent it from growing too large */
+    width: 15% !important; /* Make sure the width is 100% of the container */
+    max-width: 800px; /* Cap the maximum size to prevent it from growing too large */
     height: auto; /* Ensure aspect ratio is maintained */
 }
 
 .tagline {
-    font-size: 3rem;
+    font-size: 3rem !important;
     text-align: center;
     margin-top: 40px;
+    font-weight: bold;
 }
 
