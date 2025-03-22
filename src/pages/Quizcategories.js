@@ -117,6 +117,48 @@ const QuizCategory = () => {
         </div>
       )}
 
+      {showCustomPopup && (
+        <div className="custom-quiz-popup">
+          <div className="custom-quiz-popup-content">
+            <img className="popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => setShowCustomPopup(false)} />
+            
+            {/* Image and Title Wrapper */}
+            <div className="popup-icon-wrapper">
+              <img src="/bud-e.png" alt="Custom Quiz Icon" className="popup-icon" />
+              <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
+            </div>
+
+            <div className="custom-quiz-inputs">
+            {/* Category Label and Input */}
+            <div className="input-wrapper">
+              <label htmlFor="category" className="input-label">Category</label>
+              <input 
+                id="category"
+                type="text" 
+                placeholder="Quiz Category" 
+                value={customCategory} 
+                onChange={(e) => setCustomCategory(e.target.value)} 
+              />
+            </div>
+            
+            {/* Topic Label and Input */}
+            <div className="input-wrapper">
+              <label htmlFor="topic" className="input-label">Topic</label>
+              <input 
+                id="topic"
+                type="text" 
+                placeholder="Quiz Topic" 
+                value={customTopic} 
+                onChange={(e) => setCustomTopic(e.target.value)} 
+              />
+            </div>
+            </div>
+            <button className="start-quiz-btn" onClick={handleCustomStartQuiz}>Start Quiz</button>
+          </div>
+        </div>
+      )}
+
+
 
     </div>
   );
