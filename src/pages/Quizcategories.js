@@ -18,26 +18,45 @@ const categories = [
 ];
 
 const QuizCategory = () => {
-  const { setSelectedCategory, difficulty, setDifficulty, questionType, setQuestionType } = useContext(QuizContext); // Ensure correct state and setter
+  const { setSelectedCategory, difficulty, setDifficulty, questionType, setQuestionType } = useContext(QuizContext);
   const [quizDisplayName, setQuizDisplayName] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  
+  const [showCustomPopup, setShowCustomPopup] = useState(false);
+  const [customCategory, setCustomCategory] = useState("");
+  const [customTopic, setCustomTopic] = useState("");
+
   const navigate = useNavigate();
 
   const handleDifficultyChange = (level) => {
-    setDifficulty(level); // Use setDifficulty to update the state
+    setDifficulty(level);
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category); // Set the selected category
-    setQuizDisplayName(category.name);  // Set the display name to show in popup
-    setShowPopup(true);
+    setSelectedCategory(category);
+
+    if (category.categoryName === "custom_ai_quiz") {
+      setShowCustomPopup(true);
+      setShowPopup(false);
+    } else {
+      setQuizDisplayName(category.name);
+      setShowPopup(true);
+      setShowCustomPopup(false);
+    }
   };
 
   const handleStartQuiz = () => {
     navigate("/quiz");
   };
-  
+
+  const handleCustomStartQuiz = () => {
+    if (customCategory.trim() && customTopic.trim()) {
+      console.log("Starting custom quiz with:", customCategory, customTopic);
+      navigate("/quiz");
+    } else {
+      alert("Please enter both category and topic!");
+    }
+  };
+
   const handleToggle = () => {
     setQuestionType(questionType === "text" ? "image" : "text");
   };
@@ -46,7 +65,6 @@ const QuizCategory = () => {
     <div className="quiz-category-container">
       <h1 className="quiz-category-title">Quiz Categories</h1>
       <div className="toggle-difficulty-container">
-        {/* Quiz Type Toggle */}
         <div className="toggle-quiz-option">
           <div className="quiz-toggle">
             <span className={`quiz-option ${questionType === "text" ? 'active' : ''}`} onClick={() => setQuestionType("text")}>Text Quiz</span>
@@ -58,7 +76,6 @@ const QuizCategory = () => {
           </div>
         </div>
         
-        {/* Difficulty Selection Dropdown */}
         <div className="difficulty-dropdown">
           <select 
             className="difficulty-select" 
@@ -71,14 +88,13 @@ const QuizCategory = () => {
           </select>
         </div>
       </div>
-      
-      {/* Quiz Categories Grid */}
+
       <div className="quiz-category-grid">
         {categories.map((category, index) => (
           <div
             key={index}
             className="quiz-category-box"
-            onClick={() => handleCategoryClick(category)}  // Pass the entire category object
+            onClick={() => handleCategoryClick(category)}
           >
             <img src={category.image} alt={category.alt_text} className="category-image" />
             <p className="category-name">{category.name}</p>
@@ -86,7 +102,7 @@ const QuizCategory = () => {
         ))}
       </div>
 
-      {/* Popup for Selected Category */}
+      {/* Popup for Normal Categories */}
       {showPopup && (
         <div className="start-popup">
           <div className="start-popup-content">
@@ -95,11 +111,13 @@ const QuizCategory = () => {
               setQuizDisplayName(null);
               setShowPopup(false);
             }} />
-            <h2>{quizDisplayName} Quiz</h2> {/* Display the name of the quiz */}
+            <h2>{quizDisplayName} Quiz</h2>
             <button className="start-quiz-btn" onClick={handleStartQuiz}>Start Quiz</button>
           </div>
         </div>
       )}
+
+
     </div>
   );
 };
