@@ -161,11 +161,15 @@
 .custom-quiz-inputs {
   display: flex; 
   flex-direction: row; 
-  gap: 15px; 
+  gap: 120px; 
   margin: 15px 0;
   justify-content: center;
 }
 .custom-quiz-inputs input:focus {
+  border: 2px solid #54473F; 
+  outline: none; 
+}
+.custom-quiz-inputs select:focus {
   border: 2px solid #54473F; 
   outline: none; 
 }
@@ -179,8 +183,10 @@
 
 .input-label {
   font-size: 25px;
+  padding: 10px 0;
   margin-bottom: 6px; 
   color: #54473F;
+  margin-left: 10px;
   font-weight: bold;
   text-align: left;
 }
@@ -214,6 +220,36 @@
   transform: scale(1.2); 
 }
 
+.Difficulty-dropdown {
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: transparent; 
+  cursor: pointer;
+  transition: 0.3s;
+  
+}
+
+.Difficulty-dropdown select {
+  padding: 10px 45px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: #E9EED9; 
+  color: #54473F; 
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #54473F;
+}
+
+.Difficulty-dropdown:hover {
+  border-color: #54473F;
+}
+
+.Difficulty-dropdown:focus {
+  outline: none;
+  background-color: #A3A692;
+  border-color: #54473F;
+}
 
 .toggle-difficulty-container {
   display: flex;
@@ -236,6 +272,7 @@
   background-color: transparent; 
   cursor: pointer;
   transition: 0.3s;
+  border-color: 1px solid #54473F;
 }
 
 .difficulty-dropdown select {
@@ -245,15 +282,16 @@
   background-color: #CBD2A4; 
   color: #54473F; 
   cursor: pointer;
+  border-color: 1px solid #54473F;
 }
 
 .difficulty-dropdown:hover {
-  border-color: none;
+  border-color: #54473F;
 }
 
 .difficulty-dropdown:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: #54473F;
 }
 
 
