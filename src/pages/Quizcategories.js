@@ -136,7 +136,7 @@ const QuizCategory = () => {
                 <select
                   id="custom-difficulty"
                   className="Difficulty-select"
-                  value={customTopic} 
+                  value={customCategory} 
                   onChange={(e) => setCustomCategory(e.target.value)}
                 >
                   <option value="" disabled>Select Difficulty</option>
