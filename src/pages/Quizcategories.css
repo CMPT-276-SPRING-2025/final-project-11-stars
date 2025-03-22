@@ -50,7 +50,9 @@
   margin-bottom: 10px;
   background-color: #E9EED9;
 }
-
+.category-name{
+  font-weight: bold;
+}
 .start-popup {
   position: fixed;
   top: 50%;
