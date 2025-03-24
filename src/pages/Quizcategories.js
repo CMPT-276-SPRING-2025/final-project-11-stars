@@ -22,7 +22,7 @@ const QuizCategory = () => {
   const [quizDisplayName, setQuizDisplayName] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showCustomPopup, setShowCustomPopup] = useState(false);
-  const [customCategory, setCustomCategory] = useState("");
+  const [customDifficulty, setCustomDifficulty] = useState("");
   const [customTopic, setCustomTopic] = useState("");
 
   const navigate = useNavigate();
@@ -32,12 +32,11 @@ const QuizCategory = () => {
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-
     if (category.categoryName === "custom_ai_quiz") {
       setShowCustomPopup(true);
       setShowPopup(false);
     } else {
+      setSelectedCategory({ id: category.categoryName, categoryName: category.categoryName });
       setQuizDisplayName(category.name);
       setShowPopup(true);
       setShowCustomPopup(false);
@@ -49,11 +48,15 @@ const QuizCategory = () => {
   };
 
   const handleCustomStartQuiz = () => {
-    if (customCategory.trim() && customTopic.trim()) {
-      console.log("Starting custom quiz with:", customCategory, customTopic);
+    if (customDifficulty.trim() && customTopic.trim()) {
+      setSelectedCategory({
+        id: "custom_ai_quiz",
+        topic: customTopic.trim()
+      });
+      setDifficulty(customDifficulty.trim());
       navigate("/quiz");
     } else {
-      alert("Please enter both category and topic!");
+      alert("Please enter both difficulty and topic!");
     }
   };
 
@@ -75,7 +78,7 @@ const QuizCategory = () => {
             <span className={`quiz-option ${questionType === "image" ? 'active' : ''}`} onClick={() => setQuestionType("image")}>Image Quiz</span>
           </div>
         </div>
-        
+
         <div className="difficulty-dropdown">
           <select 
             className="difficulty-select" 
@@ -102,7 +105,6 @@ const QuizCategory = () => {
         ))}
       </div>
 
-      {/* Popup for Normal Categories */}
       {showPopup && (
         <div className="start-popup">
           <div className="start-popup-content">
@@ -121,51 +123,45 @@ const QuizCategory = () => {
         <div className="custom-quiz-popup">
           <div className="custom-quiz-popup-content">
             <img className="popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => setShowCustomPopup(false)} />
-            
-            {/* Image and Title Wrapper */}
+
             <div className="popup-icon-wrapper">
               <img src="/bud-e.png" alt="Custom Quiz Icon" className="popup-icon" />
               <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
             </div>
 
             <div className="custom-quiz-inputs">
-            {/* Category Label and Input */}
-            <div className="input-wrapper">
-              <label htmlFor="category" className="input-label">Category</label>
-              <div className="Difficulty-dropdown">
-                <select
-                  id="custom-difficulty"
-                  className="Difficulty-select"
-                  value={customCategory} 
-                  onChange={(e) => setCustomCategory(e.target.value)}
-                >
-                  <option value="" disabled>Select Difficulty</option>
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="hard">Hard</option>
-                </select>
-            </div>
-            </div>
-            
-            {/* Topic Label and Input */}
-            <div className="input-wrapper">
-              <label htmlFor="topic" className="input-label">Topic</label>
-              <input 
-                id="topic"
-                type="text" 
-                placeholder="Quiz Topic" 
-                value={customTopic} 
-                onChange={(e) => setCustomTopic(e.target.value)} 
-              />
-            </div>
+              <div className="input-wrapper">
+                <label htmlFor="category" className="input-label">Difficulty</label>
+                <div className="Difficulty-dropdown">
+                  <select
+                    id="custom-difficulty"
+                    className="Difficulty-select"
+                    value={customDifficulty}
+                    onChange={(e) => setCustomDifficulty(e.target.value)}
+                  >
+                    <option value="" disabled>Select Difficulty</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="input-wrapper">
+                <label htmlFor="topic" className="input-label">Topic</label>
+                <input 
+                  id="topic"
+                  type="text" 
+                  placeholder="Quiz Topic" 
+                  value={customTopic} 
+                  onChange={(e) => setCustomTopic(e.target.value)} 
+                />
+              </div>
             </div>
             <button className="start-quiz-btn" onClick={handleCustomStartQuiz}>Start Quiz</button>
           </div>
         </div>
       )}
-
-
-
     </div>
   );
 };
