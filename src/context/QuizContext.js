@@ -150,7 +150,7 @@ Return only: { "questions": [ ... ] }`,
             },
             {
               role: "user",
-              content: `Give a short fun fact related to this trivia question and answer:\n\nQ: ${question.text}\nA: ${question.answer}`,
+              content: `Give a short fun fact related to this trivia question and answer within 40 tokens:\n\nQ: ${question.text}\nA: ${question.answer}`,
             },
           ],
           max_tokens: 40,
