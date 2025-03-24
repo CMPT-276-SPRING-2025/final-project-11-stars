@@ -1,11 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-//import OpenAI from "openai";
 
-// Context
 export const QuizContext = createContext();
 
-// Provider
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,7 +12,8 @@ export const QuizProvider = ({ children }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Reset Quiz Function
+  const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
@@ -25,43 +23,103 @@ export const QuizProvider = ({ children }) => {
     setCurrentQuestion(0);
   };
 
-  // Fetch questions from The Trivia API
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (!selectedCategory || selectedCategory === "custom_ai_quiz") return;
-
+      if (!selectedCategory) return;
       setLoading(true);
 
       try {
-        const response = await axios.get(
-          `https://the-trivia-api.com/api/questions`, // Ensure the base URL is correct
-          {
+        if (selectedCategory.id === "custom_ai_quiz") {
+          const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${OPENAI_API_KEY}`,
+            },
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              temperature: 0.9,
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    "You are a trivia quiz generator. Generate 10 trivia questions, each with 4 options. Return only raw JSON with no markdown.",
+                },
+                {
+                  role: "user",
+                  content: `Create 10 unique trivia questions for teenagers on the topic "${selectedCategory.topic}" with "${difficulty}" difficulty.
+Each question must be an object in this format:
+{
+  "question": "What is the capital of France?",
+  "options": ["Berlin", "Paris", "London", "Rome"],
+  "correctAnswer": "Paris"
+}
+Return only: { "questions": [ ... ] }`,
+                },
+              ],
+              max_tokens: 1000,
+            }),
+          });
+
+          const data = await response.json();
+          let rawContent = data.choices[0].message.content.trim();
+
+          // Remove code block formatting if GPT includes it
+          if (rawContent.startsWith("```")) {
+            rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
+          }
+
+          let aiQuestions;
+          try {
+            const parsed = JSON.parse(rawContent);
+            aiQuestions = parsed.questions;
+          } catch (err) {
+            console.error("❌ Failed to parse AI JSON:", rawContent);
+            setQuestions([]);
+            setLoading(false);
+            return;
+          }
+
+          const formatted = aiQuestions.map((q) => {
+            const correct = q.correctAnswer;
+            const options = q.options || [];
+
+            if (!correct || !options.includes(correct)) {
+              console.warn("⚠️ Skipping question due to invalid format:", q);
+              return null;
+            }
+
+            return {
+              text: q.question,
+              options: options.sort(() => Math.random() - 0.5),
+              answer: correct,
+              explanation: null,
+            };
+          }).filter(Boolean); // Remove any nulls
+
+          setQuestions(formatted);
+        } else {
+          const response = await axios.get("https://the-trivia-api.com/api/questions", {
             params: {
               categories: selectedCategory.categoryName,
-              difficulty: difficulty, // Correct parameter name
+              difficulty: difficulty,
               limit: 10,
             },
-          }
-        );
+          });
 
-        if (!response.data || response.data.length === 0) {
-          setQuestions([]);
-          setLoading(false);
-          return;
+          const formattedQuestions = response.data.map((question) => ({
+            text: question.question,
+            options: [...question.incorrectAnswers, question.correctAnswer].sort(
+              () => Math.random() - 0.5
+            ),
+            answer: question.correctAnswer,
+            explanation: null,
+          }));
+
+          setQuestions(formattedQuestions);
         }
-
-        const formattedQuestions = response.data.map((question) => ({
-          text: question.question, // Ensure the text property is correctly set
-          options: [...question.incorrectAnswers, question.correctAnswer].sort(
-            () => Math.random() - 0.5
-          ),
-          answer: question.correctAnswer,
-          explanation: null,
-        }));
-
-        setQuestions(formattedQuestions);
       } catch (error) {
-        console.error("Error fetching trivia questions:", error);
+        console.error("❌ Error fetching questions:", error);
         setQuestions([]);
       } finally {
         setLoading(false);
@@ -69,54 +127,50 @@ export const QuizProvider = ({ children }) => {
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty]);
+  }, [selectedCategory, difficulty, OPENAI_API_KEY]);
 
-  // Fetch fun fact from OpenAI
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
 
-// Temporarily commented out due to OpenAI API key requirement
-    /*
-    const openai = new OpenAI({
-      apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-      dangerouslyAllowBrowser: true,
-    });
-    
     try {
       const question = questions[questionIndex];
 
-      const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "You explain fun trivia facts in a simple, exciting, and kid-friendly way (ages 8-16)."
-          },
-          {
-            role: "user",
-            content: `Give a **1 sentence** fun fact related to this trivia question and answer.
-            Make it short, engaging, and easy for kids to understand. Include a relevant emoji. Answer within 40 tokens.\n\nQuestion: ${question.text}\nAnswer: ${question.answer}`
-          }
-        ],
-        max_tokens: 40,
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You explain trivia answers in a fun, kid-friendly way with emojis.",
+            },
+            {
+              role: "user",
+              content: `Give a short fun fact related to this trivia question and answer:\n\nQ: ${question.text}\nA: ${question.answer}`,
+            },
+          ],
+          max_tokens: 40,
+        }),
       });
 
-      const newExplanation = response.choices?.[0]?.message?.content?.trim() || "No fun fact available.";
+      const data = await response.json();
+      const newExplanation = data.choices?.[0]?.message?.content?.trim() || "No fun fact available.";
 
       setQuestions((prevQuestions) => {
-        const updatedQuestions = [...prevQuestions];
-        updatedQuestions[questionIndex] = {
-          ...updatedQuestions[questionIndex],
+        const updated = [...prevQuestions];
+        updated[questionIndex] = {
+          ...updated[questionIndex],
           explanation: newExplanation,
         };
-        return updatedQuestions;
+        return updated;
       });
-
     } catch (error) {
-      console.error("Error fetching fun fact:", error);
+      console.error("❌ Error fetching fun fact:", error);
     }
-      */
-      
   };
 
   return (
