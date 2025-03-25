@@ -100,24 +100,28 @@ Return only: { "questions": [ ... ] }`,
 
           setQuestions(formatted);
         }else if(questionType ==="image"){
-          const response = await axios.get("https://the-trivia-api.com/api/image_questions",{
+          const response = await axios.get("https://the-trivia-api.com/v2/questions",{
             headers:{
               "X-API-Key": TRIVIA_API_KEY,
             },
             params:{
               categories: selectedCategory.categoryName,
               difficulty: difficulty,
+              type: "image_choice",
               limit: 10,
             },
           });
-          const formattedQuestions = response.data.map((question) => ({
+          const formattedQuestions = response.data.map((question) => {
+            const flattenedIncorrect = question.incorrectAnswers.flat();
+            return{
             text: question.question,
-            options:[...question.incorrectAnswers, question.correctAnswer].sort(
+            options:[...flattenedIncorrect, question.correctAnswer[0]].sort(
               () => Math.random() - 0.5
             ),
-            answer : question.correctAnswer.description,
+            answer : question.correctAnswer[0].description,
             explanation: null,
-          }))
+            };
+          })
 
           setQuestions(formattedQuestions);
 
@@ -142,7 +146,7 @@ Return only: { "questions": [ ... ] }`,
           setQuestions(formattedQuestions);
         }
       } catch (error) {
-        console.error("❌ Error fetching questions:", error);
+        console.error("Error fetching questions:", error);
         setQuestions([]);
       } finally {
         setLoading(false);
