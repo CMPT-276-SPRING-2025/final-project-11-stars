@@ -54,6 +54,7 @@ const QuizCategory = () => {
         topic: customTopic.trim()
       });
       setDifficulty(customDifficulty.trim());
+      setQuestionType("text");
       navigate("/quiz");
     } else {
       alert("Please enter both difficulty and topic!");
