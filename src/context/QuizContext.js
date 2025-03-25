@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
+
 export const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
@@ -100,7 +101,7 @@ Return only: { "questions": [ ... ] }`,
 
           setQuestions(formatted);
         }else if(questionType ==="image"){
-          const response = await axios.get("https://the-trivia-api.com/api/image_questions",{
+          const response = await axios.get("https://the-trivia-api.com/v2/questions",{
             headers:{
               "X-API-Key": TRIVIA_API_KEY,
             },
@@ -108,17 +109,25 @@ Return only: { "questions": [ ... ] }`,
               categories: selectedCategory.categoryName,
               difficulty: difficulty,
               limit: 10,
+              types: "image_choice"
             },
           });
-          const formattedQuestions = response.data.map((question) => ({
-            text: question.question,
-            options:[...question.incorrectAnswers, question.correctAnswer].sort(
-              () => Math.random() - 0.5
-            ),
-            answer : question.correctAnswer.description,
+          
+          const formattedQuestions = response.data.map((question) => {
+            const flattenedIncorrect = question.incorrectAnswers.flat();
+            const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
+            //Filter duplicate images
+            const uniqueOptions = Array.from(
+              new Map(allOptions.map(item=>[item.description, item])).values());
+            
+            const shuffledOptions = uniqueOptions.sort(()=>Math.random()-0.5);
+            return{
+            text: question.question.text,
+            options: shuffledOptions,
+            answer : question.correctAnswer[0].description,
             explanation: null,
-          }))
-
+            };
+          })
           setQuestions(formattedQuestions);
 
         }else {
@@ -142,7 +151,7 @@ Return only: { "questions": [ ... ] }`,
           setQuestions(formattedQuestions);
         }
       } catch (error) {
-        console.error("❌ Error fetching questions:", error);
+        console.error("Error fetching questions:", error);
         setQuestions([]);
       } finally {
         setLoading(false);

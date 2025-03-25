@@ -131,9 +131,7 @@ const QuizPage = () => {
                     : ""
                   }`}
                   onClick={answered ? undefined: ()=>handleOptionClick(option)}
-                >
-                </img>  
-
+                />
               ))}
             </div>
           ):(
@@ -156,9 +154,6 @@ const QuizPage = () => {
               ))}
             </div>
           )}
-
-          
-    
         </div>
       </div>
 
@@ -171,7 +166,9 @@ const QuizPage = () => {
         <div className="popup-overlay">
           <div className="popup-box">
             <h2 className="incorrect">Incorrect!</h2>
-            <p className="correct-answer">Correct Answer: {question.answer}</p>
+            {questionType==="text"&& 
+            (<p className="correct-answer">Correct Answer: {question.answer}</p>)
+            } {/*Only show correct answer as feedback for text based questions*/}
             <div className="explanation-box">
               <p>{explanation || "Fetching fun fact..."}</p>
             </div>
