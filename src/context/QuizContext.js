@@ -150,7 +150,7 @@ Return only: { "questions": [ ... ] }`,
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty, OPENAI_API_KEY]);
+  }, [selectedCategory, difficulty,questionType, OPENAI_API_KEY, TRIVIA_API_KEY]);
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
