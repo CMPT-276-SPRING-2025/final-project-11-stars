@@ -13,6 +13,7 @@ export const QuizProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+  const TRIVIA_API_KEY = process.env.REACT_APP_TRIVIA_API_KEY;
 
   const resetQuiz = () => {
     setScore(0);
@@ -74,7 +75,7 @@ Return only: { "questions": [ ... ] }`,
             const parsed = JSON.parse(rawContent);
             aiQuestions = parsed.questions;
           } catch (err) {
-            console.error("❌ Failed to parse AI JSON:", rawContent);
+            console.error("Failed to parse AI JSON:", rawContent);
             setQuestions([]);
             setLoading(false);
             return;
@@ -85,7 +86,7 @@ Return only: { "questions": [ ... ] }`,
             const options = q.options || [];
 
             if (!correct || !options.includes(correct)) {
-              console.warn("⚠️ Skipping question due to invalid format:", q);
+              console.warn("Skipping question due to invalid format:", q);
               return null;
             }
 
@@ -98,7 +99,29 @@ Return only: { "questions": [ ... ] }`,
           }).filter(Boolean); // Remove any nulls
 
           setQuestions(formatted);
-        } else {
+        }else if(questionType ==="image"){
+          const response = await axios.get("https://the-trivia-api.com/api/image_questions",{
+            headers:{
+              "X-API-Key": TRIVIA_API_KEY,
+            },
+            params:{
+              categories: selectedCategory.categoryName,
+              difficulty: difficulty,
+              limit: 10,
+            },
+          });
+          const formattedQuestions = response.data.map((question) => ({
+            text: question.question,
+            options:[...question.incorrectAnswers, question.correctAnswer].sort(
+              () => Math.random() - 0.5
+            ),
+            answer : question.correctAnswer.description,
+            explanation: null,
+          }))
+
+          setQuestions(formattedQuestions);
+
+        }else {
           const response = await axios.get("https://the-trivia-api.com/api/questions", {
             params: {
               categories: selectedCategory.categoryName,
@@ -127,7 +150,7 @@ Return only: { "questions": [ ... ] }`,
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty, OPENAI_API_KEY]);
+  }, [selectedCategory, difficulty,questionType, OPENAI_API_KEY, TRIVIA_API_KEY]);
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
@@ -169,7 +192,7 @@ Return only: { "questions": [ ... ] }`,
         return updated;
       });
     } catch (error) {
-      console.error("❌ Error fetching fun fact:", error);
+      console.error("Error fetching fun fact:", error);
     }
   };
 

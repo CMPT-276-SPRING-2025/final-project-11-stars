@@ -11,7 +11,7 @@ const QuizPage = () => {
     questions,
     currentQuestion, setCurrentQuestion,
     resetQuiz, getExplanation,
-    loading
+    loading,questionType
   } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
@@ -72,7 +72,14 @@ const QuizPage = () => {
       console.log("Correct Answer:", question.answer);
       console.log("All Options:", question.options);
 
-      const isCorrect = normalize(option) === normalize(question.answer || "");
+      let isCorrect =false;
+      //Check question type:
+      if(questionType === "image"){
+        isCorrect = normalize(option.description) === normalize(question.answer || "");
+      }
+      else{
+        isCorrect = normalize(option) === normalize(question.answer || "");
+      }
 
       if (isCorrect) {
         setScore((prev) => prev + 1);
@@ -109,22 +116,49 @@ const QuizPage = () => {
       <div className="question-box">
         <p className="question-text">Q{currentQuestion + 1}: {questionText}</p>
         <div className="options-container">
-          {question.options.map((option, index) => (
-            <button
-              key={index}
-              className={`option ${
-                selected === option
-                  ? normalize(option) === normalize(question.answer || "")
-                    ? "correct"
-                    : "wrong"
-                  : ""
-              }`}
-              onClick={() => handleOptionClick(option)}
-              disabled={answered}
-            >
-              {option}
-            </button>
-          ))}
+          {questionType === "image" ?(
+            <div className="image-options">
+              {question.options.map((option,index)=>(
+                <img 
+                  key={index}
+                  src={option.url} //render the image option
+                  alt={option.description}
+                  className={`option ${
+                    selected === option ? 
+                    normalize(option.description) === normalize(question.answer || "")
+                      ?"correct"
+                      :"wrong"
+                    : ""
+                  }`}
+                  onClick={answered ? undefined: ()=>handleOptionClick(option)}
+                >
+                </img>  
+
+              ))}
+            </div>
+          ):(
+            <div className="text-options">
+              {question.options.map((option, index) => (
+                <button
+                  key={index}
+                  className={`option ${
+                    selected === option
+                      ? normalize(option) === normalize(question.answer || "")
+                        ? "correct"
+                        : "wrong"
+                      : ""
+                  }`}
+                  onClick={() => handleOptionClick(option)}
+                  disabled={answered}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+
+          
+    
         </div>
       </div>
 
