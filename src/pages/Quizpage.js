@@ -123,13 +123,13 @@ const QuizPage = () => {
                   key={index}
                   src={option.url} //render the image option
                   alt={option.description}
-                  // className={`option ${
-                  //   selected === option ? 
-                  //   normalize(option.description) === normalize(question.answer || "")
-                  //     ?"correct"
-                  //     :"wrong"
-                  //   : ""
-                  // }`}
+                  className={`option ${
+                    selected === option ? 
+                    normalize(option.description) === normalize(question.answer || "")
+                      ?"correct"
+                      :"wrong"
+                    : ""
+                  }`}
                   onClick={answered ? undefined: ()=>handleOptionClick(option)}
                 />
               ))}

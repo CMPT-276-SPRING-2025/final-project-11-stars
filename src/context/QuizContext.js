@@ -107,14 +107,16 @@ Return only: { "questions": [ ... ] }`,
             params:{
               categories: selectedCategory.categoryName,
               difficulty: difficulty,
-              type: "image_choice",
               limit: 10,
+              types: "image_choice"
             },
           });
+          console.log("Image question API response:", response.data);
+          console.log("Question type:", questionType);
           const formattedQuestions = response.data.map((question) => {
             const flattenedIncorrect = question.incorrectAnswers.flat();
             return{
-            text: question.question,
+            text: question.question.text,
             options:[...flattenedIncorrect, question.correctAnswer[0]].sort(
               () => Math.random() - 0.5
             ),
