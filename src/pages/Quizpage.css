@@ -7,8 +7,9 @@ body {
 }
 
 .quiz-container {
-  width: 800px;
-  height: 800px;
+  min-height: 95vh;
+  width: 90%;
+  max-width: 1200px;
   padding: 40px;
   background-color: #E9EED9;
   border-radius: 10px;
@@ -41,6 +42,7 @@ border-radius: 10px;
 color: #54473F;
 border: 12px solid #9A7E6F;
 margin-bottom: 20px;
+justify-items: center;
 }
 
 .question-text {
@@ -150,17 +152,39 @@ background-color: #816656;
 }
 }
 
-/* .options-container {
+.text-options{
 margin-top: 20px;
 display: grid;
 grid-template-columns: repeat(2, 1fr);
 gap: 20px;
-} */
-.text-options, .image-options{
-margin-top: 20px;
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
+ }
+.image-options{
+  margin-top: 20px;
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  max-width: 100%;
+ }
+ .image-options img{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.3s;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+ }
+ @keyframes fadeIn{
+  to{
+    opacity: 1;
+  }
+ }
+ .image-options img:hover{
+  background-color: #B0B99D;
  }
 
 .option {
@@ -168,8 +192,10 @@ background-color: #CBD2A4;
 padding: 20px;
 border-radius: 5px;
 border: none;
-font-size: 18px;
+font-size: 20px;
 font-weight: bold;
+min-width:200px;
+min-height: 80px;
 cursor: pointer;
 }
 

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
+
 export const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
@@ -111,20 +112,22 @@ Return only: { "questions": [ ... ] }`,
               types: "image_choice"
             },
           });
-          console.log("Image question API response:", response.data);
-          console.log("Question type:", questionType);
+          
           const formattedQuestions = response.data.map((question) => {
             const flattenedIncorrect = question.incorrectAnswers.flat();
+            const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
+            //Filter duplicate images
+            const uniqueOptions = Array.from(
+              new Map(allOptions.map(item=>[item.description, item])).values());
+            
+            const shuffledOptions = uniqueOptions.sort(()=>Math.random()-0.5);
             return{
             text: question.question.text,
-            options:[...flattenedIncorrect, question.correctAnswer[0]].sort(
-              () => Math.random() - 0.5
-            ),
+            options: shuffledOptions,
             answer : question.correctAnswer[0].description,
             explanation: null,
             };
           })
-
           setQuestions(formattedQuestions);
 
         }else {
