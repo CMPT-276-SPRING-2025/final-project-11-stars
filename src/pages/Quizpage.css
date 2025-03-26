@@ -341,22 +341,32 @@ background-color: #816656;
     text-align: right;
     color: #555;
   }
-  .budE-message.assistant .assistant-bubble{
+  .budE-message.assistant{
     display:flex;
     align-items: flex-start;
     gap: 10px;
+    text-align: left;
+  }
+  .assistant-bubble{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1;
   }
   .budE-avatar{
     width:32px;
     height: 32px;
     border-radius: 50%;
+    align-self: flex-start;
   }
   .assistant-content{
     background-color: #f1f1f1;
     border-radius: 10px;
     padding: 8px 12px;
+    text-align:justify;
+    margin: 0;
     color: #333;
-    max-width: 80%;
+    max-width: 100%;
     word-wrap: break-word;
   }
   .ask-input{

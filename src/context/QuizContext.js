@@ -245,11 +245,27 @@ export const QuizProvider = ({ children }) => {
     const baseMessages = [
       {
         role: "system",
-        content: `You are Bud-E, a friendly robot who explains quiz topics to kids (ages 8-14) in a fun, short, simple way.`,
+        content: `You are Bud-E, a cheerful quiz buddy for kids (ages 8–14). 
+        Your job is to explain and expand on quiz topics in a fun, simple, and educational way.
+
+        Only answer follow-up questions that are:
+        - Related to the current quiz **topic**, **category**, **question**,**fun fact**, or **discussion**
+        - Reasonable extensions of what the student is curious about
+
+        If the user asks something off-topic or outside the scope of the quiz, kindly say:
+        "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
+
+        Never answer questions about:
+        - Violence
+        - Sexual or explicit content
+        - Death, politics
+        - Anything not suitable for children
+
+        Always keep replies short, fun, and encouraging. You're here to make learning feel like an adventure.`,
       },
       {
         role: "user",
-        content: `The quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched for the question was: "${question.explanation}"`,
+        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched for the question was: "${question.explanation}"`,
       },
     ];
 
@@ -270,7 +286,7 @@ export const QuizProvider = ({ children }) => {
             model: "gpt-3.5-turbo",
             temperature: 0.8,
             messages: conversation,
-            max_tokens: 150,
+            max_tokens: 80,
           }),
         });
         const data = await response.json();
