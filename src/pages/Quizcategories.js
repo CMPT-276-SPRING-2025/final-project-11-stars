@@ -28,26 +28,29 @@ const triviaApiLanguages = [
 ];
 
 const customLanguages = [
-  { code: "en", label: "🇺🇸 English" },
-  { code: "fr", label: "🇫🇷 French" },
-  { code: "es", label: "🇪🇸 Spanish" },
-  { code: "de", label: "🇩🇪 German" },
-  { code: "hi", label: "🇮🇳 Hindi" },
-  { code: "it", label: "🇮🇹 Italian" },
-  { code: "pt", label: "🇵🇹 Portuguese" },
-  { code: "ja", label: "🇯🇵 Japanese" },
-  { code: "ko", label: "🇰🇷 Korean" },
-  { code: "zh", label: "🇨🇳 Chinese" },
-  { code: "ru", label: "🇷🇺 Russian" },
+  { code: "en", label: "🇺🇸 English" }, // English first
   { code: "ar", label: "🇸🇦 Arabic" },
   { code: "bn", label: "🇧🇩 Bengali" },
-  { code: "pl", label: "🇵🇱 Polish" },
-  { code: "uk", label: "🇺🇦 Ukrainian" },
-  { code: "ro", label: "🇷🇴 Romanian" },
-  { code: "vi", label: "🇻🇳 Vietnamese" },
-  { code: "id", label: "🇮🇩 Indonesian" },
+  { code: "zh", label: "🇨🇳 Chinese" },
+  { code: "nl", label: "🇳🇱 Dutch" },
   { code: "fa", label: "🇮🇷 Persian" },
+  { code: "fr", label: "🇫🇷 French" },
+  { code: "de", label: "🇩🇪 German" },
+  { code: "hi", label: "🇮🇳 Hindi" },
+  { code: "id", label: "🇮🇩 Indonesian" },
+  { code: "it", label: "🇮🇹 Italian" },
+  { code: "ja", label: "🇯🇵 Japanese" },
+  { code: "ko", label: "🇰🇷 Korean" },
+  { code: "pl", label: "🇵🇱 Polish" },
+  { code: "pt", label: "🇵🇹 Portuguese" },
+  { code: "ro", label: "🇷🇴 Romanian" },
+  { code: "ru", label: "🇷🇺 Russian" },
+  { code: "es", label: "🇪🇸 Spanish" },
+  { code: "tr", label: "🇹🇷 Turkish" },
+  { code: "uk", label: "🇺🇦 Ukrainian" },
+  { code: "vi", label: "🇻🇳 Vietnamese" },
 ];
+
 
 const QuizCategory = () => {
   const {
