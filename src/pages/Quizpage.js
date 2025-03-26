@@ -12,7 +12,7 @@ const QuizPage = () => {
     currentQuestion, setCurrentQuestion,
     resetQuiz, getExplanation,
     loading, questionType,
-    errorMessage, // ✅ grab from context
+    errorMessage, getBudEReply,
   } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
@@ -22,6 +22,9 @@ const QuizPage = () => {
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   const [explanation, setExplanation] = useState(null);
   const timerRef = useRef(null);
+  const [budEInput, setBudEInput] = useState("");
+  const [budEHistory, setBudEHistory] = useState([]);
+  const [budELoading, setBudELoading] = useState(false);
 
   const normalize = (str) => str?.trim().toLowerCase();
 
@@ -129,6 +132,17 @@ const QuizPage = () => {
     }
   };
 
+  const handleAskBudE = async() => {
+    if (!budEInput.trim()) return; //prevent empty messages
+    setBudELoading(true);  // show thinking status
+    
+    const updatedHistory = await getBudEReply(budEInput, budEHistory);
+
+    setBudEHistory(updatedHistory);
+    setBudEInput(""); //Clear input box
+    setBudELoading(false); //Stop loading
+  }
+
   return (
     <div className="quiz-container">
       <div className="header">
@@ -198,7 +212,27 @@ const QuizPage = () => {
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
               <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
-              <input type="text" placeholder="Ask anything" />
+              {/**Chat history scroll box */}
+              <div className="budE-chat-history">
+                {
+                  budEHistory.map((msg, index) =>(
+                    <div key ={index} className = {`budE-message ${msg.role}`}>
+                      <strong>{msg.role === "user" ? "You" : "Bud-E"}:</strong>
+                      <p>{msg.content}</p>
+                    </div>
+                  ))
+                }
+              </div>
+              <textarea
+                value ={budEInput}
+                onChange={(e) => setBudEInput(e.target.value)}
+                placeholder="Ask Bud-E to learn more!"
+                rows={3}
+                className="ask-input"
+              />
+              <button onClick={handleAskBudE} disabled={budELoading} className="bud-e-button">
+                {budELoading ? "Thinking...": "Ask Bud-E"}
+              </button>
             </div>
             <div className="feedback-popup-buttons">
               <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
@@ -218,7 +252,27 @@ const QuizPage = () => {
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
               <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
-              <input type="text" placeholder="Ask anything" />
+              {/**Chat history scroll box */}
+              <div className="budE-chat-history">
+                {
+                  budEHistory.map((msg, index) =>(
+                    <div key ={index} className = {`budE-message ${msg.role}`}>
+                      <strong>{msg.role === "user" ? "You" : "Bud-E"}:</strong>
+                      <p>{msg.content}</p>
+                    </div>
+                  ))
+                }
+              </div>
+              <textarea
+                value ={budEInput}
+                onChange={(e) => setBudEInput(e.target.value)}
+                placeholder="Ask Bud-E to learn more!"
+                rows={3}
+                className="ask-input"
+              />
+              <button onClick={handleAskBudE} disabled={budELoading} className="bud-e-button">
+                {budELoading ? "Thinking...": "Ask Bud-E"}
+              </button>
             </div>
             <div className="feedback-popup-buttons">
               <button className="complete-button" onClick={() => navigate("/result")}>Complete Quiz</button>
