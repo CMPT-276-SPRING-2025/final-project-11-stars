@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-
 export const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
@@ -12,6 +11,7 @@ export const QuizProvider = ({ children }) => {
   const [questionType, setQuestionType] = useState("text");
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
   const TRIVIA_API_KEY = process.env.REACT_APP_TRIVIA_API_KEY;
@@ -23,15 +23,41 @@ export const QuizProvider = ({ children }) => {
     setQuestions([]);
     setQuestionType("text");
     setCurrentQuestion(0);
+    setErrorMessage(null);
   };
 
   useEffect(() => {
     const fetchQuestions = async () => {
       if (!selectedCategory) return;
       setLoading(true);
+      setErrorMessage(null);
 
       try {
         if (selectedCategory.id === "custom_ai_quiz") {
+          const topic = selectedCategory.topic.toLowerCase();
+
+          const blocklist = [
+            "sex", "sexual", "porn", "porno", "pornography", "nude", "nudity", "naked", "strip", "fetish",
+            "erotic", "kamasutra", "condom", "intercourse", "masturbate", "masturbation", "orgasm", "ejaculation",
+            "dildo", "vibrator", "anal", "vaginal", "genital", "genitals", "penis", "vagina", "boobs", "breasts",
+            "nipples", "hentai", "bdsm", "xxx", "blowjob", "handjob", "threesome", "incest", "pedophile", "pedophilia",
+            "rape", "molest", "molestation", "abuse", "assault", "kill", "murder", "suicide", "torture", "violence",
+            "drug", "drugs", "cocaine", "heroin", "meth", "weed", "marijuana", "lsd", "ecstasy", "overdose",
+            "alcohol", "beer", "vodka", "whiskey", "gin", "champagne", "rum", "intoxicated", "hangover", "cigarette", "smoking",
+            "fuck", "shit", "bitch", "bastard", "slut", "whore", "asshole", "dick", "pussy", "cock", "cunt",
+            "goddamn", "damn", "hell", "retard", "racist", "nazism", "terrorist", "terrorism", "bomb", "gun", "shoot",
+          ];
+
+          const hasBadWord = blocklist.some((word) => topic.includes(word));
+
+          if (hasBadWord) {
+            console.warn(`🚫 Blocked topic due to blocklist: "${topic}"`);
+            setErrorMessage("⚠️ This topic isn't suitable for a trivia quiz. Please choose another.");
+            setQuestions([]);
+            setLoading(false);
+            return;
+          }
+
           const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -45,7 +71,7 @@ export const QuizProvider = ({ children }) => {
                 {
                   role: "system",
                   content:
-                    "You are a trivia quiz generator. Generate 10 trivia questions, each with 4 options. Return only raw JSON with no markdown.",
+                    "You are a trivia quiz generator for a school-friendly quiz app. 'Easy', 'Medium', and 'Hard' describe the academic difficulty — not the content’s safety. Only reject the topic if it's clearly inappropriate (e.g. adult content, drugs, violence). Topics like biology, math, or history are always appropriate.",
                 },
                 {
                   role: "user",
@@ -56,7 +82,7 @@ Each question must be an object in this format:
   "options": ["Berlin", "Paris", "London", "Rome"],
   "correctAnswer": "Paris"
 }
-Return only: { "questions": [ ... ] }`,
+Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
                 },
               ],
               max_tokens: 1000,
@@ -64,9 +90,8 @@ Return only: { "questions": [ ... ] }`,
           });
 
           const data = await response.json();
-          let rawContent = data.choices[0].message.content.trim();
+          let rawContent = data.choices?.[0]?.message?.content?.trim();
 
-          // Remove code block formatting if GPT includes it
           if (rawContent.startsWith("```")) {
             rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
           }
@@ -74,63 +99,78 @@ Return only: { "questions": [ ... ] }`,
           let aiQuestions;
           try {
             const parsed = JSON.parse(rawContent);
+
+            if (parsed.status === "REJECTED") {
+              console.warn(`❌ GPT rejected topic as inappropriate: "${topic}"`);
+              setErrorMessage("⚠️ This topic isn't appropriate for a quiz. Please try a different one.");
+              setQuestions([]);
+              setLoading(false);
+              return;
+            }
+
             aiQuestions = parsed.questions;
           } catch (err) {
             console.error("Failed to parse AI JSON:", rawContent);
             setQuestions([]);
+            setErrorMessage("⚠️ Failed to understand the quiz content. Please try another topic.");
             setLoading(false);
             return;
           }
 
-          const formatted = aiQuestions.map((q) => {
-            const correct = q.correctAnswer;
-            const options = q.options || [];
+          const formatted = aiQuestions
+            .map((q) => {
+              const correct = q.correctAnswer;
+              const options = q.options || [];
 
-            if (!correct || !options.includes(correct)) {
-              console.warn("Skipping question due to invalid format:", q);
-              return null;
-            }
+              if (!correct || !options.includes(correct)) {
+                console.warn("⚠️ Skipping question due to invalid format:", q);
+                return null;
+              }
 
-            return {
-              text: q.question,
-              options: options.sort(() => Math.random() - 0.5),
-              answer: correct,
-              explanation: null,
-            };
-          }).filter(Boolean); // Remove any nulls
+              return {
+                text: q.question,
+                options: options.sort(() => Math.random() - 0.5),
+                answer: correct,
+                explanation: null,
+              };
+            })
+            .filter(Boolean);
 
           setQuestions(formatted);
-        }else if(questionType ==="image"){
-          const response = await axios.get("https://the-trivia-api.com/v2/questions",{
-            headers:{
+          console.log(`✅ Topic accepted: "${topic}" — ${formatted.length} questions generated.`);
+        } else if (questionType === "image") {
+          const response = await axios.get("https://the-trivia-api.com/v2/questions", {
+            headers: {
               "X-API-Key": TRIVIA_API_KEY,
             },
-            params:{
+            params: {
               categories: selectedCategory.categoryName,
               difficulty: difficulty,
               limit: 10,
-              types: "image_choice"
+              types: "image_choice",
             },
           });
-          
+
           const formattedQuestions = response.data.map((question) => {
             const flattenedIncorrect = question.incorrectAnswers.flat();
             const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
-            //Filter duplicate images
-            const uniqueOptions = Array.from(
-              new Map(allOptions.map(item=>[item.description, item])).values());
-            
-            const shuffledOptions = uniqueOptions.sort(()=>Math.random()-0.5);
-            return{
-            text: question.question.text,
-            options: shuffledOptions,
-            answer : question.correctAnswer[0].description,
-            explanation: null,
-            };
-          })
-          setQuestions(formattedQuestions);
 
-        }else {
+            const uniqueOptions = Array.from(
+              new Map(allOptions.map((item) => [item.description, item])).values()
+            );
+
+            const shuffledOptions = uniqueOptions.sort(() => Math.random() - 0.5);
+
+            return {
+              text: question.question.text,
+              options: shuffledOptions,
+              answer: question.correctAnswer[0].description,
+              explanation: null,
+            };
+          });
+
+          setQuestions(formattedQuestions);
+        } else {
           const response = await axios.get("https://the-trivia-api.com/api/questions", {
             params: {
               categories: selectedCategory.categoryName,
@@ -151,15 +191,16 @@ Return only: { "questions": [ ... ] }`,
           setQuestions(formattedQuestions);
         }
       } catch (error) {
-        console.error("Error fetching questions:", error);
+        console.error("❌ Error fetching questions:", error);
         setQuestions([]);
+        setErrorMessage("⚠️ Something went wrong while fetching quiz questions.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty,questionType, OPENAI_API_KEY, TRIVIA_API_KEY]);
+  }, [selectedCategory, difficulty, questionType, OPENAI_API_KEY, TRIVIA_API_KEY]);
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
@@ -201,7 +242,7 @@ Return only: { "questions": [ ... ] }`,
         return updated;
       });
     } catch (error) {
-      console.error("Error fetching fun fact:", error);
+      console.error("❌ Error fetching fun fact:", error);
     }
   };
 
@@ -223,6 +264,8 @@ Return only: { "questions": [ ... ] }`,
         loading,
         getExplanation,
         resetQuiz,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {children}

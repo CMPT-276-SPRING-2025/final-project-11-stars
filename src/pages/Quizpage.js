@@ -11,7 +11,8 @@ const QuizPage = () => {
     questions,
     currentQuestion, setCurrentQuestion,
     resetQuiz, getExplanation,
-    loading,questionType
+    loading, questionType,
+    errorMessage, // ✅ grab from context
   } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
@@ -55,8 +56,31 @@ const QuizPage = () => {
     }
   }, [answered, currentQuestion, questions, getExplanation]);
 
-  if (loading || questions.length === 0) {
+  // ✅ Error handling and loading screen
+  if (loading) {
     return <h2>Generating your quiz... Please wait 😊</h2>;
+  }
+
+  if (errorMessage) {
+    return (
+      <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
+        <h2 style={{ color: "#7B0323" }}>{errorMessage}</h2>
+        <button className="exit-button" onClick={() => navigate("/")}>
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
+  if (questions.length === 0) {
+    return (
+      <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
+        <h2>No questions available. Please try a different topic.</h2>
+        <button className="exit-button" onClick={() => navigate("/")}>
+          Go Back
+        </button>
+      </div>
+    );
   }
 
   const question = questions[currentQuestion];
@@ -72,12 +96,11 @@ const QuizPage = () => {
       console.log("Correct Answer:", question.answer);
       console.log("All Options:", question.options);
 
-      let isCorrect =false;
-      //Check question type:
-      if(questionType === "image"){
+      let isCorrect = false;
+
+      if (questionType === "image") {
         isCorrect = normalize(option.description) === normalize(question.answer || "");
-      }
-      else{
+      } else {
         isCorrect = normalize(option) === normalize(question.answer || "");
       }
 
@@ -116,25 +139,25 @@ const QuizPage = () => {
       <div className="question-box">
         <p className="question-text">Q{currentQuestion + 1}: {questionText}</p>
         <div className="options-container">
-          {questionType === "image" ?(
+          {questionType === "image" ? (
             <div className="image-options">
-              {question.options.map((option,index)=>(
-                <img 
+              {question.options.map((option, index) => (
+                <img
                   key={index}
-                  src={option.url} //render the image option
+                  src={option.url}
                   alt={option.description}
                   className={`option ${
-                    selected === option ? 
-                    normalize(option.description) === normalize(question.answer || "")
-                      ?"correct"
-                      :"wrong"
-                    : ""
+                    selected === option
+                      ? normalize(option.description) === normalize(question.answer || "")
+                        ? "correct"
+                        : "wrong"
+                      : ""
                   }`}
-                  onClick={answered ? undefined: ()=>handleOptionClick(option)}
+                  onClick={answered ? undefined : () => handleOptionClick(option)}
                 />
               ))}
             </div>
-          ):(
+          ) : (
             <div className="text-options">
               {question.options.map((option, index) => (
                 <button
@@ -166,9 +189,9 @@ const QuizPage = () => {
         <div className="popup-overlay">
           <div className="popup-box">
             <h2 className="incorrect">Incorrect!</h2>
-            {questionType==="text"&& 
-            (<p className="correct-answer">Correct Answer: {question.answer}</p>)
-            } {/*Only show correct answer as feedback for text based questions*/}
+            {questionType === "text" && (
+              <p className="correct-answer">Correct Answer: {question.answer}</p>
+            )}
             <div className="explanation-box">
               <p>{explanation || "Fetching fun fact..."}</p>
             </div>
