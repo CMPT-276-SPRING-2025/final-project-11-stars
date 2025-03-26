@@ -237,6 +237,77 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const getBudEReply = async(userMessage, history = []) =>
+  {
+    const question = questions[currentQuestion]; 
+    // Check if current question exists
+    if(!question) return[];
+    const baseMessages = [
+      {
+        role: "system",
+        content: `You are Bud-E, a cheerful quiz buddy for kids (ages 8–14). 
+        Your job is to explain and expand on quiz topics in a fun, simple, and educational way.
+
+        Only answer follow-up questions that are:
+        - Related to the current quiz **topic**, **category**, **question**,**fun fact**, or **discussion**
+        - Reasonable extensions of what the student is curious about
+
+        If the user asks something off-topic or outside the scope of the quiz, kindly say:
+        "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
+
+        Never answer questions about:
+        - Violence
+        - Sexual or explicit content
+        - Death, politics
+        - Anything not suitable for children
+
+        Always keep replies short, fun, and encouraging. You're here to make learning feel like an adventure.`,
+      },
+      {
+        role: "user",
+        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched for the question was: "${question.explanation}"`,
+      },
+    ];
+
+    const conversation = [
+      ...baseMessages,
+      ...history,
+      {role: "user", content: userMessage},
+    ];
+
+    try{
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            temperature: 0.8,
+            messages: conversation,
+            max_tokens: 80,
+          }),
+        });
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content || "Hmm... I'm not sure! 🤔";
+
+        return[
+          ...history,
+          
+          {role: "user", content: userMessage },
+          {role: "assistant", content:reply},
+        ];
+    }catch(error){
+      console.error("Error in Bud-E chat:", error);
+      return[
+        ...history,
+        {role: "user", conten: userMessage },
+        {role: "assistant", content:"Oops! Something went wrong. Try again?"},
+      ];
+    }
+  };
+
   return (
     <QuizContext.Provider
       value={{
@@ -259,6 +330,7 @@ export const QuizProvider = ({ children }) => {
         setErrorMessage,
         language,
         setLanguage,
+        getBudEReply,
       }}
     >
       {children}
