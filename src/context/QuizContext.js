@@ -7,6 +7,7 @@ export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [difficulty, setDifficulty] = useState("easy");
+  const [language, setLanguage] = useState("en");
   const [questions, setQuestions] = useState([]);
   const [questionType, setQuestionType] = useState("text");
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -47,9 +48,7 @@ export const QuizProvider = ({ children }) => {
             "fuck", "shit", "bitch", "bastard", "slut", "whore", "asshole", "dick", "pussy", "cock", "cunt",
             "goddamn", "damn", "hell", "retard", "racist", "nazism", "terrorist", "terrorism", "bomb", "gun", "shoot",
           ];
-
           const hasBadWord = blocklist.some((word) => topic.includes(word));
-
           if (hasBadWord) {
             console.warn(`🚫 Blocked topic due to blocklist: "${topic}"`);
             setErrorMessage("⚠️ This topic isn't suitable for a trivia quiz. Please choose another.");
@@ -73,17 +72,19 @@ export const QuizProvider = ({ children }) => {
                   content:
                     "You are a trivia quiz generator for a school-friendly quiz app. 'Easy', 'Medium', and 'Hard' describe the academic difficulty — not the content’s safety. Only reject the topic if it's clearly inappropriate (e.g. adult content, drugs, violence). Topics like biology, math, or history are always appropriate.",
                 },
+
                 {
                   role: "user",
-                  content: `Create 10 unique trivia questions for teenagers on the topic "${selectedCategory.topic}" with "${difficulty}" difficulty.
-Each question must be an object in this format:
-{
-  "question": "What is the capital of France?",
-  "options": ["Berlin", "Paris", "London", "Rome"],
-  "correctAnswer": "Paris"
-}
-Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
+                  content: `Create 10 unique trivia questions for teenagers on the topic "${selectedCategory.topic}" with "${difficulty}" difficulty in the language "${language}".
+                Each question must be written in "${language}" and returned as an object in this format:
+                {
+                  "question": "What is the capital of France?",
+                  "options": ["Berlin", "Paris", "London", "Rome"],
+                  "correctAnswer": "Paris"
+                }
+                Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
                 },
+                
               ],
               max_tokens: 1000,
             }),
@@ -91,7 +92,6 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
 
           const data = await response.json();
           let rawContent = data.choices?.[0]?.message?.content?.trim();
-
           if (rawContent.startsWith("```")) {
             rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
           }
@@ -99,15 +99,13 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
           let aiQuestions;
           try {
             const parsed = JSON.parse(rawContent);
-
             if (parsed.status === "REJECTED") {
               console.warn(`❌ GPT rejected topic as inappropriate: "${topic}"`);
-              setErrorMessage("⚠️ This topic isn't appropriate for a quiz. Please try a different one.");
+              setErrorMessage("⚠️ This topic isn't available for a quiz. Please try a different one.");
               setQuestions([]);
               setLoading(false);
               return;
             }
-
             aiQuestions = parsed.questions;
           } catch (err) {
             console.error("Failed to parse AI JSON:", rawContent);
@@ -121,7 +119,6 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
             .map((q) => {
               const correct = q.correctAnswer;
               const options = q.options || [];
-
               if (!correct || !options.includes(correct)) {
                 console.warn("⚠️ Skipping question due to invalid format:", q);
                 return null;
@@ -138,55 +135,48 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
 
           setQuestions(formatted);
           console.log(`✅ Topic accepted: "${topic}" — ${formatted.length} questions generated.`);
-        } else if (questionType === "image") {
+        } else {
+          const params = {
+            categories: selectedCategory.categoryName,
+            difficulty: difficulty,
+            limit: 10,
+            types: questionType === "image" ? "image_choice" : "text_choice",
+            ...(language !== "en" && { language }), // ✅ Only include language param if NOT English
+          };
+
           const response = await axios.get("https://the-trivia-api.com/v2/questions", {
             headers: {
               "X-API-Key": TRIVIA_API_KEY,
             },
-            params: {
-              categories: selectedCategory.categoryName,
-              difficulty: difficulty,
-              limit: 10,
-              types: "image_choice",
-            },
+            params,
           });
 
           const formattedQuestions = response.data.map((question) => {
-            const flattenedIncorrect = question.incorrectAnswers.flat();
-            const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
+            if (questionType === "image") {
+              const flattenedIncorrect = question.incorrectAnswers.flat();
+              const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
 
-            const uniqueOptions = Array.from(
-              new Map(allOptions.map((item) => [item.description, item])).values()
-            );
+              const uniqueOptions = Array.from(
+                new Map(allOptions.map((item) => [item.description, item])).values()
+              );
 
-            const shuffledOptions = uniqueOptions.sort(() => Math.random() - 0.5);
+              const shuffledOptions = uniqueOptions.sort(() => Math.random() - 0.5);
 
-            return {
-              text: question.question.text,
-              options: shuffledOptions,
-              answer: question.correctAnswer[0].description,
-              explanation: null,
-            };
+              return {
+                text: question.question.text,
+                options: shuffledOptions,
+                answer: question.correctAnswer[0].description,
+                explanation: null,
+              };
+            } else {
+              return {
+                text: question.question.text,
+                options: [...question.incorrectAnswers, question.correctAnswer].sort(() => Math.random() - 0.5),
+                answer: question.correctAnswer,
+                explanation: null,
+              };
+            }
           });
-
-          setQuestions(formattedQuestions);
-        } else {
-          const response = await axios.get("https://the-trivia-api.com/api/questions", {
-            params: {
-              categories: selectedCategory.categoryName,
-              difficulty: difficulty,
-              limit: 10,
-            },
-          });
-
-          const formattedQuestions = response.data.map((question) => ({
-            text: question.question,
-            options: [...question.incorrectAnswers, question.correctAnswer].sort(
-              () => Math.random() - 0.5
-            ),
-            answer: question.correctAnswer,
-            explanation: null,
-          }));
 
           setQuestions(formattedQuestions);
         }
@@ -200,14 +190,14 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty, questionType, OPENAI_API_KEY, TRIVIA_API_KEY]);
+  }, [selectedCategory, difficulty, questionType, language, OPENAI_API_KEY, TRIVIA_API_KEY]);
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
-
+  
     try {
       const question = questions[questionIndex];
-
+  
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -219,20 +209,21 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
           messages: [
             {
               role: "system",
-              content: "You explain trivia answers in a fun, kid-friendly way with emojis.",
+              content: `You are a multilingual trivia fact explainer for kids and teens (ages 8–16). Respond with fun, short facts in the user's selected language. Include 1 relevant emoji.`,
             },
             {
               role: "user",
-              content: `Give a short fun fact related to this trivia question and answer within 40 tokens:\n\nQ: ${question.text}\nA: ${question.answer}`,
+              content: `Give a short, kid-friendly fun fact in **${language}** related to this trivia question and answer (max 1 sentence):\n\nQ: ${question.text}\nA: ${question.answer}`,
             },
           ],
-          max_tokens: 40,
+          max_tokens: 60,
+          temperature: 0.7,
         }),
       });
-
+  
       const data = await response.json();
       const newExplanation = data.choices?.[0]?.message?.content?.trim() || "No fun fact available.";
-
+  
       setQuestions((prevQuestions) => {
         const updated = [...prevQuestions];
         updated[questionIndex] = {
@@ -266,6 +257,8 @@ Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
         resetQuiz,
         errorMessage,
         setErrorMessage,
+        language,
+        setLanguage,
       }}
     >
       {children}
