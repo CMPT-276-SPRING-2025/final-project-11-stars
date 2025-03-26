@@ -107,6 +107,11 @@
   transform: scale(1.2); 
 }
 .custom-quiz-popup {
+  min-width: 750px;
+  min-height: 400px;
+  height: auto;
+  max-height: 100vh;
+  overflow-y: auto;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -159,11 +164,12 @@
 }
 
 .custom-quiz-inputs {
-  display: flex; 
-  flex-direction: row; 
-  gap: 120px; 
-  margin: 15px 0;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 20px 0;
+  align-items: center;
+
 }
 .custom-quiz-inputs input:focus {
   border: 2px solid #54473F; 
@@ -197,7 +203,7 @@
   border: 1px solid #54473F;
   width: 200px; 
   margin-top: 10px;
-  background-color: #E9EED9;
+  background-color: #CBD2A4;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -221,10 +227,10 @@
 }
 
 .Difficulty-dropdown {
-  padding: 10px 10px;
+ padding: 10px 10px;
   font-size: 16px;
   border-radius: 10px;
-  background-color: transparent; 
+  background-color: transparent;
   cursor: pointer;
   transition: 0.3s;
   
@@ -234,8 +240,8 @@
   padding: 10px 45px;
   font-size: 16px;
   border-radius: 10px;
-  background-color: #E9EED9; 
-  color: #54473F; 
+  background-color: #CBD2A4;
+  color: #54473F;
   cursor: pointer;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border: 1px solid #54473F;
@@ -253,8 +259,9 @@
 
 .toggle-difficulty-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Keep toggle on the left and dropdowns on the right */
   align-items: center;
+  gap: 20px; /* Add spacing between elements */
   margin-bottom: 20px;
   width: 100%;
 }
@@ -263,6 +270,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.difficulty-dropdown,
+.language-dropdown {
+  display: inline-block;
 }
 
 .difficulty-dropdown {
@@ -352,4 +364,33 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(14px);
+}
+
+.language-dropdown {
+  padding: 10px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.language-dropdown select {
+  padding: 10px 45px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: #CBD2A4;
+  color: #54473F;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #54473F;
+}
+
+.language-dropdown select:hover {
+  background-color: #A3A692;
+}
+
+.language-dropdown select:focus {
+  outline: none;
+  border: 2px solid #54473F;
 }

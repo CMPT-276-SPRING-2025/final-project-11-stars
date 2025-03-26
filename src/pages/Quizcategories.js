@@ -17,19 +17,65 @@ const categories = [
   { name: 'Custom', categoryName: 'custom_ai_quiz', image: '/custom_quiz.png', alt_text: 'Custom category icon' }
 ];
 
+const triviaApiLanguages = [
+  { code: "en", label: "🇺🇸 English" },
+  { code: "fr", label: "🇫🇷 French" },
+  { code: "es", label: "🇪🇸 Spanish" },
+  { code: "nl", label: "🇳🇱 Dutch" },
+  { code: "hi", label: "🇮🇳 Hindi" },
+  { code: "tr", label: "🇹🇷 Turkish" },
+  { code: "de", label: "🇩🇪 German" },
+];
+
+const customLanguages = [
+  { code: "en", label: "🇺🇸 English" }, // English first
+  { code: "ar", label: "🇸🇦 Arabic" },
+  { code: "bn", label: "🇧🇩 Bengali" },
+  { code: "zh", label: "🇨🇳 Chinese" },
+  { code: "nl", label: "🇳🇱 Dutch" },
+  { code: "fa", label: "🇮🇷 Persian" },
+  { code: "fr", label: "🇫🇷 French" },
+  { code: "de", label: "🇩🇪 German" },
+  { code: "hi", label: "🇮🇳 Hindi" },
+  { code: "id", label: "🇮🇩 Indonesian" },
+  { code: "it", label: "🇮🇹 Italian" },
+  { code: "ja", label: "🇯🇵 Japanese" },
+  { code: "ko", label: "🇰🇷 Korean" },
+  { code: "pl", label: "🇵🇱 Polish" },
+  { code: "pt", label: "🇵🇹 Portuguese" },
+  { code: "ro", label: "🇷🇴 Romanian" },
+  { code: "ru", label: "🇷🇺 Russian" },
+  { code: "es", label: "🇪🇸 Spanish" },
+  { code: "tr", label: "🇹🇷 Turkish" },
+  { code: "uk", label: "🇺🇦 Ukrainian" },
+  { code: "vi", label: "🇻🇳 Vietnamese" },
+];
+
+
 const QuizCategory = () => {
-  const { setSelectedCategory, difficulty, setDifficulty, questionType, setQuestionType } = useContext(QuizContext);
+  const {
+    setSelectedCategory,
+    difficulty,
+    setDifficulty,
+    questionType,
+    setQuestionType,
+    language,
+    setLanguage,
+  } = useContext(QuizContext);
+
   const [quizDisplayName, setQuizDisplayName] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showCustomPopup, setShowCustomPopup] = useState(false);
   const [customDifficulty, setCustomDifficulty] = useState("");
   const [customTopic, setCustomTopic] = useState("");
+  const [customLanguage, setCustomLanguage] = useState(language);
 
   const navigate = useNavigate();
 
-  const handleDifficultyChange = (level) => {
-    setDifficulty(level);
-  };
+  const handleDifficultyChange = (level) => setDifficulty(level);
+  const handleLanguageChange = (e) => setLanguage(e.target.value);
+  const handleCustomLanguageChange = (e) => setCustomLanguage(e.target.value);
+  const handleToggle = () => setQuestionType(questionType === "text" ? "image" : "text");
 
   const handleCategoryClick = (category) => {
     if (category.categoryName === "custom_ai_quiz") {
@@ -43,17 +89,16 @@ const QuizCategory = () => {
     }
   };
 
-  const handleStartQuiz = () => {
-    navigate("/quiz");
-  };
+  const handleStartQuiz = () => navigate("/quiz");
 
   const handleCustomStartQuiz = () => {
     if (customDifficulty.trim() && customTopic.trim()) {
       setSelectedCategory({
         id: "custom_ai_quiz",
-        topic: customTopic.trim()
+        topic: customTopic.trim(),
       });
       setDifficulty(customDifficulty.trim());
+      setLanguage(customLanguage);
       setQuestionType("text");
       navigate("/quiz");
     } else {
@@ -61,13 +106,10 @@ const QuizCategory = () => {
     }
   };
 
-  const handleToggle = () => {
-    setQuestionType(questionType === "text" ? "image" : "text");
-  };
-
   return (
     <div className="quiz-category-container">
       <h1 className="quiz-category-title">Quiz Categories</h1>
+
       <div className="toggle-difficulty-container">
         <div className="toggle-quiz-option">
           <div className="quiz-toggle">
@@ -81,14 +123,28 @@ const QuizCategory = () => {
         </div>
 
         <div className="difficulty-dropdown">
-          <select 
-            className="difficulty-select" 
-            value={difficulty} 
+          <select
+            className="difficulty-select"
+            value={difficulty}
             onChange={(e) => handleDifficultyChange(e.target.value)}
           >
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div className="language-dropdown">
+          <select
+            className="language-select"
+            value={language}
+            onChange={handleLanguageChange}
+          >
+            {triviaApiLanguages.map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -124,7 +180,6 @@ const QuizCategory = () => {
         <div className="custom-quiz-popup">
           <div className="custom-quiz-popup-content">
             <img className="popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => setShowCustomPopup(false)} />
-
             <div className="popup-icon-wrapper">
               <img src="/bud-e.png" alt="Custom Quiz Icon" className="popup-icon" />
               <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
@@ -132,11 +187,9 @@ const QuizCategory = () => {
 
             <div className="custom-quiz-inputs">
               <div className="input-wrapper">
-                <label htmlFor="category" className="input-label">Difficulty</label>
+                <label className="input-label">Difficulty</label>
                 <div className="Difficulty-dropdown">
                   <select
-                    id="custom-difficulty"
-                    className="Difficulty-select"
                     value={customDifficulty}
                     onChange={(e) => setCustomDifficulty(e.target.value)}
                   >
@@ -149,16 +202,32 @@ const QuizCategory = () => {
               </div>
 
               <div className="input-wrapper">
-                <label htmlFor="topic" className="input-label">Topic</label>
-                <input 
-                  id="topic"
-                  type="text" 
-                  placeholder="Quiz Topic" 
-                  value={customTopic} 
-                  onChange={(e) => setCustomTopic(e.target.value)} 
+                <label className="input-label">Topic</label>
+                <input
+                  type="text"
+                  placeholder="Quiz Topic"
+                  value={customTopic}
+                  onChange={(e) => setCustomTopic(e.target.value)}
                 />
               </div>
+
+              <div className="input-wrapper">
+                <label className="input-label">Language</label>
+                <div className="language-dropdown">
+                  <select
+                    value={customLanguage}
+                    onChange={handleCustomLanguageChange}
+                  >
+                    {customLanguages.map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
+
             <button className="start-quiz-btn" onClick={handleCustomStartQuiz}>Start Quiz</button>
           </div>
         </div>
