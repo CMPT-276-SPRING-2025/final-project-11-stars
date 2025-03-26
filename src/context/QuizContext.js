@@ -237,6 +237,61 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const getBudEReply = async(userMessage, history = []) =>
+  {
+    const question = questions[currentQuestion]; 
+    // Check if current question exists
+    if(!question) return[];
+    const baseMessages = [
+      {
+        role: "system",
+        content: `You are Bud-E, a friendly robot who explains quiz topics to kids (ages 8-14) in a fun, short, simple way.`,
+      },
+      {
+        role: "user",
+        content: `The quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"`,
+      },
+    ];
+
+    const conversation = [
+      ...baseMessages,
+      ...history,
+      {role: "user", content: userMessage},
+    ];
+
+    try{
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            temperature: 0.8,
+            messages: conversation,
+            max_tokens: 150,
+          }),
+        });
+        const data = await response.json();
+        const reply = data.choices?.[0]?.message?.content || "Hmm... I'm not sure! 🤔";
+
+        return[
+          ...history,
+          
+          {role: "user", content: userMessage },
+          {role: "assistant", content:reply},
+        ];
+    }catch(error){
+      console.error("Error in Bud-E chat:", error);
+      return[
+        ...history,
+        {role: "user", conten: userMessage },
+        {role: "assistant", content:"Oops! Something went wrong. Try again?"},
+      ];
+    }
+  };
+
   return (
     <QuizContext.Provider
       value={{
@@ -259,6 +314,7 @@ export const QuizProvider = ({ children }) => {
         setErrorMessage,
         language,
         setLanguage,
+        getBudEReply,
       }}
     >
       {children}
