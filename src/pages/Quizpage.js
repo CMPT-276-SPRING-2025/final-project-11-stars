@@ -134,6 +134,8 @@ const QuizPage = () => {
       setShowIncorrectPopup(false);
       setExplanation(null);
       setTimeLeft(30);
+      setBudEHistory([]);
+      setBudEInput("");
     } else {
       navigate("/result");
     }
@@ -224,8 +226,11 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
-              <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
-              <div className="budE-chat-history">
+              {budEHistory.length === 0 && 
+              (<img src="/bud-e.png" alt="Bud-E" className="ai-icon" />)
+              } 
+              {budEHistory.length > 0 && (
+                <div className="budE-chat-history">
                 {
                   budEHistory.map((msg, index) =>(
                     <div key ={index} className = {`budE-message ${msg.role}`}>
@@ -249,6 +254,7 @@ const QuizPage = () => {
                 {/**Scroll down */}
                 <div ref = {chatEndRef}/>
               </div>
+              )}
               <textarea
                 value ={budEInput}
                 onChange={(e) => setBudEInput(e.target.value)}
@@ -277,9 +283,11 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
-              <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
-              {/**Chat history scroll box */}
-              <div className="budE-chat-history">
+              {budEHistory.length === 0 && 
+              (<img src="/bud-e.png" alt="Bud-E" className="ai-icon" />)
+              } 
+              {budEHistory.length > 0 && (
+                <div className="budE-chat-history">
                 {
                   budEHistory.map((msg, index) =>(
                     <div key ={index} className = {`budE-message ${msg.role}`}>
@@ -300,7 +308,10 @@ const QuizPage = () => {
                     </div>
                   ))
                 }
+                {/**Scroll down */}
+                <div ref = {chatEndRef}/>
               </div>
+              )}
               <textarea
                 value ={budEInput}
                 onChange={(e) => setBudEInput(e.target.value)}
