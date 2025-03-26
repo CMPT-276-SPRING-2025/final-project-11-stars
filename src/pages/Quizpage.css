@@ -122,21 +122,6 @@ border-radius: 5px;
 margin-bottom: 15px;
 }
 
-.chatbot-container {
-margin-bottom: 15px;
-}
-
-.chatbot-container p {
-font-weight: bold;
-}
-
-.chatbot-container input {
-width: 80%;
-padding: 8px;
-border: 1px solid #9A7E6F;
-border-radius: 5px;
-}
-
 .complete-button {
 background-color: #9A7E6F;
 color: white;
@@ -277,23 +262,6 @@ padding: 15px;
 border-radius: 5px;
 margin-bottom: 15px;
 }
-
-.chatbot-container {
-margin-bottom: 15px;
-}
-
-.chatbot-container p {
-font-weight: bold;
-}
-
-.chatbot-container input {
-width: 80%;
-padding: 8px;
-border: 1px solid #9A7E6F;
-border-radius: 5px;
-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-background-color: #E9EED9;
-}
 .feedback-popup-buttons{
   display: flex;
   justify-content: space-between;
@@ -330,3 +298,76 @@ background-color: #816656;
     width: 150px !important;
     height: auto;
 }
+.chatbot-container {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  }
+  
+  .chatbot-container p {
+  font-weight: bold;
+  }
+  /*Chat History Scroll Area */
+  .budE-chat-history{
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+  .budE-message{
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+  }
+  
+  .budE-message.user{
+    text-align: right;
+    color: #555;
+  }
+  .budE-message.assistant .assistant-bubble{
+    display:flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .budE-avatar{
+    width:32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .assistant-content{
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: #333;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
+  .ask-input{
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #9A7E6F;
+    resize: none;
+    margin-bottom: 10px;
+    background-color: #E9EED9;
+  }
+  .budE-button{
+    padding: 6px 12px;
+    font-size: 1rem; 
+    background-color: #9A7E6F;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-end;
+    
+  }
+  .budE-button:disabled{
+    background-color:#9b928c;
+    cursor: not-allowed;
+  }

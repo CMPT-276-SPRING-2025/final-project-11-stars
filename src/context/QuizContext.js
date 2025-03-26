@@ -249,7 +249,7 @@ export const QuizProvider = ({ children }) => {
       },
       {
         role: "user",
-        content: `The quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"`,
+        content: `The quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched for the question was: "${question.explanation}"`,
       },
     ];
 
