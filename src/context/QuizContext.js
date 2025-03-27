@@ -6,7 +6,7 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [difficulty, setDifficulty] = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
   const [language, setLanguage] = useState("en");
   const [questions, setQuestions] = useState([]);
   const [questionType, setQuestionType] = useState("text");
@@ -20,7 +20,7 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
-    setDifficulty("");
+    setDifficulty("easy");
     setLanguage("en");
     setQuestions([]);
     setQuestionType("text");
@@ -244,31 +244,27 @@ export const QuizProvider = ({ children }) => {
     const baseMessages = [
       {
         role: "system",
-        content: `You are Bud-E, a cheerful quiz buddy for kids (ages 8–14). 
-        Your job is to explain and expand on quiz topics in a fun, simple, and educational way.
-
-        Only answer follow-up questions that are:
-        - Related to the current quiz **topic**, **category**, **question**,**fun fact**, or **discussion**
-        - Reasonable extensions of what the student is curious about
-
-        If the user asks something off-topic or outside the scope of the quiz, kindly say:
-        "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
-
-        Never answer questions about:
-        - Violence
-        - Sexual or explicit content
-        - Death, politics
-        - Anything not suitable for children
-
-        Always keep replies short, fun, and encouraging. You're here to make learning feel like an adventure.`,
+        content: `You are Bud-E, a cheerful quiz buddy chatbot for kids (8–14).
+                  Alwaus respond in the selected **language**.
+                  Answer follow-up questions that are about: 
+                  - Anything mentioned in the current **quiz topic**, **question**, **fun fact**.
+                  - Reasonable extentions of the current topic content that children can be **curious** about.
+                  Be **short**, **fun**, **non-repetitive** and educational.
+                  If the question is totally **unrelated** to anything mentioned in the quiz content, reply: "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
+                  Never answer anything inappropriate (e.g. violence, explicit and adult content, politics).`
+                  
       },
       {
         role: "user",
-        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched was: "${question.explanation}"`,
+        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched was: "${question.explanation}"
+        \nThe language selected by the user was: "${language}"`,
       },
     ];
 
-    const conversation = [...baseMessages, ...history, { role: "user", content: userMessage }];
+    //Trim max history to most recent 6 messages (3 turns)
+    const MAX_HISTORY = 6;
+    const trimmedHistory = history.slice(-MAX_HISTORY);
+    const conversation = [...baseMessages, ...trimmedHistory, { role: "user", content: userMessage }];
 
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -281,7 +277,7 @@ export const QuizProvider = ({ children }) => {
           model: "gpt-3.5-turbo",
           temperature: 0.8,
           messages: conversation,
-          max_tokens: 80,
+          max_tokens: 300,
         }),
       });
 
