@@ -6,7 +6,7 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [difficulty, setDifficulty] = useState("easy");
+  const [difficulty, setDifficulty] = useState("");
   const [language, setLanguage] = useState("en");
   const [questions, setQuestions] = useState([]);
   const [questionType, setQuestionType] = useState("text");
@@ -20,7 +20,8 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
-    setDifficulty("easy");
+    setDifficulty("");
+    setLanguage("en");
     setQuestions([]);
     setQuestionType("text");
     setCurrentQuestion(0);
@@ -33,115 +34,114 @@ export const QuizProvider = ({ children }) => {
       setLoading(true);
       setErrorMessage(null);
 
-      try {
-        if (selectedCategory.id === "custom_ai_quiz") {
-          const topic = selectedCategory.topic.toLowerCase();
+      const topic = selectedCategory?.topic?.toLowerCase?.() || "";
 
-          const blocklist = [
-            "sex", "sexual", "porn", "porno", "pornography", "nude", "nudity", "naked", "strip", "fetish",
-            "erotic", "kamasutra", "condom", "intercourse", "masturbate", "masturbation", "orgasm", "ejaculation",
-            "dildo", "vibrator", "anal", "vaginal", "genital", "genitals", "penis", "vagina", "boobs", "breasts",
-            "nipples", "hentai", "bdsm", "xxx", "blowjob", "handjob", "threesome", "incest", "pedophile", "pedophilia",
-            "rape", "molest", "molestation", "abuse", "assault", "kill", "murder", "suicide", "torture", "violence",
-            "drug", "drugs", "cocaine", "heroin", "meth", "weed", "marijuana", "lsd", "ecstasy", "overdose",
-            "alcohol", "beer", "vodka", "whiskey", "gin", "champagne", "rum", "intoxicated", "hangover", "cigarette", "smoking",
-            "fuck", "shit", "bitch", "bastard", "slut", "whore", "asshole", "dick", "pussy", "cock", "cunt",
-            "goddamn", "damn", "hell", "retard", "racist", "nazism", "terrorist", "terrorism", "bomb", "gun", "shoot",
-          ];
-          const hasBadWord = blocklist.some((word) => topic.includes(word));
-          if (hasBadWord) {
-            console.warn(`🚫 Blocked topic due to blocklist: "${topic}"`);
-            setErrorMessage("⚠️ This topic isn't suitable for a trivia quiz. Please choose another.");
-            setQuestions([]);
-            setLoading(false);
-            return;
-          }
+      const isCustomAIQuiz = selectedCategory.id === "custom_ai_quiz";
 
-          const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${OPENAI_API_KEY}`,
-            },
-            body: JSON.stringify({
-              model: "gpt-3.5-turbo",
-              temperature: 0.9,
-              messages: [
-                {
-                  role: "system",
-                  content:
-                    "You are a trivia quiz generator for a school-friendly quiz app. 'Easy', 'Medium', and 'Hard' describe the academic difficulty — not the content’s safety. Only reject the topic if it's clearly inappropriate (e.g. adult content, drugs, violence). Topics like biology, math, or history are always appropriate.",
-                },
+      if (isCustomAIQuiz) {
+        const inappropriateCategories = ["violence", "hate speech", "adult content"];
+        if (inappropriateCategories.includes(topic)) {
+          console.warn(`🚫 Flagged topic as inappropriate: "${topic}"`);
+          setErrorMessage("⚠️ This topic isn't suitable for a trivia quiz. Please choose another.");
+          setQuestions([]);
+          setLoading(false);
+          return;
+        }
 
-                {
-                  role: "user",
-                  content: `Create 10 unique trivia questions for teenagers on the topic "${selectedCategory.topic}" with "${difficulty}" difficulty in the language "${language}".
-                Each question must be written in "${language}" and returned as an object in this format:
-                {
-                  "question": "What is the capital of France?",
-                  "options": ["Berlin", "Paris", "London", "Rome"],
-                  "correctAnswer": "Paris"
-                }
-                Return only: { "questions": [ ... ] } or { "status": "REJECTED" }`,
-                },
-                
-              ],
-              max_tokens: 1000,
-            }),
-          });
+        const generateValidQuestions = async () => {
+          const maxRetries = 5;
+          let validQuestions = [];
 
-          const data = await response.json();
-          let rawContent = data.choices?.[0]?.message?.content?.trim();
-          if (rawContent.startsWith("```")) {
-            rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
-          }
+          for (let attempt = 0; attempt < maxRetries && validQuestions.length < 10; attempt++) {
+            const remaining = 10 - validQuestions.length;
 
-          let aiQuestions;
-          try {
-            const parsed = JSON.parse(rawContent);
-            if (parsed.status === "REJECTED") {
-              console.warn(`❌ GPT rejected topic as inappropriate: "${topic}"`);
-              setErrorMessage("⚠️ This topic isn't available for a quiz. Please try a different one.");
-              setQuestions([]);
-              setLoading(false);
-              return;
+            const response = await fetch("https://api.openai.com/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+              },
+              body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                temperature: 0.9,
+                messages: [
+                  {
+                    role: "system",
+                    content: `You are a trivia quiz generator for a school-friendly quiz app for teenagers (ages 10–16). Only reject if the topic is clearly inappropriate (e.g., porn, drugs, violence).`,
+                  },
+                  {
+                    role: "user",
+                    content: `Please generate ${remaining} unique trivia questions for teenagers on the topic: "${selectedCategory.topic}". Use the difficulty: "${difficulty}" and language: "${language}". Format: { "question": "...", "options": ["..."], "correctAnswer": "..." }. Return only { "questions": [...] } or { "status": "REJECTED" }.`,
+                  },
+                ],
+                max_tokens: 2500,
+              }),
+            });
+
+            const data = await response.json();
+            let rawContent = data.choices?.[0]?.message?.content?.trim();
+
+            if (rawContent?.startsWith("```")) {
+              rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
             }
-            aiQuestions = parsed.questions;
-          } catch (err) {
-            console.error("Failed to parse AI JSON:", rawContent);
-            setQuestions([]);
-            setErrorMessage("⚠️ Failed to understand the quiz content. Please try another topic.");
-            setLoading(false);
-            return;
+
+            let aiQuestions;
+            try {
+              const parsed = JSON.parse(rawContent);
+              if (parsed.status === "REJECTED") {
+                console.warn(`❌ GPT rejected topic as inappropriate: "${topic}"`);
+                setErrorMessage("⚠️ This topic isn't available for a quiz. Please try a different one.");
+                setQuestions([]);
+                setLoading(false);
+                return;
+              }
+              aiQuestions = parsed.questions;
+            } catch (err) {
+              console.error("❌ Failed to parse AI JSON:", rawContent);
+              continue;
+            }
+
+            const formatted = aiQuestions
+              .map((q) => {
+                const correct = q.correctAnswer;
+                const options = q.options || [];
+                if (!correct || !options.includes(correct)) {
+                  console.warn("⚠️ Skipping question due to invalid format:", q);
+                  return null;
+                }
+                return {
+                  text: q.question,
+                  options: options.sort(() => Math.random() - 0.5),
+                  answer: correct,
+                  explanation: null,
+                };
+              })
+              .filter(Boolean);
+
+            validQuestions = [...validQuestions, ...formatted];
           }
 
-          const formatted = aiQuestions
-            .map((q) => {
-              const correct = q.correctAnswer;
-              const options = q.options || [];
-              if (!correct || !options.includes(correct)) {
-                console.warn("⚠️ Skipping question due to invalid format:", q);
-                return null;
-              }
+          if (validQuestions.length === 10) {
+            setQuestions(validQuestions);
+            console.log(`✅ Topic accepted: "${topic}" — 10 valid questions generated.`);
+          } else {
+            console.warn(`⚠️ Only ${validQuestions.length}/10 valid questions generated after retries.`);
+            setErrorMessage("⚠️ Not enough valid questions generated. Try rewording the topic.");
+            setQuestions([]);
+          }
 
-              return {
-                text: q.question,
-                options: options.sort(() => Math.random() - 0.5),
-                answer: correct,
-                explanation: null,
-              };
-            })
-            .filter(Boolean);
+          setLoading(false);
+        };
 
-          setQuestions(formatted);
-          console.log(`✅ Topic accepted: "${topic}" — ${formatted.length} questions generated.`);
-        } else {
+        await generateValidQuestions();
+      } else {
+        try {
           const params = {
             categories: selectedCategory.categoryName,
             difficulty: difficulty,
             limit: 10,
             types: questionType === "image" ? "image_choice" : "text_choice",
-            ...(language !== "en" && { language }), // ✅ Only include language param if NOT English
+            ...(language !== "en" && { language }),
           };
 
           const response = await axios.get("https://the-trivia-api.com/v2/questions", {
@@ -179,13 +179,13 @@ export const QuizProvider = ({ children }) => {
           });
 
           setQuestions(formattedQuestions);
+        } catch (error) {
+          console.error("❌ Error fetching questions:", error);
+          setQuestions([]);
+          setErrorMessage("⚠️ Something went wrong while fetching quiz questions.");
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        console.error("❌ Error fetching questions:", error);
-        setQuestions([]);
-        setErrorMessage("⚠️ Something went wrong while fetching quiz questions.");
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -194,10 +194,10 @@ export const QuizProvider = ({ children }) => {
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
-  
+
     try {
       const question = questions[questionIndex];
-  
+
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -206,6 +206,8 @@ export const QuizProvider = ({ children }) => {
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
+          temperature: 0.7,
+          max_tokens: 60,
           messages: [
             {
               role: "system",
@@ -213,17 +215,15 @@ export const QuizProvider = ({ children }) => {
             },
             {
               role: "user",
-              content: `Give a short, kid-friendly fun fact in **${language}** related to this trivia question and answer (max 1 sentence):\n\nQ: ${question.text}\nA: ${question.answer}`,
+              content: `Give a short, fun, and **non-repetitive** fact in **${language}** that is related to the topic of this trivia question and answer. It should **not repeat the question or the answer** but provide something new or surprising related to it. Keep it light and fun (max 1 sentence) with a relevant emoji. Trivia Question: ${question.text} Correct Answer: ${question.answer}`,
             },
           ],
-          max_tokens: 60,
-          temperature: 0.7,
         }),
       });
-  
+
       const data = await response.json();
       const newExplanation = data.choices?.[0]?.message?.content?.trim() || "No fun fact available.";
-  
+
       setQuestions((prevQuestions) => {
         const updated = [...prevQuestions];
         updated[questionIndex] = {
@@ -237,73 +237,48 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
-  const getBudEReply = async(userMessage, history = []) =>
-  {
-    const question = questions[currentQuestion]; 
-    // Check if current question exists
-    if(!question) return[];
+  const getBudEReply = async (userMessage, history = []) => {
+    const question = questions[currentQuestion];
+    if (!question) return [];
+
     const baseMessages = [
       {
         role: "system",
-        content: `You are Bud-E, a cheerful quiz buddy for kids (ages 8–14). 
-        Your job is to explain and expand on quiz topics in a fun, simple, and educational way.
-
-        Only answer follow-up questions that are:
-        - Related to the current quiz **topic**, **category**, **question**,**fun fact**, or **discussion**
-        - Reasonable extensions of what the student is curious about
-
-        If the user asks something off-topic or outside the scope of the quiz, kindly say:
-        "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
-
-        Never answer questions about:
-        - Violence
-        - Sexual or explicit content
-        - Death, politics
-        - Anything not suitable for children
-
-        Always keep replies short, fun, and encouraging. You're here to make learning feel like an adventure.`,
+        content: `You are Bud-E, a cheerful quiz buddy for kids (ages 8–15). You explain quiz topics in a fun, simple, and educational way.`,
       },
       {
         role: "user",
-        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched for the question was: "${question.explanation}"`,
+        content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched was: "${question.explanation}"`,
       },
     ];
 
-    const conversation = [
-      ...baseMessages,
-      ...history,
-      {role: "user", content: userMessage},
-    ];
+    const conversation = [...baseMessages, ...history, { role: "user", content: userMessage }];
 
-    try{
+    try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers:{
-            "Content-Type":"application/json",
-            Authorization: `Bearer ${OPENAI_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            temperature: 0.8,
-            messages: conversation,
-            max_tokens: 80,
-          }),
-        });
-        const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content || "Hmm... I'm not sure! 🤔";
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          temperature: 0.8,
+          messages: conversation,
+          max_tokens: 80,
+        }),
+      });
 
-        return[
-          ...history,
-          
-          {role: "user", content: userMessage },
-          {role: "assistant", content:reply},
-        ];
-    }catch(error){
+      const data = await response.json();
+      const reply = data.choices?.[0]?.message?.content || "Hmm... I'm not sure! 🤔";
+
+      return [...history, { role: "user", content: userMessage }, { role: "assistant", content: reply }];
+    } catch (error) {
       console.error("Error in Bud-E chat:", error);
-      return[
+      return [
         ...history,
-        {role: "user", conten: userMessage },
-        {role: "assistant", content:"Oops! Something went wrong. Try again?"},
+        { role: "user", content: userMessage },
+        { role: "assistant", content: "Oops! Something went wrong. Try again?" },
       ];
     }
   };

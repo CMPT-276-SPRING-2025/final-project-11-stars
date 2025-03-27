@@ -107,7 +107,7 @@
   transform: scale(1.2); 
 }
 .custom-quiz-popup {
-  min-width: 750px;
+  min-width: 800px;
   min-height: 400px;
   height: auto;
   max-height: 100vh;
