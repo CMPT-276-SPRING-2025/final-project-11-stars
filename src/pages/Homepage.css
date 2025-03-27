@@ -47,4 +47,15 @@ html {
     margin-top: 40px;
     font-weight: bold;
 }
-
+.iframe-wrapper {
+    height: 100%;
+    width: 100%;   /* taller to show full animation */
+    overflow: hidden; /* prevents scrollbars */
+    margin: 0 auto;   /* center horizontally if needed */
+  }
+  
+  .bud-e-frame {
+    width: 300px;     /* match iframe-wrapper width */
+    height: 400px;
+    border: none;
+  }
