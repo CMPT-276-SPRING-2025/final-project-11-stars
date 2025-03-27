@@ -28,7 +28,7 @@ const triviaApiLanguages = [
 ];
 
 const customLanguages = [
-  { code: "en", label: "🇺🇸 English" }, // English first
+  { code: "en", label: "🇺🇸 English" },
   { code: "ar", label: "🇸🇦 Arabic" },
   { code: "bn", label: "🇧🇩 Bengali" },
   { code: "zh", label: "🇨🇳 Chinese" },
@@ -50,7 +50,6 @@ const customLanguages = [
   { code: "uk", label: "🇺🇦 Ukrainian" },
   { code: "vi", label: "🇻🇳 Vietnamese" },
 ];
-
 
 const QuizCategory = () => {
   const {
@@ -89,10 +88,16 @@ const QuizCategory = () => {
     }
   };
 
-  const handleStartQuiz = () => navigate("/quiz");
+  const handleStartQuiz = () => {
+    if (!difficulty || !language) {
+      alert("Please choose your difficulty!");
+      return;
+    }
+    navigate("/quiz");
+  };
 
   const handleCustomStartQuiz = () => {
-    if (customDifficulty.trim() && customTopic.trim()) {
+    if (customDifficulty.trim() && customTopic.trim() && customLanguage.trim()) {
       setSelectedCategory({
         id: "custom_ai_quiz",
         topic: customTopic.trim(),
@@ -102,7 +107,7 @@ const QuizCategory = () => {
       setQuestionType("text");
       navigate("/quiz");
     } else {
-      alert("Please enter both difficulty and topic!");
+      alert("Please enter difficulty and topic!");
     }
   };
 
@@ -128,6 +133,7 @@ const QuizCategory = () => {
             value={difficulty}
             onChange={(e) => handleDifficultyChange(e.target.value)}
           >
+            <option value="" disabled>Select Difficulty</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
@@ -140,6 +146,7 @@ const QuizCategory = () => {
             value={language}
             onChange={handleLanguageChange}
           >
+            <option value="" disabled>Select Language</option>
             {triviaApiLanguages.map((lang) => (
               <option key={lang.code} value={lang.code}>
                 {lang.label}
@@ -165,11 +172,19 @@ const QuizCategory = () => {
       {showPopup && (
         <div className="start-popup">
           <div className="start-popup-content">
-            <img className="start-popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => {
-              setSelectedCategory(null);
-              setQuizDisplayName(null);
-              setShowPopup(false);
-            }} />
+            <img
+              className="start-popup-close-btn"
+              src="/crossbtn.png"
+              alt="Close"
+              onClick={() => {
+                setSelectedCategory(null);
+                setQuizDisplayName(null);
+                setShowPopup(false);
+                setCustomDifficulty("");
+                setCustomTopic("");
+                setCustomLanguage(language);
+              }}
+            />
             <h2>{quizDisplayName} Quiz</h2>
             <button className="start-quiz-btn" onClick={handleStartQuiz}>Start Quiz</button>
           </div>
@@ -218,6 +233,7 @@ const QuizCategory = () => {
                     value={customLanguage}
                     onChange={handleCustomLanguageChange}
                   >
+                    <option value="" disabled>Select Language</option>
                     {customLanguages.map((lang) => (
                       <option key={lang.code} value={lang.code}>
                         {lang.label}
