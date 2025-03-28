@@ -2,6 +2,8 @@ const fetch = require("node-fetch");
 
 exports.handler = async(event, context) =>{
     try{
+        // Parse the POST body to get topic, difficulty, language, remaining
+        const { topic, difficulty, language, remaining } = JSON.parse(event.body);
         const apiKey = process.env.OPENAI_API_KEY
         const openAiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -19,7 +21,7 @@ exports.handler = async(event, context) =>{
                 },
                 {
                 role: "user",
-                content: `Please generate ${remaining} unique trivia questions for teenagers on the topic: "${selectedCategory.topic}". Use the difficulty: "${difficulty}" and language: "${language}". Format: { "question": "...", "options": ["..."], "correctAnswer": "..." }. Return only { "questions": [...] } or { "status": "REJECTED" }.`,
+                content: `Please generate ${remaining} unique trivia questions for teenagers on the topic: "${topic}". Use the difficulty: "${difficulty}" and language: "${language}". Format: { "question": "...", "options": ["..."], "correctAnswer": "..." }. Return only { "questions": [...] } or { "status": "REJECTED" }.`,
                 },
             ],
             max_tokens: 2500,
