@@ -105,10 +105,18 @@ export const QuizProvider = ({ children }) => {
               .map((q) => {
                 const correct = q.correctAnswer;
                 const options = q.options || [];
-                if (!correct || !options.includes(correct)) {
+            
+                // Validate: exactly 4 options, all unique, non-empty, correct answer included
+                const allValid = options.length === 4 &&
+                                options.every(opt => typeof opt === "string" && opt.trim() !== "") &&
+                                new Set(options).size === 4 &&
+                                options.includes(correct);
+            
+                if (!correct || !allValid) {
                   console.warn("⚠️ Skipping question due to invalid format:", q);
                   return null;
                 }
+            
                 return {
                   text: q.question,
                   options: options.sort(() => Math.random() - 0.5),
@@ -117,6 +125,7 @@ export const QuizProvider = ({ children }) => {
                 };
               })
               .filter(Boolean);
+          
 
             validQuestions = [...validQuestions, ...formatted];
           }
