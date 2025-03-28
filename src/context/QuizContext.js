@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
 
 export const QuizContext = createContext();
 
@@ -13,9 +12,6 @@ export const QuizProvider = ({ children }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
-  const TRIVIA_API_KEY = process.env.REACT_APP_TRIVIA_API_KEY;
 
   const resetQuiz = () => {
     setScore(0);
@@ -55,26 +51,16 @@ export const QuizProvider = ({ children }) => {
           for (let attempt = 0; attempt < maxRetries && validQuestions.length < 10; attempt++) {
             const remaining = 10 - validQuestions.length;
 
-            const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            const response = await fetch("/.netlify/functions/generateQuestions", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${OPENAI_API_KEY}`,
               },
               body: JSON.stringify({
-                model: "gpt-3.5-turbo",
-                temperature: 0.9,
-                messages: [
-                  {
-                    role: "system",
-                    content: `You are a trivia quiz generator for a school-friendly quiz app for teenagers (ages 10–16). Only reject if the topic is clearly inappropriate (e.g., porn, drugs, violence).`,
-                  },
-                  {
-                    role: "user",
-                    content: `Please generate ${remaining} unique trivia questions for teenagers on the topic: "${selectedCategory.topic}". Use the difficulty: "${difficulty}" and language: "${language}". Format: { "question": "...", "options": ["..."], "correctAnswer": "..." }. Return only { "questions": [...] } or { "status": "REJECTED" }.`,
-                  },
-                ],
-                max_tokens: 2500,
+                topic: selectedCategory.topic,
+                difficulty,
+                language,
+                remaining,
               }),
             });
 
@@ -146,21 +132,23 @@ export const QuizProvider = ({ children }) => {
       } else {
         try {
           const params = {
-            categories: selectedCategory.categoryName,
-            difficulty: difficulty,
-            limit: 10,
-            types: questionType === "image" ? "image_choice" : "text_choice",
-            ...(language !== "en" && { language }),
+            categoryName: selectedCategory.categoryName,
+            difficulty,
+            questionType,
+            language,
           };
 
-          const response = await axios.get("https://the-trivia-api.com/v2/questions", {
+          const response = await fetch("/.netlify/functions/getTriviaQuestions", {
+            method: "POST",
             headers: {
-              "X-API-Key": TRIVIA_API_KEY,
+              "Content-Type": "application/json",
             },
-            params,
+            body: JSON.stringify(params),
           });
 
-          const formattedQuestions = response.data.map((question) => {
+          const data = await response.json();
+
+          const formattedQuestions = data.map((question) => {
             if (questionType === "image") {
               const flattenedIncorrect = question.incorrectAnswers.flat();
               const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
@@ -199,7 +187,7 @@ export const QuizProvider = ({ children }) => {
     };
 
     fetchQuestions();
-  }, [selectedCategory, difficulty, questionType, language, OPENAI_API_KEY, TRIVIA_API_KEY]);
+  }, [selectedCategory, difficulty, questionType, language]);
 
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
@@ -207,26 +195,15 @@ export const QuizProvider = ({ children }) => {
     try {
       const question = questions[questionIndex];
 
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("/.netlify/functions/getFunFact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          temperature: 0.7,
-          max_tokens: 60,
-          messages: [
-            {
-              role: "system",
-              content: `You are a multilingual trivia fact explainer for kids and teens (ages 8–15). Respond with fun, short facts in the user's selected language. Include 1 relevant emoji.`,
-            },
-            {
-              role: "user",
-              content: `Give a short, fun, and **non-repetitive** fact in **${language}** that is related to the topic of this trivia question and answer. It should **not repeat the question or the answer** but provide something new or surprising related to it. Keep it light and fun (max 1 sentence) with a relevant emoji. Trivia Question: ${question.text} Correct Answer: ${question.answer}`,
-            },
-          ],
+          questionText: question.text,
+          correctAnswer: question.answer,
+          language, 
         }),
       });
 
@@ -286,17 +263,13 @@ export const QuizProvider = ({ children }) => {
     const conversation = [...baseMessages, ...trimmedHistory, { role: "user", content: userMessage }];
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetch("/.netlify/functions/budEChatbotReply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          temperature: 0.8,
-          messages: conversation,
-          max_tokens: 300,
+          conversation
         }),
       });
 
