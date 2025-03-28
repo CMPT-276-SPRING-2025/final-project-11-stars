@@ -66,7 +66,7 @@ const QuizPage = () => {
     }
   }, [budEHistory]);
 
-  // ✅ Error handling and loading screen
+  // Error handling and loading screen
   if (loading) {
     return(
     <div className="loading-message">
