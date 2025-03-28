@@ -105,10 +105,18 @@ export const QuizProvider = ({ children }) => {
               .map((q) => {
                 const correct = q.correctAnswer;
                 const options = q.options || [];
-                if (!correct || !options.includes(correct)) {
+            
+                // Validate: exactly 4 options, all unique, non-empty, correct answer included
+                const allValid = options.length === 4 &&
+                                options.every(opt => typeof opt === "string" && opt.trim() !== "") &&
+                                new Set(options).size === 4 &&
+                                options.includes(correct);
+            
+                if (!correct || !allValid) {
                   console.warn("⚠️ Skipping question due to invalid format:", q);
                   return null;
                 }
+            
                 return {
                   text: q.question,
                   options: options.sort(() => Math.random() - 0.5),
@@ -117,6 +125,7 @@ export const QuizProvider = ({ children }) => {
                 };
               })
               .filter(Boolean);
+          
 
             validQuestions = [...validQuestions, ...formatted];
           }
@@ -211,7 +220,7 @@ export const QuizProvider = ({ children }) => {
           messages: [
             {
               role: "system",
-              content: `You are a multilingual trivia fact explainer for kids and teens (ages 8–16). Respond with fun, short facts in the user's selected language. Include 1 relevant emoji.`,
+              content: `You are a multilingual trivia fact explainer for kids and teens (ages 8–15). Respond with fun, short facts in the user's selected language. Include 1 relevant emoji.`,
             },
             {
               role: "user",
@@ -244,16 +253,26 @@ export const QuizProvider = ({ children }) => {
     const baseMessages = [
       {
         role: "system",
-        content: `You are Bud-E, a cheerful quiz buddy chatbot for kids (8–14).
-                  Alwaus respond in the selected **language**.
-                  Answer follow-up questions that are about: 
-                  - Anything mentioned in the current **quiz topic**, **question**, **fun fact**.
-                  - Reasonable extentions of the current topic content that children can be **curious** about.
-                  Be **short**, **fun**, **non-repetitive** and educational.
-                  If the question is totally **unrelated** to anything mentioned in the quiz content, reply: "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
-                  Never answer anything inappropriate (e.g. violence, explicit and adult content, politics).`
+        content: `You are Bud-E, a cheerful quiz buddy chatbot for kids (8–15).
+                  Always respond in the selected **language**.
                   
-      },
+                  Answer follow-up questions that are about: 
+                  - Anything mentioned in the current **quiz topic**, **question**, or **fun fact**.
+                  - Reasonable extensions of the current topic that children might be **curious** about.
+      
+                  Be **short**, **fun**, **non-repetitive**, and educational.
+      
+                  If the user says something friendly like "hi", "hello", or "hey", cheerfully greet them back, then guide them back to the quiz. 
+                  For example: "Hi there! So glad you’re here. Let’s keep going with our quiz! 🌟"
+      
+                  If the user says something like "how are you?", respond warmly and personally, then bring the focus back to the quiz. 
+                  For example: "I'm doing great, thanks for asking! Now, let’s explore more from our quiz. 😊"
+      
+                  If the message is completely **unrelated** to the quiz topic, reply:
+                  "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
+      
+                  Never answer anything inappropriate (e.g. violence, explicit/adult content, or politics).`
+      },      
       {
         role: "user",
         content: `The quiz category was: "${selectedCategory}"\nThe quiz question was:"${question.text}"\nThe correct answer was: "${question.answer}"\nThe fun fact fetched was: "${question.explanation}"
