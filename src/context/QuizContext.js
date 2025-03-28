@@ -6,7 +6,7 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [difficulty, setDifficulty] = useState("easy");
+  const [difficulty, setDifficulty] = useState("");
   const [language, setLanguage] = useState("en");
   const [questions, setQuestions] = useState([]);
   const [questionType, setQuestionType] = useState("text");
@@ -20,7 +20,7 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
-    setDifficulty("easy");
+    setDifficulty("");
     setLanguage("en");
     setQuestions([]);
     setQuestionType("text");

@@ -68,7 +68,18 @@ const QuizPage = () => {
 
   // ✅ Error handling and loading screen
   if (loading) {
-    return <h2>Generating your quiz... Please wait 😊</h2>;
+    return(
+    <div className="loading-message">
+      <h1>Generating your quiz... Please wait 😊</h1>
+      <div className="flower-iframe-wrapper">
+      <iframe
+        src="/flowerloading.html"
+        title="Flower-Loading Animation"
+        className="loading-flower-frame"
+      />
+      </div>
+    </div>
+    )
   }
 
   if (errorMessage) {

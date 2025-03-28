@@ -5,6 +5,20 @@ body {
     background-color: #E9EED9;
     margin: 0;
 }
+.loading-message {
+  margin: 50px;
+}
+.flower-wrapper{
+  height: 100%;
+  width: 100%;   
+  overflow: hidden; 
+  margin: 0 auto; 
+}
+.loading-flower-frame {
+  width: 400px;     
+  height: 500px;
+  border: none;
+}
 
 .quiz-container {
   min-height: 95vh;
@@ -394,4 +408,4 @@ background-color: #816656;
     background-color:#9b928c;
     cursor: not-allowed;
   }
-  
+
