@@ -195,10 +195,15 @@ const QuizCategory = () => {
         <div className="custom-quiz-popup">
           <div className="custom-quiz-popup-content">
             <img className="popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => setShowCustomPopup(false)} />
-            <div className="popup-icon-wrapper">
-              <img src="/bud-e.png" alt="Custom Quiz Icon" className="popup-icon" />
+            <div className="custom-title-block">
+              <iframe
+                src="/BudE_animation.html"
+                title="Bud-E Animation"
+                className="bud-e-frame"
+              />
               <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
             </div>
+
 
             <div className="custom-quiz-inputs">
               <div className="input-wrapper">
