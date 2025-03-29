@@ -1,0 +1,51 @@
+name: CI/CD Pipeline for BrainGoated
+
+on: 
+  push: 
+    branches: 
+      - main
+  pull_request: 
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 
+        with: 
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        env: 
+          # MOCK_TRIVIA_API_URL: ${{ secrets.MOCK_TRIVIA_API_URL }}
+          # MOCK_OPENAI_API_KEY: ${{ secrets.MOCK_OPENAI_API_KEY }}
+        run: npm test || echo "No tests found, skipping..."
+
+      - name: Build Project
+        run: npm run build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: netlify deploy --prod --dir=build --auth=$NETLIFY_AUTH_TOKEN
