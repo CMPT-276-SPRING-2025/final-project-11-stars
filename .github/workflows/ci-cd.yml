@@ -33,19 +33,19 @@ jobs:
       - name: Build Project
         run: npm run build
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+  # deploy:
+  #   needs: build-and-test
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v3
 
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
+  #     - name: Install Netlify CLI
+  #       run: npm install -g netlify-cli
 
-      - name: Deploy to Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: netlify deploy --prod --dir=build --auth=$NETLIFY_AUTH_TOKEN
+  #     - name: Deploy to Netlify
+  #       env:
+  #         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+  #       run: netlify deploy --prod --dir=build --auth=$NETLIFY_AUTH_TOKEN
