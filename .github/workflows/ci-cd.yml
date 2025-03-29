@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run Tests
-        env: 
+        #env: 
           # MOCK_TRIVIA_API_URL: ${{ secrets.MOCK_TRIVIA_API_URL }}
           # MOCK_OPENAI_API_KEY: ${{ secrets.MOCK_OPENAI_API_KEY }}
         run: npm test || echo "No tests found, skipping..."
