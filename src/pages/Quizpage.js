@@ -247,7 +247,6 @@ const QuizPage = () => {
                     <div key ={index} className = {`budE-message ${msg.role}`}>
                       {msg.role === "user"? (
                         <>
-                          <strong>🌱CuriousSeed</strong>
                           <p>{msg.content}</p>
                         </>
                       ):(
@@ -304,7 +303,6 @@ const QuizPage = () => {
                     <div key ={index} className = {`budE-message ${msg.role}`}>
                       {msg.role === "user"? (
                         <>
-                          <strong>🌱CuriousSeed</strong>
                           <p>{msg.content}</p>
                         </>
                       ):(

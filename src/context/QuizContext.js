@@ -239,7 +239,7 @@ export const QuizProvider = ({ children }) => {
       
                   Be **short**, **fun**, **non-repetitive**, and educational.
       
-                  If the user says something friendly like "hi", "hello", or "hey", cheerfully greet them back, then guide them back to the quiz. 
+                  If the user says something friendly like "hi", "hello", or "hey", "what's your name" cheerfully answer any friendly questions and greet them back, then guide them back to the quiz. 
                   For example: "Hi there! So glad you’re here. Let’s keep going with our quiz! 🌟"
       
                   If the user says something like "how are you?", respond warmly and personally, then bring the focus back to the quiz. 
