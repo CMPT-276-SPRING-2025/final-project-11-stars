@@ -25,19 +25,23 @@ const QuizPage = () => {
   const [budEInput, setBudEInput] = useState("");
   const [budEHistory, setBudEHistory] = useState([]);
   const chatEndRef = useRef(null);
+  const [isTimerActive, setIsTimerActive] = useState(true);
 
   const normalize = (str) => str?.trim().toLowerCase();
 
   const handleTimeout = useCallback(() => {
     if (!answered) {
+      setIsTimerActive(false); // ⛔ STOP the timer properly
+      clearInterval(timerRef.current);
       setAnswered(true);
       setShowIncorrectPopup(true);
-      clearInterval(timerRef.current);
     }
   }, [answered]);
+  
 
   useEffect(() => {
-    setTimeLeft(30);
+    if (!isTimerActive) return;
+  
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev === 1) {
@@ -48,8 +52,11 @@ const QuizPage = () => {
         return prev - 1;
       });
     }, 1000);
+  
     return () => clearInterval(timerRef.current);
-  }, [currentQuestion, handleTimeout]);
+  }, [isTimerActive, handleTimeout]);
+  
+  
 
   useEffect(() => {
     if (answered && questions[currentQuestion]?.explanation === null) {
@@ -111,6 +118,7 @@ const QuizPage = () => {
     if (!answered) {
       setSelected(option);
       clearInterval(timerRef.current);
+      setIsTimerActive(false); // ⏸️ freeze timer on answer
 
       // Debug logs
       console.log("Selected Option:", option);
@@ -147,6 +155,8 @@ const QuizPage = () => {
       setTimeLeft(30);
       setBudEHistory([]);
       setBudEInput("");
+      setIsTimerActive(true); // 🔁 resume timer for next question
+
     } else {
       navigate("/result");
     }
