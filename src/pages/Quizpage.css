@@ -410,3 +410,81 @@ background-color:#9b928c;
 cursor: not-allowed;
 }
 
+.timer-box {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.timer-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: width 1s linear;
+  z-index: 0;
+  border-radius: 10px;
+  color:#54473F;
+  background-color: #54473F;
+}
+
+
+.timer-text {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #FFFFFF; /* default white */
+  transition: color 0.3s ease;
+}
+
+/* When fill is under text */
+.timer-on-white {
+  color: #9A7E6F;
+}
+
+/* When time is low */
+.timer-critical {
+  color: #9A7E6F;
+  font-size: 2rem;
+  animation: heartbeat 0.6s ease-in-out infinite;
+}
+
+/* Combine both — override the brown if it's also critical */
+.timer-on-white.timer-critical {
+  color: #FFD700;
+}
+.timer-box-critical {
+  animation: heartbeat 1s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.2);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+

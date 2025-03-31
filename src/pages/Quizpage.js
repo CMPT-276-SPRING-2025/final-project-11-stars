@@ -26,6 +26,7 @@ const QuizPage = () => {
   const [budEHistory, setBudEHistory] = useState([]);
   const chatEndRef = useRef(null);
   const [isTimerActive, setIsTimerActive] = useState(true);
+  const [justStarted, setJustStarted] = useState(true);
 
   const normalize = (str) => str?.trim().toLowerCase();
 
@@ -40,6 +41,10 @@ const QuizPage = () => {
   
 
   useEffect(() => {
+    setJustStarted(true); // ⬅️ trigger "Timer: 30s" label initially
+  
+    const timer = setTimeout(() => setJustStarted(false), 1000); // hide after 1 sec
+  
     if (!isTimerActive) return;
   
     timerRef.current = setInterval(() => {
@@ -53,8 +58,12 @@ const QuizPage = () => {
       });
     }, 1000);
   
-    return () => clearInterval(timerRef.current);
-  }, [isTimerActive, handleTimeout]);
+    return () => {
+      clearInterval(timerRef.current);
+      clearTimeout(timer);
+    };
+  }, [currentQuestion, isTimerActive, handleTimeout]);
+  
   
   
 
@@ -155,7 +164,11 @@ const QuizPage = () => {
       setTimeLeft(30);
       setBudEHistory([]);
       setBudEInput("");
-      setIsTimerActive(true); // 🔁 resume timer for next question
+      setIsTimerActive(true); 
+      setTimeLeft(30);     
+      setJustStarted(true);  
+
+
 
     } else {
       navigate("/result");
@@ -182,7 +195,30 @@ const QuizPage = () => {
   return (
     <div className="quiz-container">
       <div className="header">
-        <div className="timer-box">Timer: {timeLeft}s</div>
+      <div className={`timer-box ${timeLeft <= 5 ? 'timer-box-critical' : ''}`}>
+        <div
+          className="timer-fill"
+          style={{
+            width: `${(timeLeft / 30) * 100}%`,
+            backgroundColor: timeLeft <= 5 ? '#D9534F' : '#9A7E6F',
+          }}
+        ></div>
+     <span
+        className={`timer-text 
+          ${timeLeft <= 5 ? "timer-critical" : ""}
+          ${timeLeft <= 14 && timeLeft > 5 ? "timer-on-white" : ""}
+          ${timeLeft === 0 ? "timer-critical" : ""}`}
+      >
+        {timeLeft === 0
+          ? "⏳ Time's up!"
+          : justStarted && !answered
+          ? `Timer: ${timeLeft}s`
+          : timeLeft}
+      </span>
+
+
+      </div>
+
         <div className="score-box">Score: {score}</div>
       </div>
 
