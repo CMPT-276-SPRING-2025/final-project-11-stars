@@ -68,6 +68,8 @@ const QuizCategory = () => {
   const [customDifficulty, setCustomDifficulty] = useState("");
   const [customTopic, setCustomTopic] = useState("");
   const [customLanguage, setCustomLanguage] = useState(language);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   const navigate = useNavigate();
 
@@ -90,11 +92,12 @@ const QuizCategory = () => {
 
   const handleStartQuiz = () => {
     if (!difficulty || !language) {
-      alert("Please choose your difficulty!");
+      setErrorMessage("Please choose your difficulty!");
       return;
     }
     navigate("/quiz");
   };
+  
 
   const handleCustomStartQuiz = () => {
     if (customDifficulty.trim() && customTopic.trim() && customLanguage.trim()) {
@@ -222,8 +225,10 @@ const QuizCategory = () => {
               </div>
 
               <div className="input-wrapper">
-                <label className="input-label">Topic</label>
+                <label id="quiz-topic-label" className="input-label">Topic</label>
+
                 <input
+                  id="quiz-topic"
                   type="text"
                   placeholder="Quiz Topic"
                   value={customTopic}
@@ -253,6 +258,24 @@ const QuizCategory = () => {
           </div>
         </div>
       )}
+      {errorMessage && (
+        <div className="error-popup-overlay">
+          <div className="error-popup">
+            <p>{errorMessage}</p>
+            <span
+              onClick={() => {
+                setErrorMessage("");
+                setShowPopup(false);
+                setShowCustomPopup(false);
+                setQuizDisplayName(null);
+              }}
+            >
+              Back
+            </span>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
