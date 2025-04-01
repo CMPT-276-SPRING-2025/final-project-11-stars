@@ -314,6 +314,12 @@ const QuizPage = () => {
               <textarea
                 value ={budEInput}
                 onChange={(e) => setBudEInput(e.target.value)}
+                onKeyDown={(e)=>{
+                  if(e.key === "Enter" && !e.shiftKey){
+                    e.preventDefault();
+                    handleAskBudE();
+                  }
+                }}
                 placeholder="Ask Bud-E to learn more!"
                 rows={3}
                 className="ask-input"
@@ -370,6 +376,12 @@ const QuizPage = () => {
               <textarea
                 value ={budEInput}
                 onChange={(e) => setBudEInput(e.target.value)}
+                onKeyDown={(e)=>{
+                  if(e.key === "Enter" && !e.shiftKey){
+                    e.preventDefault();
+                    handleAskBudE();
+                  }
+                }}
                 placeholder="Ask Bud-E to learn more!"
                 rows={3}
                 className="ask-input"
