@@ -16,7 +16,7 @@ const ResultPage = () => {
       <div className="result-content">
         <div className="score-message">Score: {score}/10</div>
         <div className="result-info">
-        {(score<=4&&(<p>Great effort! Every mistake is a step towards learning!</p>))||(score>4&&score<8&&(<p>You are improving! Keep up the good work!</p>))||(score>=8&&(<p>Congratulations! You are officially BrainGoated!</p>))}
+        {(score<=4&&(<p>Great effort! Every mistake is a step towards learning!😊</p>))||(score>4&&score<8&&(<p>You are improving! Keep up the good work!💪</p>))||(score>=8&&(<p>Congratulations! You are officially BrainGoated!😎</p>))}
         </div>
         
         <div className="ai-assistant">
