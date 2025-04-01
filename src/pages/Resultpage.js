@@ -1,7 +1,9 @@
 import React, {useContext} from 'react';
 import { QuizContext } from "../context/QuizContext";
 import { useNavigate } from 'react-router-dom';
-import './Resultpage.css'; // Ensure to create and style this file accordingly
+import './Resultpage.css'; 
+import FloatingRobot from '../FloatingRobot';
+
 
 const ResultPage = () => {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const ResultPage = () => {
         </div>
         
         <div className="ai-assistant">
-          <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
+        <FloatingRobot />
         </div>
         
         <div className="result-buttons">
