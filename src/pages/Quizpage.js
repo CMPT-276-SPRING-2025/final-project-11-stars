@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef, useCallback } from "rea
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
 import "./Quizpage.css";
+import FloatingRobot from "../FloatingRobot"; 
 
 const QuizPage = () => {
   const navigate = useNavigate();
@@ -193,6 +194,7 @@ const QuizPage = () => {
   }
 
   return (
+    <div className="quiz-wrapper">
     <div className="quiz-container">
       <div className="header">
       <div className={`timer-box ${timeLeft <= 5 ? 'timer-box-critical' : ''}`}>
@@ -283,9 +285,11 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
-              {budEHistory.length === 0 && 
-              (<img src="/bud-e.png" alt="Bud-E" className="ai-icon" />)
-              } 
+              {budEHistory.length === 0 && (
+                <div className="floating-robot-wrapper">
+                  <FloatingRobot />
+                </div>
+              )}
               {budEHistory.length > 0 && (
                 <div className="budE-chat-history">
                 {
@@ -339,9 +343,11 @@ const QuizPage = () => {
             </div>
             <div className="chatbot-container">
               <p>Learn more with Bud-E!</p>
-              {budEHistory.length === 0 && 
-              (<img src="/bud-e.png" alt="Bud-E" className="ai-icon" />)
-              } 
+              {budEHistory.length === 0 && (
+                <div className="floating-robot-wrapper">
+                  <FloatingRobot />
+                </div>
+              )}
               {budEHistory.length > 0 && (
                 <div className="budE-chat-history">
                 {
@@ -385,6 +391,7 @@ const QuizPage = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
