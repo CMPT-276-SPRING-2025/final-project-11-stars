@@ -3,14 +3,19 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import ResultPage from "../pages/Resultpage";
 import { QuizContext } from "../context/QuizContext";
 import { MemoryRouter } from "react-router-dom";
-import * as routerDom from "react-router-dom";
 
-// Mock useNavigate before each test
+// Mock useNavigate
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockNavigate,
 }));
+
+// Mock the FloatingRobot component
+jest.mock("../FloatingRobot", () => () => (
+  <img src="/bud-e.png" alt="Bud-E" />
+));
+
 describe("ResultPage", () => {
   const mockResetQuiz = jest.fn();
 
@@ -36,7 +41,7 @@ describe("ResultPage", () => {
     ).toBeInTheDocument();
   });
 
-  test("displays Bud-E image", () => {
+  test("displays Bud-E image from FloatingRobot", () => {
     renderWithContext();
     const image = screen.getByAltText(/Bud-E/i);
     expect(image).toBeInTheDocument();
