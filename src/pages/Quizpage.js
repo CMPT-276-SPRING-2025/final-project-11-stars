@@ -31,6 +31,8 @@ const QuizPage = () => {
   const [justStarted, setJustStarted] = useState(true);
   const [isBudEExpanded, setIsBudEExpanded] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false); 
+  const [quizReady, setQuizReady] = useState(false); // ✅ NEW
+
 
   const normalize = (str) => {
     if (typeof str === "string") {
@@ -39,9 +41,8 @@ const QuizPage = () => {
     if (str && typeof str === "object" && str.description) {
       return str.description.trim().toLowerCase();
     }
-    return ""; // fallback for undefined/null/non-strings
+    return "";
   };
-  
 
   const handleTimeout = useCallback(() => {
     if (!answered) {
@@ -54,11 +55,12 @@ const QuizPage = () => {
     }
   }, [answered]);
 
+  // ✅ Start timer only when quiz is ready and timer is active
   useEffect(() => {
-    setJustStarted(true);
-    const timer = setTimeout(() => setJustStarted(false), 1000);
+    if (!quizReady || !isTimerActive) return;
 
-    if (!isTimerActive) return;
+    setJustStarted(true);
+    const startupDelay = setTimeout(() => setJustStarted(false), 1000);
 
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -73,9 +75,16 @@ const QuizPage = () => {
 
     return () => {
       clearInterval(timerRef.current);
-      clearTimeout(timer);
+      clearTimeout(startupDelay);
     };
-  }, [currentQuestion, isTimerActive, handleTimeout]);
+  }, [quizReady, currentQuestion, isTimerActive, handleTimeout]);
+
+  // ✅ When loading is done and questions are ready, mark quiz as ready
+  useEffect(() => {
+    if (!loading && questions.length > 0) {
+      setQuizReady(true);
+    }
+  }, [loading, questions]);
 
   useEffect(() => {
     if (answered && questions[currentQuestion]?.explanation === null) {
@@ -127,7 +136,6 @@ const QuizPage = () => {
       </div>
     );
   }
-  
 
   if (questions.length === 0) {
     return (
@@ -160,14 +168,14 @@ const QuizPage = () => {
       }
 
       if (isCorrect) {
-        confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } }); // 🎉
+        confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
         setScore((prev) => prev + 1);
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
         setShakeEffect(true);
       }
-      // Save this question’s result
+
       const answeredData = {
         question: question.text,
         options: question.options,
@@ -177,7 +185,6 @@ const QuizPage = () => {
         explanation: explanation || null,
       };
       setAnsweredQuestions((prev) => [...prev, answeredData]);
-
 
       setIsBudEExpanded(true);
       setAnswered(true);
@@ -198,7 +205,7 @@ const QuizPage = () => {
       setIsTimerActive(true);
       setJustStarted(true);
       setIsBudEExpanded(false);
-      setShakeEffect(false); // Reset shake
+      setShakeEffect(false);
     } else {
       navigate("/result");
     }
@@ -306,7 +313,6 @@ const QuizPage = () => {
             </div>
           </div>
         </div>
-
 
         <div className="quiz-buttons">
           <button className="finish-button" onClick={() => navigate("/result")}>
