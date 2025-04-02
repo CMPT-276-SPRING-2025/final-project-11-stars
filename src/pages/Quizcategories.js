@@ -4,17 +4,17 @@ import { QuizContext } from "../context/QuizContext";
 import './Quizcategories.css';
 
 const categories = [
-  { name: 'General', categoryName: 'general_knowledge', image: '/general.png', alt_text: 'General category icon' },
-  { name: 'Culture', categoryName: 'society_and_culture', image: '/culture.png', alt_text: 'Culture category icon' },
-  { name: 'Geography', categoryName: 'geography', image: '/geography.png', alt_text: 'Geography category icon' },
-  { name: 'Literature', categoryName: 'arts_and_literature', image: '/literature.png', alt_text: 'Literature category icon' },
-  { name: 'Food', categoryName: 'food_and_drink', image: '/food.png', alt_text: 'Food category icon ' },
-  { name: 'Film & TV', categoryName: 'film_and_tv', image: '/film_and_tv.png', alt_text: 'Film and TV category ' },
-  { name: 'Music', categoryName: 'music', image: '/music.png', alt_text: 'Music category icon' },
-  { name: 'Sports', categoryName: 'sport_and_leisure', image: '/sports.png', alt_text: 'Sports category icon' },
-  { name: 'Science', categoryName: 'science', image: '/science.png', alt_text: 'Science category icon' },
-  { name: 'History', categoryName: 'history', image: '/history.png', alt_text: 'History category icon' },
-  { name: 'Custom', categoryName: 'custom_ai_quiz', image: '/custom_quiz.png', alt_text: 'Custom category icon' }
+  { name: 'General', categoryName: 'general_knowledge', image: '/general_knowledge.svg', alt_text: 'General category icon' },
+  { name: 'Culture', categoryName: 'society_and_culture', image: '/culture.svg', alt_text: 'Culture category icon' },
+  { name: 'Geography', categoryName: 'geography', image: '/geography.svg', alt_text: 'Geography category icon' },
+  { name: 'Literature', categoryName: 'arts_and_literature', image: '/literature.svg', alt_text: 'Literature category icon' },
+  { name: 'Food', categoryName: 'food_and_drink', image: '/food.svg', alt_text: 'Food category icon ' },
+  { name: 'Film & TV', categoryName: 'film_and_tv', image: '/film_and_tv.svg', alt_text: 'Film and TV category ' },
+  { name: 'Music', categoryName: 'music', image: '/music.svg', alt_text: 'Music category icon' },
+  { name: 'Sports', categoryName: 'sport_and_leisure', image: '/sports.svg', alt_text: 'Sports category icon' },
+  { name: 'Science', categoryName: 'science', image: '/science.svg', alt_text: 'Science category icon' },
+  { name: 'History', categoryName: 'history', image: '/history.svg', alt_text: 'History category icon' },
+  { name: 'Custom', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'Custom category icon' }
 ];
 
 const triviaApiLanguages = [
