@@ -1,10 +1,19 @@
 @import url('https://fonts.google.com/share?selection.family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
 
-body {
-    font-family: "Arial", sans-serif;
-    background-color: #E9EED9;
-    margin: 0;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-family: "Arial", sans-serif;
 }
+
+.quizpage-background {
+  background-color: #CBD2A4;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .loading-message {
   margin: 50px;
 }
@@ -24,93 +33,76 @@ body {
   min-height: 95vh;
   width: 90%;
   max-width: 1200px;
-  padding: 40px;
-  background-color: #E9EED9;
+  padding: 20px;
+  background-color: transparent;
   border-radius: 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
+  align-items: center;
 }
 
 .header {
-display: flex;
-justify-content: space-between;
-margin-bottom: 20px;
+  display: flex;
+  justify-content: center; /* horizontally center */
+  align-items: center;     /* vertically center */
+  gap: 60px;               /* space between timer and score */
+  margin-bottom: 10px;
+  margin-top: 30px;
 }
 
+
 .timer-box, .score-box {
-background-color: #9A7E6F;
-padding: 10px 20px;
-border-radius: 5px;
-font-weight: bold;
-color: white;
-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #E9EED9;
+  color: #54473F;
+  border: 2px solid #6F715B;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 12px 24px;
+  min-width: 120px;
+  height: 50px; /* Ensure matching height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .question-box {
-background-color: #E9EED9;
-padding: 40px;
-border-radius: 10px;
-color: #54473F;
-border: 12px solid #9A7E6F;
-margin-bottom: 20px;
-justify-items: center;
+  background-color: #E9EED9;
+  padding: 50px 60px;
+  border-radius: 10px;
+  color: #54473F;
+  border: 4px solid #9A7E6F;
+  margin-bottom: 20px;
+
+  width: 100%;
+  max-width: 1400px; /* updated to go wide! */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .question-text {
 font-size: 24px;
 font-weight: bold;
-margin-bottom: 20px;.exit-button {
-background-color: #9A7E6F;
-padding: 10px 20px;
-border-radius: 5px;
-font-weight: bold;
-color: white;
-text-align: center;
-display: inline-block;
-cursor: pointer;
-border: none;
-font-size: 16px;
-width: fit-content;
+margin-bottom: 20px;
 }
 
-.popup-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1000;
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.popup-box {
-background: #E9EED9;
-padding: 30px;
-border-radius: 10px;
-text-align: center;
-width: 400px;
-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.incorrect {
-font-size: 24px;
-font-weight: bold;
-color: #D9534F;
-margin-bottom: 10px;
-}
-
-.correct {
-font-size: 24px;
-font-weight: bold;
-color: #4F8A10;
-margin-bottom: 10px;
-}
 
 .correct-popup {
 background: #CBD2A4;
@@ -149,108 +141,130 @@ font-size: 16px;
 .complete-button:hover {
 background-color: #816656;
 }
-}
 
-.text-options{
-margin-top: 20px;
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
- }
-.image-options{
-  margin-top: 20px;
-  display:grid;
+/* === IMAGE OPTIONS FIXED GRID === */
+.image-options {
+  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 25px;
   justify-items: center;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Wrap each image inside this container (or apply this to the image parent div) */
+.image-option {
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image itself resizes to stay inside the box */
+.image-option img {
   max-width: 100%;
- }
- .image-options img{
-  width: 200px;
-  height: 200px;
+  max-height: 100%;
   object-fit: cover;
-  border: 2px solid transparent;
   border-radius: 10px;
-  transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.3s;
+  transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 0.5s forwards;
- }
- @keyframes fadeIn{
-  to{
+}
+
+.image-option img:hover {
+  transform: scale(1.05);
+}
+
+.image-option.correct-highlight {
+  border: 4px solid #2E7D32;
+  box-shadow: 0 0 8px #2E7D32;
+  transform: scale(1.02);
+}
+
+.image-option.wrong-highlight {
+  border: 4px solid #C62828;
+  box-shadow: 0 0 8px #C62828;
+  transform: scale(1.02);
+}
+
+
+
+@keyframes fadeIn {
+  to {
     opacity: 1;
   }
- }
- .image-options img:hover{
+}
+
+.image-options img:hover {
   background-color: #B0B99D;
- }
+  transform: scale(1.05);
+}
+
+/* === DARK MODE SUPPORT === */
+body.dark-mode .image-options img.correct-highlight {
+  border-color: #6dbd6d;
+  box-shadow: 0 0 6px rgba(109, 189, 109, 0.4);
+}
+
+body.dark-mode .image-options img.wrong-highlight {
+  border-color: #cc6666;
+  box-shadow: 0 0 6px rgba(204, 102, 102, 0.4);
+}
+
+
+.image-options img.wrong-highlight {
+  border: 4px solid #C62828;
+  box-shadow: 0 0 8px #C62828;
+  opacity: 1;
+}
 
 .option {
-background-color: #CBD2A4;
-padding: 20px;
-border-radius: 5px;
-border: none;
-font-size: 20px;
-font-weight: bold;
-min-width:200px;
-min-height: 80px;
-cursor: pointer;
+  background-color: #CBD2A4;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #6F715B;
+  font-size: 20px;
+  font-weight: bold;
+  min-width: 300px;
+  max-width: 300px; /* Fix the width */
+  height: 80px; /* Standard height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
 }
+
+
+.option.correct-highlight {
+  background-color: #C8E6C9 !important;
+  color: #2E7D32 !important;
+  border: 3px solid #2E7D32 !important;
+  box-shadow: 0 0 10px 4px #2E7D32 !important;
+}
+
+.option.wrong-highlight {
+  background-color: #F8D7DA !important;
+  color: #C62828 !important;
+  border: 3px solid #C62828 !important;
+  box-shadow: 0 0 10px 4px #C62828 !important;
+}
+
+
 
 .option:hover {
-background-color: #B0B99D;
-}
-.exit-button {
-background-color: #9A7E6F;
-padding: 10px 20px;
-border-radius: 5px;
-font-weight: bold;
-color: white;
-text-align: center;
-display: inline-block;
-cursor: pointer;
-border: none;
-font-size: 16px;
-width: fit-content;
-margin-top: 20px;
-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.popup-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1000;
-}
-
-.popup-box {
-background: #E9EED9;
-padding: 30px;
-border-radius: 10px;
-text-align: center;
-width: 400px;
-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.incorrect {
-font-size: 24px;
-font-weight: bold;
-color: #D9534F;
-margin-bottom: 10px;
-}
-
-.correct {
-font-size: 24px;
-font-weight: bold;
-color: #4F8A10;
-margin-bottom: 10px;
+  background-color: #B0B99D;
 }
 
 .correct-popup {
@@ -276,10 +290,13 @@ padding: 15px;
 border-radius: 5px;
 margin-bottom: 15px;
 }
-.feedback-popup-buttons{
+
+.feedback-popup-buttons {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
+
 .complete-button {
 background-color: #9A7E6F;
 color: white;
@@ -394,33 +411,41 @@ resize: none;
 margin-bottom: 10px;
 background-color: #E9EED9;
 }
-.budE-button{
-padding: 6px 12px;
-font-size: 1rem; 
-background-color: #9A7E6F;
-color: white;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-align-self: flex-end;
 
+.budE-button {
+  padding: 6px 12px;
+  font-size: 1rem;
+  background-color: #9A7E6F;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: 10px;
 }
+
+
 .budE-button:disabled{
-background-color:#9b928c;
-cursor: not-allowed;
+  background-color:#9b928c;
+  cursor: not-allowed;
 }
 
 .timer-box {
   position: relative;
   width: 200px;
   height: 40px;
-  background-color: #e0e0e0;
+  background-color: #E9EED9;  
+  border: 2px solid #54473F;
   border-radius: 10px;
   overflow: hidden;
-  margin-right: 20px;
   font-weight: bold;
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add soft shadow */
 }
+
 
 .timer-fill {
   position: absolute;
@@ -430,21 +455,20 @@ cursor: not-allowed;
   transition: width 1s linear;
   z-index: 0;
   border-radius: 10px;
-  color:#54473F;
-  background-color: #54473F;
+  background-color: #9A7E6F; /* Darker brown or red for contrast */
 }
+
 
 
 .timer-text {
   position: relative;
   z-index: 1;
+  font-size: 1.3rem;
+  color: #54473F;
   width: 100%;
   text-align: center;
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #FFFFFF; /* default white */
-  transition: color 0.3s ease;
 }
+
 
 /* When fill is under text */
 .timer-on-white {
@@ -493,12 +517,15 @@ body.dark-mode {
 }
 body.dark-mode .question-box{
   background: #2f2f2f;
-  color: #CBD2A4;
   padding: 15px;
   border-radius: 5px;
   margin-bottom: 15px;
   border: 1px solid #9A7E6F;
-  box-shadow: 0 0 10px rgba(203, 210, 164, 0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .quizpage-background {
+  background-color: #2f2f2f;
 }
 
 body.dark-mode .quiz-container,
@@ -507,13 +534,15 @@ body.dark-mode .budE-chat-history,
 body.dark-mode .ask-input {
   background-color: #2f2f2f;
   color: #E9EED9;
-  border-color: #CBD2A4;
+  border-color: #9A7E6F; 
 }
 
-body.dark-mode .question-box,
-body.dark-mode .popup-box {
-  box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
+
+body.dark-mode .question-box{
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  color: #CBD2A4
 }
+
 
 body.dark-mode .correct-answer,
 body.dark-mode .assistant-content {
@@ -527,7 +556,7 @@ body.dark-mode .option{
   border-radius: 5px;
   margin-bottom: 15px;
   border: 1px solid #9A7E6F;
-  box-shadow: 0 0 10px rgba(203, 210, 164, 0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode .option:hover {
@@ -543,12 +572,20 @@ body.dark-mode .timer-box {
   background-color: #2f2f2f;
   color: #E9EED9;
   border: 2px solid #9A7E6F;
-  box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   transition: background-color 0.3s;
 }
 
 body.dark-mode .timer-fill {
   background-color: #9A7E6F;
+}
+
+body.dark-mode .score-box {
+  background-color: #2f2f2f;
+  color: #E9EED9;
+  border: 2px solid #9A7E6F;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s;
 }
 
 body.dark-mode .chatbot-container p,
@@ -561,13 +598,195 @@ body.dark-mode .assistant-bubble {
   color: #CBD2A4;
   border-radius: 10px;
   padding: 10px;
+  
 }
+
 body.dark-mode .explanation-box {
   background: #2f2f2f;
   color: #CBD2A4;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
+  border: 1px solid #444; 
   border: 1px solid #9A7E6F;
-  box-shadow: 0 0 10px rgba(203, 210, 164, 0.1);
+
+}
+
+
+.text-options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+body.dark-mode .text-options {
+  display: flex !important;
+  flex-direction: column !important;
+  
+}
+
+
+@keyframes budEBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+
+.budE-avatar-floating {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 1001;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.budE-avatar-floating:hover {
+  transform: scale(1.1);
+}
+
+.bud-e-floating-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 1003;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  background: #E9EED9;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  animation: budEBounce 1s ease-in-out infinite;
+}
+
+.bud-e-popup-floating {
+  position: fixed;
+  bottom: 100px;
+  right: 280px;     /* moved to bottom-right */
+  left: auto;      /* ensure left is not conflicting */
+  width: 360px;
+  background: #E9EED9;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  padding: 20px;
+  z-index: 1002;
+  animation: slideInUp 0.4s ease forwards;
+}
+
+.bud-e-popup-hidden {
+  display: none !important;
+}
+
+.bud-e-popup-visible {
+  display: block !important;
+}
+
+@media screen and (max-width: 768px) {
+  .bud-e-popup-floating {
+    width: 90%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: 90px;
+  }
+}
+
+
+.bud-e-floating-icon:hover {
+  transform: scale(1.1);
+  animation-play-state: paused;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bud-e-bottom-right {
+  bottom: 100px !important; /* distance from bottom */
+  right: 180px;   /* align to right instead of left */
+  left: auto !important;
+}
+
+/* Shift quiz content left to make space for Bud-E */
+.quiz-container.shift-left {
+  margin-right: 650px; /* Makes space for Bud-E popup (360px + padding) */
+  transition: margin-right 0.4s ease;
+}
+@media screen and (max-width: 768px) {
+  .quiz-container.shift-left {
+    margin-right: 0;
+  }
+}
+
+.quiz-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.finish-button {
+  background-color: #9A7E6F;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.finish-button:hover {
+  background-color: #816656;
+}
+/* Correct answer in dark mode */
+body.dark-mode .option.correct-highlight {
+  background-color: #3c5232 !important;  /* muted green */
+  color: #b5e3b1 !important;             /* soft light green text */
+  border: 2px solid #6dbd6d !important;  /* soft outline */
+  box-shadow: 0 0 6px rgba(109, 189, 109, 0.4) !important;
+}
+
+/* Incorrect answer in dark mode */
+body.dark-mode .option.wrong-highlight {
+  background-color: #552d2d !important;  /* muted red background */
+  color: #f2b4b4 !important;             /* light pinkish red text */
+  border: 2px solid #cc6666 !important;  /* soft red border */
+  box-shadow: 0 0 6px rgba(204, 102, 102, 0.4) !important;
+}
+
+
+body.dark-mode .bud-e-popup-floating {
+  background: #2f2f2f;
+  border: 1px solid #444;
+  color: #E9EED9;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* softer + darker */
+}
+
+body.dark-mode .bud-e-popup-floating:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.9); /* slightly deeper on hover */
+  transform: translateY(-2px); /* subtle lift */
+  transition: all 0.3s ease;
+
+}
+
+
+body.dark-mode .bud-e-floating-icon {
+  background: #2f2f2f; /* or try #3a3a3a or even #9A7E6F for contrast */
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15); /* subtle glow in dark mode */
+  border: 1px solid #444; /* optional border to enhance structure */
 }

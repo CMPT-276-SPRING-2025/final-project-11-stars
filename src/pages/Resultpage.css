@@ -13,8 +13,11 @@ body.dark-mode {
 body.dark-mode .result-container {
     background-color: #2f2f2f;
     color: #E9EED9;
-    border-color: #9A7E6F;
-    box-shadow: none;
+    border-color: #121212;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);;
+}
+body.dark-mode .result-container:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
 }
 
 body.dark-mode .result-content {
@@ -24,7 +27,10 @@ body.dark-mode .result-content {
     padding: 0;
 }
 
-body.dark-mode .score-message,
+body.dark-mode .score-message{
+    background-color: #2f2f2f;
+    color: #CBD2A4;
+}
 body.dark-mode .result-info {
     background-color: #2f2f2f;
     border: 1.5px solid #9A7E6F;

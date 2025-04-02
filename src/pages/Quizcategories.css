@@ -76,7 +76,6 @@ label,
   width: 230px;
   height: 230px;
   margin-bottom: 10px;
-  background-color: #E9EED9;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15); /* ✅ Subtle image lift */
 }
 
@@ -177,7 +176,7 @@ label,
   flex-direction: column;
   align-items: center;
   gap: 0px;
-  margin-top: -30px;
+  margin-top: 30px;
   margin-bottom: 0px;
 }
 
@@ -295,13 +294,14 @@ select {
 
 .popup-close-btn {
   position: absolute;
-  top: 35px;
-  right: 4px;
-  width: 20px; 
-  height: 20px;  
+  right: 20px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  transition: transform 0.3s ease; 
+  transition: transform 0.3s ease;
+  z-index: 1; /* Ensure it's above Bud-E and modal contents */
 }
+
 
 .custom-quiz-popup .popup-close-btn:hover {
   transform: scale(1.2); 
@@ -497,6 +497,7 @@ input:checked + .slider:before {
   gap: 60px;
   margin-top: 30px;
   margin-bottom: 30px;
+  
 }
 
 /* Ensure each block (label + input/select) has the same size and alignment */
@@ -566,22 +567,26 @@ body.dark-mode .quiz-category-container {
 body.dark-mode .quiz-category-title {
   color: #CBD2A4;
   background-color: #2f2f2f; 
-  border: 2px solid #9A7E6F;
-  box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
+  border: 2px solid #000000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* softer + darker */
 
 }
 
+body.dark-mode .quiz-category-title :hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 5);
+}
 
 body.dark-mode .quiz-category-box {
   background-color: #2f2f2f;
   color: #E9EED9;
-  border: 2px solid #9A7E6F;
-  box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
+  border: 2px solid #121212;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   transition: background-color 0.3s;
 }
 
 body.dark-mode .quiz-category-box:hover {
   background-color: #3a3a3a;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
 }
 
 body.dark-mode .quiz-option {
@@ -627,7 +632,7 @@ body.dark-mode .start-popup-content h2 {
 body.dark-mode .start-quiz-btn {
   background-color: #9A7E6F;
   color: #fff;
-  border: none;
+  border: #9A7E6F;
 }
 
 body.dark-mode .start-popup-close-btn {
@@ -663,7 +668,7 @@ body.dark-mode .error-popup .popup-close-btn {
 }
 body.dark-mode .custom-quiz-popup {
   background-color: #2f2f2f;
-  border: 1px solid #9A7E6F;
+  border: 1px solid #121212;
   box-shadow: 0 0 16px rgba(154, 126, 111, 0.3);
 }
 
@@ -671,7 +676,7 @@ body.dark-mode .custom-quiz-popup {
 body.dark-mode .custom-quiz-title {
   color: #CBD2A4;
   background-color: #2f2f2f; 
-  border: 2px solid #9A7E6F;
+  border: 2px solid #121212;
   box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
 
 }
