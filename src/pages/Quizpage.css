@@ -142,15 +142,17 @@ font-size: 16px;
 background-color: #816656;
 }
 
-.image-options{
+.image-options {
   margin-top: 20px;
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 20px;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
-  max-width: 100%;
- }
+  width: 100%;
+  box-sizing: border-box;
+}
+
  .image-options img{
   width: 200px;
   height: 200px;
@@ -620,7 +622,7 @@ body.dark-mode .text-options {
   transition: transform 0.3s ease;
   background: #E9EED9;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-  animation: budEBounce 0.5s ease-in-out infinite;
+  animation: budEBounce 1s ease-in-out infinite;
 }
 
 .bud-e-popup-floating {
@@ -725,18 +727,6 @@ body.dark-mode .option.wrong-highlight {
   color: #f2b4b4 !important;             /* light pinkish red text */
   border: 2px solid #cc6666 !important;  /* soft red border */
   box-shadow: 0 0 6px rgba(204, 102, 102, 0.4) !important;
-}
-
-/* Image option correct in dark mode */
-body.dark-mode .image-options img.correct-highlight {
-  border: 3px solid #6dbd6d;
-  box-shadow: 0 0 6px rgba(109, 189, 109, 0.4);
-}
-
-/* Image option incorrect in dark mode */
-body.dark-mode .image-options img.wrong-highlight {
-  border: 3px solid #cc6666;
-  box-shadow: 0 0 6px rgba(204, 102, 102, 0.4);
 }
 
 
