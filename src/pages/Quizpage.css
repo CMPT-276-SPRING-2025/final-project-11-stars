@@ -831,52 +831,187 @@ body.dark-mode .bud-e-floating-icon {
   80% { transform: translateX(10px); }
   100% { transform: translateX(0); }
 }
-
+/* 🌵 Base Error Page */
 .error-page {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #1e1e1e;
+  background: linear-gradient(135deg, #e8f5e9, #f0ebe3); /* soft greens and neutrals */
 }
 
 .error-container {
   text-align: center;
-  background: #2a2a2a;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
-  color: #ffcccc;
+  background: #f9fff3; /* pale cactus skin */
+  padding: 50px 40px;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(101, 154, 59, 0.15); /* greenish glow */
+  color: #2e3114; /* cactus facial tone */
+  transition: all 0.3s ease;
+  animation: popFade 0.4s ease-out;
 }
 
+/* 🌵 Cactus Icon */
 .error-icon {
-  width: 80px;
+  width: 100px;
   margin-bottom: 20px;
+  animation: cactusBounce 1.8s infinite ease-in-out;
 }
 
 .error-message {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff5555;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #659a3b !important;
+  font-weight: 700 !important;
+  font-size: 28px;
 }
+
 
 .error-subtext {
-  font-size: 16px;
-  margin: 10px 0 30px;
-  color: #ddd;
+  font-size: 18px;
+  color: #4e5841; /* earthier dark green */
+  margin-bottom: 30px;
 }
 
+/* 🪴 Exit Button */
 .exit-button {
-  padding: 12px 24px;
+  padding: 14px 30px;
   font-size: 16px;
-  background-color: #cb5a5e;
-  color: #fff;
+  background-color: #bedf9f; /* light cactus highlight */
+  color: #2e2e2e;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .exit-button:hover {
-  background-color: #a04044;
+  background-color: #91cf61;
+  transform: scale(1.05);
 }
+
+/* 🌚 Dark Mode */
+body.dark-mode .error-page {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+}
+
+body.dark-mode .error-container {
+  background: #2a2a2a;
+  color: #E9EED9;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .error-message {
+  color: #bedf9f;
+}
+
+body.dark-mode .error-subtext {
+  color: #b0ba91;
+}
+
+body.dark-mode .exit-button {
+  background-color: #659a3b;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(109, 189, 109, 0.2);
+}
+
+body.dark-mode .exit-button:hover {
+  background-color: #91cf61;
+  transform: scale(1.05);
+}
+
+body.dark-mode .error-icon {
+  filter: brightness(1.1) saturate(1.2);
+}
+
+
+
+/* 🌱 Animations */
+@keyframes cactusBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes popFade {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Styling for "No Questions Available" screen */
+
+.no-questions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9, #fce4ec); /* soft pastel */
+}
+
+.no-questions-message {
+  background-color: #fffaf0;
+  padding: 40px 60px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(85, 85, 85, 0.2);
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.no-questions-message h2 {
+  font-size: 1.8rem;
+  color: #5c3c38;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.no-questions-message .finish-button {
+  background-color: #CBD2A4;
+  color: #54473F;
+  font-size: 1.2rem;
+  padding: 12px 28px;
+  border: 2px solid #6F715B;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.no-questions-message .finish-button:hover {
+  background-color: #A3A692;
+  transform: scale(1.05);
+}
+
+/* 🌑 DARK MODE FIX */
+body.dark-mode .no-questions {
+  background: linear-gradient(135deg, #1e1e1e, #121212);
+}
+
+body.dark-mode .no-questions-message {
+  background-color: #2a2a2a;
+  color: #E9EED9;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .no-questions-message h2 {
+  color: #CBD2A4;
+}
+
+body.dark-mode .no-questions-message .finish-button {
+  background-color: #9A7E6F;
+  color: #fff;
+  border-color: #E9EED9;
+}
+
+body.dark-mode .no-questions-message .finish-button:hover {
+  background-color: #A87B69;
+}
+

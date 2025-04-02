@@ -5,7 +5,14 @@ import confetti from "canvas-confetti";
 import "./Quizpage.css";
 
 const QuizPage = () => {
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    document.body.classList.toggle("dark-mode", savedMode);
+    document.body.classList.toggle("light-mode", !savedMode);
+  }, []);
+  
   const navigate = useNavigate();
+  
 
   const {
     score, setScore,
@@ -127,7 +134,11 @@ const QuizPage = () => {
       <div className="quizpage-background error-page">
         <div className="error-container">
           <img src="/warning.png" alt="Warning" className="error-icon" />
-          <h2 className="error-message">{errorMessage}</h2>
+          <h2 className="error-message">
+            {typeof errorMessage === "string"
+              ? errorMessage
+              : "Oops! Something went wrong."}
+          </h2>
           <p className="error-subtext">Try a simpler or more kid-friendly topic instead! 💡</p>
           <button className="exit-button" onClick={() => navigate("/")}>
             ⬅️ Back to Home
@@ -139,8 +150,8 @@ const QuizPage = () => {
 
   if (questions.length === 0) {
     return (
-      <div className="quizpage-background">
-        <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
+      <div className="quizpage-background no-questions">
+        <div className="no-questions-message">
           <h2>No questions available. Please try a different topic.</h2>
           <button className="finish-button" onClick={() => navigate("/result")}>
             Finish Quiz
@@ -149,6 +160,7 @@ const QuizPage = () => {
       </div>
     );
   }
+  
 
   const question = questions[currentQuestion];
   const questionText = question?.text || "Question not available";
