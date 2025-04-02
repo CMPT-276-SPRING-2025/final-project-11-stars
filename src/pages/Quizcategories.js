@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from "../context/QuizContext";
 import './Quizcategories.css';
+import FloatingRobot from "../FloatingRobot"; 
 
 const categories = [
   { name: 'General', categoryName: 'general_knowledge', image: '/general.png', alt_text: 'General category icon' },
@@ -201,11 +202,7 @@ const QuizCategory = () => {
           <div className="custom-quiz-popup-content">
             <img className="popup-close-btn" src="/crossbtn.png" alt="Close" onClick={() => setShowCustomPopup(false)} />
             <div className="custom-title-block">
-              <iframe
-                src="/BudE_animation.html"
-                title="Bud-E Animation"
-                className="bud-e-frame"
-              />
+              <FloatingRobot />
               <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
             </div>
 
