@@ -4,7 +4,43 @@ body {
     margin: 0;
 }
 
-/* Main Container */
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #E9EED9;
+}
+
+body.dark-mode .result-container {
+    background-color: #2f2f2f;
+    color: #E9EED9;
+    border-color: #9A7E6F;
+    box-shadow: none;
+}
+
+body.dark-mode .result-content {
+    background-color: transparent;
+    border: none;
+    color: #E9EED9;
+    padding: 0;
+}
+
+body.dark-mode .score-message,
+body.dark-mode .result-info {
+    background-color: #2f2f2f;
+    border: 1.5px solid #9A7E6F;
+    color: #CBD2A4;
+}
+
+body.dark-mode .go-back-button {
+    background-color: #9A7E6F;
+    color: #fff;
+}
+
+body.dark-mode .go-back-button:hover {
+    background-color: #816656;
+}
+
+
 .result-container {
     width: 800px;
     padding: 40px;
@@ -15,10 +51,11 @@ body {
     flex-direction: column;
     justify-content: space-between;
     margin: 70px auto;
-
+    margin-top: 150px;
+    border: solid 1px #9A7E6F;
 }
 
-/* Header: Exit Button, Timer, Score */
+
 .result-header {
     display: flex;
     justify-content: space-between;
@@ -27,18 +64,16 @@ body {
     position: relative;
 }
 
-/* Result Box */
+
 .result-content {
-    background-color: #E9EED9;
-    border: 1.5px solid #9A7E6F;
-    padding: 40px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
     width: 100%;
     text-align: center;
-    border-radius: 10px;
     color: #54473F;
 }
 
-/* Score Message */
 .score-message {
     background-color: #9A7E6F;
     color: white;
@@ -49,7 +84,7 @@ body {
     border-radius: 5px;
 }
 
-/* Result Info */
+
 .result-info {
     background-color: #CBD2A4;
     padding: 15px;
@@ -58,8 +93,8 @@ body {
     font-weight: bold;
 }
 
-/* AI Assistant */
-.ai-assistant {
+
+ai-assistant {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -70,7 +105,7 @@ body {
     height: auto;
 }
 
-/* Buttons */
+
 .result-buttons {
     display: flex;
     justify-content: center;
