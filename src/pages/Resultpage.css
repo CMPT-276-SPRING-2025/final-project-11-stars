@@ -132,6 +132,26 @@ ai-assistant {
 .go-back-button:hover {
     background-color: #816656;
 }
+/* Responsive tweaks */
+@media screen and (max-width: 768px) {
+    .result-content {
+      padding: 30px 20px;
+    }
+  
+    .score-message {
+      font-size: 2rem;
+    }
+  
+    .result-info p {
+      font-size: 1.3rem;
+    }
+  
+    .go-back-button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 12px 0;
+    }
+  }
 /* 🔘 Filter Buttons */
 .filter-buttons {
     display: flex;
