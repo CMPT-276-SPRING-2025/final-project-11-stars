@@ -1,9 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { QuizContext } from "../context/QuizContext";
 import { useNavigate } from "react-router-dom";
 import "./Resultpage.css";
 
 const ResultPage = () => {
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    document.body.classList.toggle("dark-mode", savedMode);
+    document.body.classList.toggle("light-mode", !savedMode);
+  }, []);
   const navigate = useNavigate();
   const { score, resetQuiz, answeredQuestions } = useContext(QuizContext);
   const [filter, setFilter] = useState("all");
