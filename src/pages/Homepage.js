@@ -6,6 +6,14 @@ const HomePage = () => {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("darkMode") === "true";
   });
+  useEffect(() => {
+    // Automatically scroll down after 3.5 seconds 
+    const timer = setTimeout(() => {
+      document.getElementById('quiz-category-space')?.scrollIntoView({ behavior: 'smooth' });
+    }, 3500);
+      // Cleanup: clear timer if component unmounts before it fires
+      return () => clearTimeout(timer);
+    }, []);
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
@@ -25,18 +33,19 @@ const HomePage = () => {
           <span className="slider round"></span>
         </label>
       </div>
-      <h1 className="main-heading">BrainGoated</h1>
-      {/* <img src="/bud-e.png" alt="BrainGoated Logo" className="logo" /> */}
-      <div className="iframe-wrapper">
-        <iframe
-          src="/BudE_animation.html"
-          title="Bud-E Animation"
-          className="bud-e-frame"
-        />
-      </div>
-      <p className="tagline">Water your curiosity, Watch it grow!</p>
-      <div className="quiz-category-space"></div>
-
+      <div className="welcome-section" >
+        <h1 className="main-heading">BrainGoated</h1>
+        {/* <img src="/bud-e.png" alt="BrainGoated Logo" className="logo" /> */}
+        <div className="iframe-wrapper">
+          <iframe
+            src="/BudE_animation.html"
+            title="Bud-E Animation"
+            className="bud-e-frame"
+          />
+        </div>
+        <p className="tagline">Water your curiosity, Watch it grow!</p>
+        </div>
+      <div id = "quiz-category-space" className="quiz-category-space"></div>
       <QuizCategory />
     </div>
 

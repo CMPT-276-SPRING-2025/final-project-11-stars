@@ -120,7 +120,7 @@ html {
       }
       50% {
         opacity: 1;
-        transform: scale(3); /* Max grow */
+        transform: scale(2.8); /* Max grow */
       }
       100% {
         opacity: 1;
@@ -199,6 +199,5 @@ html {
 }
 /* Quiz Section */
 .quiz-category-space {
-  height: 200px;
   background-color: transparent;
 }
