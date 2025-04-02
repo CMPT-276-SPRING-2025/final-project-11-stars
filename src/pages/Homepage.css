@@ -1,203 +1,329 @@
-/* HomePage.css */
 @import url('https://fonts.googleapis.com/css2?family=Jersey+20&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Delius&family=Fontdiner+Swanky&display=swap");
+
+/* Layout Containers */
 .homepage-container {
   padding: 50px;
   text-align: center;
   font-size: 10vw;
 }
 
-
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  
-  .theme-label {
-    color: inherit;
-  }
-  
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
- 
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #9A7E6F;
-    transition: 0.4s;
-    border-radius: 24px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #54473F;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(20px);
-  }
-  
-  .light-mode {
-    background-color: #E9EED9;
-    color: #54473F;
-  }
-  
-  /* Dark Mode */
-  .dark-mode {
-    background-color: #1e1e1e;
-    color: #E9EED9;
-  }
-  
-  .dark-mode .main-heading {
-    color: #CBD2A4;
-  }
-  
-  .dark-mode .tagline {
-    color: #9A7E6F;
-  }
-  
-  .dark-mode .toggle-button {
-    background-color: #54473F;
-    color: #E9EED9;
-  }
-  
 .landing-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 0px;
   text-align: center;
   min-height: 100vh;
-  margin-top: 150px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 html {
-  scroll-behavior:smooth;
+  scroll-behavior: smooth;
 }
 
- 
 .welcome-section {
-  animation: growShrinkFade 3.5s ease-in-out forwards;
-  margin-bottom: 400px;
-}
-@keyframes growShrinkFade{
-    0% {
-        opacity: 0;
-        transform: scale(2.5); /* Bigger */
-      }
-      50% {
-        opacity: 1;
-        transform: scale(2.8); /* Max grow */
-      }
-      100% {
-        opacity: 1;
-        transform: scale(2.5); /* Shrink to normal */
-    }
-}
-/*Responsive Scaling*/
-@media (max-width: 768px) {
-  .landing-page{
-    margin-top: 100px;
-  }
-  .welcome-section{
-    margin-bottom:200px;
-  }
-  @keyframes growShrinkFade {
-    0% {
-      opacity: 0;
-      transform: scale(1.3);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.5);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1.3);
-    }
-  }
-}
-/* Even smaller on phones */
-@media (max-width: 480px) {
-  .landing-page{
-    margin-top: 80px;
-  }
-  .welcome-section{
-    margin-bottom:150px;
-  }
-  @keyframes growShrinkFade {
-    0% {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.0);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(0.8);
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: none;
+  margin-bottom: -20;
 }
 
-/* Title (h1) */
+/* Toggle Dark/Light Theme */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.theme-label {
+  color: inherit;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #9A7E6F;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #54473F;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Theme Modes */
+.light-mode {
+  background-color: #E9EED9;
+  color: #54473F;
+}
+
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #E9EED9;
+}
+
+.dark-mode .main-heading {
+  color: #CBD2A4;
+}
+
+.dark-mode .tagline {
+  color: #9A7E6F;
+}
+
+.dark-mode .toggle-button {
+  background-color: #54473F;
+  color: #E9EED9;
+}
+
+/* Headline and Tagline */
 .main-heading {
-  
   font-family: 'Jersey 20', sans-serif;
-  transition: font-size 1s ease, transform 1s ease;
+  font-size:  14rem !important;
+  text-align: center;
+  opacity: 1;
+  transform: scale(1);
+  margin-top: 0;
+  margin-bottom: -60px;
 }
 
 /* Tagline */
 .tagline {
-  font-family:'Chakra Petch', sans-serif ;
+  font-family: 'Chakra Petch', sans-serif;
   font-weight: bold;
-  font-size:20px !important;
+  font-size: 3rem !important;
+  text-align: center;
+  margin-top: 0;
 }
 
-/* Bud-E Animation Iframe */
-.bud-e-frame {
-  width: 200px;
-  height: 300px;
-  border: none;
-  transition: width 1s ease, height 1s ease;
-  margin-top: -80px;
-  margin-bottom: -90px;
+/* Animations - First load & breathing loop */
+@keyframes growShrinkFadeOnce {
+  0% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
 }
+
+@keyframes chillBreathe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heading-once {
+  animation: growShrinkFadeOnce 3s ease-in-out forwards;
+}
+
+.heading-breathe {
+  animation: chillBreathe 2.5s ease-in-out infinite;
+}
+
+/* Robot Canvas Wrapper */
+.robot-3d-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: -60px;
+}
+
 /* Quiz Section */
 .quiz-category-space {
+  height: 100px;
   background-color: transparent;
+}
+
+/* === Universal Responsive Tweaks === */
+@media (max-width: 1024px) {
+  .homepage-container {
+    padding: 30px;
+    font-size: 8vw;
+  }
+
+  .robot-3d-wrapper {
+    height: 400px;
+  }
+
+  .main-heading {
+    font-size: 10rem !important;
+  }
+
+  .tagline {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-container {
+    padding: 20px;
+    font-size: 6vw;
+  }
+
+  .landing-page {
+    padding: 20px;
+    margin-top: 80px;
+  }
+
+  .main-heading {
+    font-size: 6rem !important;
+    margin-bottom: -30px;
+  }
+
+  .tagline {
+    font-size: 1.8rem !important;
+    margin-top: 10px;
+  }
+
+  .robot-3d-wrapper {
+    height: 300px;
+    margin-top: 20px;
+  }
+
+  .theme-toggle {
+    top: 15px;
+    right: 15px;
+    font-size: 0.9rem;
+  }
+
+  .slider {
+    width: 40px;
+    height: 20px;
+  }
+
+  .slider:before {
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    bottom: 2px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(18px);
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-container {
+    padding: 10px;
+    font-size: 5vw;
+  }
+
+  .main-heading {
+    font-size: 3rem !important;
+    margin-bottom: -20px;
+  }
+
+  .tagline {
+    font-size: 1.3rem !important;
+  }
+
+  .robot-3d-wrapper {
+    height: 220px;
+  }
+
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+  }
+
+  .slider {
+    width: 36px;
+    height: 18px;
+  }
+
+  .slider:before {
+    width: 14px;
+    height: 14px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(16px);
+  }
+}
+
+.heading-once { animation: growShrinkFadeOnce 3s ease-in-out forwards; }
+.heading-breathe { animation: chillBreathe 2.5s ease-in-out infinite; }
+
+
+/* Tagline Animations */
+.tagline-once {
+  animation: taglineGrowShrinkFadeOnce 3s ease-in-out forwards;
+}
+
+.tagline-breathe {
+  animation: chillBreatheTagline 2.5s ease-in-out infinite;
+}
+
+
+/* Tagline Breathing Loop */
+@keyframes chillBreatheTagline {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
