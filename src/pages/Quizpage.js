@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
-import confetti from "canvas-confetti"; // 🎉 NEW
+import confetti from "canvas-confetti"; 
 import "./Quizpage.css";
 
 const QuizPage = () => {
@@ -14,6 +14,7 @@ const QuizPage = () => {
     getExplanation,
     loading, questionType,
     errorMessage, getBudEReply,
+    setAnsweredQuestions
   } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
@@ -29,8 +30,8 @@ const QuizPage = () => {
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [justStarted, setJustStarted] = useState(true);
   const [isBudEExpanded, setIsBudEExpanded] = useState(false);
-  const [shakeEffect, setShakeEffect] = useState(false); // ❌ NEW
-
+  const [shakeEffect, setShakeEffect] = useState(false); 
+  
   const normalize = (str) => str?.trim().toLowerCase();
 
   const handleTimeout = useCallback(() => {
@@ -40,7 +41,7 @@ const QuizPage = () => {
       setAnswered(true);
       setShowIncorrectPopup(true);
       setIsBudEExpanded(true);
-      setShakeEffect(true); // ❌ Shake on timeout
+      setShakeEffect(true); 
     }
   }, [answered]);
 
@@ -154,8 +155,19 @@ const QuizPage = () => {
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
-        setShakeEffect(true); // ❌ Shake on wrong answer
+        setShakeEffect(true);
       }
+      // Save this question’s result
+      const answeredData = {
+        question: question.text,
+        options: question.options,
+        correctAnswer: question.answer,
+        selectedAnswer: option,
+        isCorrect: isCorrect,
+        explanation: explanation || null,
+      };
+      setAnsweredQuestions((prev) => [...prev, answeredData]);
+
 
       setIsBudEExpanded(true);
       setAnswered(true);
