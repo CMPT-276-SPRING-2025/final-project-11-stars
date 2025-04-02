@@ -5,7 +5,7 @@ import './Homepage.css';
 
 const HomePage = () => {
     useEffect(() => {
-      // Automatically scroll down after 3 seconds (3000 ms)
+      // Automatically scroll down after 3.5 seconds 
       const timer = setTimeout(() => {
         document.getElementById('quiz-category-space')?.scrollIntoView({ behavior: 'smooth' });
       }, 3500);
