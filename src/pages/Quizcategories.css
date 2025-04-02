@@ -1,4 +1,20 @@
-@import url('https://fonts.google.com/share?selection.family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
+@import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Delius&family=Fontdiner+Swanky&display=swap");
+
+body,
+button,
+input,
+select,
+label,
+.quiz-option,
+.custom-quiz-title,
+.start-popup-content,
+.custom-quiz-popup-content,
+.category-name,
+.quiz-category-title,
+.start-quiz-btn,
+
+.input-label {
+  font-family: 'Chakra Petch', sans-serif;}
 
 .quiz-category-container {
   text-align: center;
@@ -81,7 +97,7 @@
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   z-index: 1000; 
   width: 350px;
-  height: 300px;
+  height: 200px;
   text-align: center;
 }
 
@@ -93,21 +109,22 @@
 
 .start-quiz-btn {
   background-color: #CBD2A4;
-  border: none;
-  padding: 20px 35px;
-  font-size: 2.5rem;
+  border: 2px solid #6F715B;
+  padding: 15px 40px;
+  font-size: 2.2rem;
   font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
   color: #54473F;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* matches Quiz Categories */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .start-quiz-btn:hover {
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
+
 
 .start-popup-close-btn {
   position: absolute;
@@ -350,7 +367,7 @@ select {
 }
 
 .quiz-option {
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -427,7 +444,7 @@ input:checked + .slider:before {
 
 .language-dropdown select:focus {
   outline: none;
-  border: 2px solid #54473F;
+  border: 1px solid #54473F;
 }
 
 .iframe-wrapper {
@@ -471,4 +488,72 @@ input:checked + .slider:before {
 
 .error-popup span:hover {
   color: #2E5F3F;
+}
+
+/* Make sure all input blocks are evenly sized and aligned */
+.custom-quiz-popup .custom-quiz-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Ensure each block (label + input/select) has the same size and alignment */
+.custom-quiz-popup .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* Make all wrappers equal width */
+}
+
+/* Match label styles */
+.custom-quiz-popup .input-wrapper .input-label {
+  font-size: 20px;
+  font-weight: bold;
+  color: #54473F;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Make dropdowns same width as the textbox */
+.custom-quiz-popup .input-wrapper select,
+.custom-quiz-popup .input-wrapper input {
+  width: 200px !important; /* Match the textbox */
+  max-width: 100%;
+}
+
+/* Optional: fix visual inconsistency if needed */
+.custom-quiz-popup .input-wrapper select {
+  height: 45px;
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+.custom-quiz-popup .difficulty-dropdown select {
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #CBD2A4;
+  color: #54473F;
+  cursor: pointer;
+  border: 2px solid #54473F;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-align: left;
+  text-indent: 10px;
+}
+
+
+.custom-quiz-popup .difficulty-dropdown select:hover,
+.custom-quiz-popup .difficulty-dropdown select:focus {
+  border-color: #2E5F3F;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.35);
+  outline: none;
+}
+
+
+.custom-quiz-popup .difficulty-dropdown:hover {
+  border-color: #2E5F3F;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
 }
