@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ajv": "^8.17.1",
     "axios": "^1.8.3",
+    "canvas-confetti": "^1.9.3",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.4.10",
     "http-proxy-middleware": "^3.0.3",

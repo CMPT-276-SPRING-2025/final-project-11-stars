@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
+import confetti from "canvas-confetti"; // 🎉 NEW
 import "./Quizpage.css";
 
 const QuizPage = () => {
@@ -13,7 +14,7 @@ const QuizPage = () => {
     getExplanation,
     loading, questionType,
     errorMessage, getBudEReply,
-  } = useContext(QuizContext); // ✅ removed resetQuiz
+  } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
@@ -28,6 +29,7 @@ const QuizPage = () => {
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [justStarted, setJustStarted] = useState(true);
   const [isBudEExpanded, setIsBudEExpanded] = useState(false);
+  const [shakeEffect, setShakeEffect] = useState(false); // ❌ NEW
 
   const normalize = (str) => str?.trim().toLowerCase();
 
@@ -38,6 +40,7 @@ const QuizPage = () => {
       setAnswered(true);
       setShowIncorrectPopup(true);
       setIsBudEExpanded(true);
+      setShakeEffect(true); // ❌ Shake on timeout
     }
   }, [answered]);
 
@@ -77,6 +80,13 @@ const QuizPage = () => {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [budEHistory]);
+
+  useEffect(() => {
+    if (shakeEffect) {
+      const timeout = setTimeout(() => setShakeEffect(false), 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [shakeEffect]);
 
   if (loading) {
     return (
@@ -139,10 +149,12 @@ const QuizPage = () => {
       }
 
       if (isCorrect) {
+        confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } }); // 🎉
         setScore((prev) => prev + 1);
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
+        setShakeEffect(true); // ❌ Shake on wrong answer
       }
 
       setIsBudEExpanded(true);
@@ -164,6 +176,7 @@ const QuizPage = () => {
       setIsTimerActive(true);
       setJustStarted(true);
       setIsBudEExpanded(false);
+      setShakeEffect(false); // Reset shake
     } else {
       navigate("/result");
     }
@@ -211,64 +224,67 @@ const QuizPage = () => {
           <div className="score-box">Score: {score}</div>
         </div>
 
-        <div className="question-box spacious-box">
-          <p className="question-text">
-            Q{currentQuestion + 1}: {questionText}
-          </p>
-          <div className="options-container">
-            {questionType === "image" ? (
-              <div className="image-options">
-                {question.options.map((option, index) => {
-                  const isCorrect =
-                    normalize(option.description) === normalize(question.answer || "");
-                  const isSelected = selected === option;
+        <div className={`shake-wrapper ${shakeEffect ? "shake" : ""}`}>
+          <div className="question-box spacious-box">
+            <p className="question-text">
+              Q{currentQuestion + 1}: {questionText}
+            </p>
+            <div className="options-container">
+              {questionType === "image" ? (
+                <div className="image-options">
+                  {question.options.map((option, index) => {
+                    const isCorrect =
+                      normalize(option.description) === normalize(question.answer || "");
+                    const isSelected = selected === option;
 
-                  return (
-                    <div
-                      key={index}
-                      className={`image-option ${
-                        answered
-                          ? isCorrect
-                            ? "correct-highlight"
-                            : isSelected
-                            ? "wrong-highlight"
+                    return (
+                      <div
+                        key={index}
+                        className={`image-option ${
+                          answered
+                            ? isCorrect
+                              ? "correct-highlight"
+                              : isSelected
+                              ? "wrong-highlight"
+                              : ""
                             : ""
-                          : ""
-                      }`}
-                      onClick={answered ? undefined : () => handleOptionClick(option)}
-                    >
-                      <img src={option.url} alt={option.description} />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-options">
-                {question.options.map((option, index) => {
-                  const isCorrect = normalize(option) === normalize(question.answer || "");
-                  const isSelected = selected === option;
+                        }`}
+                        onClick={answered ? undefined : () => handleOptionClick(option)}
+                      >
+                        <img src={option.url} alt={option.description} />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-options">
+                  {question.options.map((option, index) => {
+                    const isCorrect = normalize(option) === normalize(question.answer || "");
+                    const isSelected = selected === option;
 
-                  let optionClass = "option";
-                  if (answered) {
-                    if (isCorrect) optionClass += " correct-highlight";
-                    if (isSelected && !isCorrect) optionClass += " wrong-highlight";
-                  }
+                    let optionClass = "option";
+                    if (answered) {
+                      if (isCorrect) optionClass += " correct-highlight";
+                      if (isSelected && !isCorrect) optionClass += " wrong-highlight";
+                    }
 
-                  return (
-                    <button
-                      key={index}
-                      className={optionClass}
-                      onClick={() => handleOptionClick(option)}
-                      disabled={answered}
-                    >
-                      {option}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+                    return (
+                      <button
+                        key={index}
+                        className={optionClass}
+                        onClick={() => handleOptionClick(option)}
+                        disabled={answered}
+                      >
+                        {option}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
+
 
         <div className="quiz-buttons">
           <button className="finish-button" onClick={() => navigate("/result")}>
