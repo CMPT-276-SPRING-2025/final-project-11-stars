@@ -6,8 +6,7 @@
   text-align: center;
   font-size: 10vw;
 }
-/* Theme toggle button */
-/* ==== DARK MODE TOGGLE STYLES ==== */
+
 
 .theme-toggle {
     position: absolute;
@@ -24,7 +23,6 @@
     color: inherit;
   }
   
-  /* Reuse your toggle switch style from quiz type */
   .switch {
     position: relative;
     display: inline-block;
@@ -38,7 +36,7 @@
     height: 0;
   }
   
-  /* The slider */
+ 
   .slider {
     position: absolute;
     cursor: pointer;
@@ -71,7 +69,6 @@
     transform: translateX(20px);
   }
   
-  /* Light Mode */
   .light-mode {
     background-color: #E9EED9;
     color: #54473F;
