@@ -165,10 +165,12 @@ export const QuizProvider = ({ children }) => {
               return {
                 text: question.question.text,
                 options: shuffledOptions,
-                answer: question.correctAnswer[0].description,
+                answer: question.correctAnswer[0], // <--- STORE FULL OBJECT, not just .description
                 explanation: null,
               };
-            } else {
+            } 
+
+            else {
               return {
                 text: question.question.text,
                 options: [...question.incorrectAnswers, question.correctAnswer].sort(() => Math.random() - 0.5),

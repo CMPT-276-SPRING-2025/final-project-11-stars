@@ -256,13 +256,13 @@ ai-assistant {
   }
   
   .result-thumbnail {
-    width: 100px;
-    height: 100px;
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 8px;
+    margin: 8px 0;
     object-fit: cover;
-    border-radius: 5px;
-    border: 2px solid #9A7E6F;
-    margin-top: 8px;
   }
+  
   
   .answer-pair {
     display: flex;

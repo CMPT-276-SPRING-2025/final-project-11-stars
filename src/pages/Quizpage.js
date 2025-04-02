@@ -31,8 +31,17 @@ const QuizPage = () => {
   const [justStarted, setJustStarted] = useState(true);
   const [isBudEExpanded, setIsBudEExpanded] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false); 
+
+  const normalize = (str) => {
+    if (typeof str === "string") {
+      return str.trim().toLowerCase();
+    }
+    if (str && typeof str === "object" && str.description) {
+      return str.description.trim().toLowerCase();
+    }
+    return ""; // fallback for undefined/null/non-strings
+  };
   
-  const normalize = (str) => str?.trim().toLowerCase();
 
   const handleTimeout = useCallback(() => {
     if (!answered) {
@@ -106,18 +115,19 @@ const QuizPage = () => {
 
   if (errorMessage) {
     return (
-      <div className="quizpage-background">
-        <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
-          <h2 style={{ color: "#7B0323" }}>{errorMessage}</h2>
-          <div className="quiz-buttons">
-            <button className="finish-button" onClick={() => navigate("/result")}>
-              Finish Quiz
-            </button>
-          </div>
+      <div className="quizpage-background error-page">
+        <div className="error-container">
+          <img src="/warning.png" alt="Warning" className="error-icon" />
+          <h2 className="error-message">{errorMessage}</h2>
+          <p className="error-subtext">Try a simpler or more kid-friendly topic instead! 💡</p>
+          <button className="exit-button" onClick={() => navigate("/")}>
+            ⬅️ Back to Home
+          </button>
         </div>
       </div>
     );
   }
+  
 
   if (questions.length === 0) {
     return (

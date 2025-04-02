@@ -9,41 +9,45 @@ const ResultPage = () => {
   const [filter, setFilter] = useState("all");
 
   const getFilteredQuestions = () => {
-    if (filter === "correct") {
-      return answeredQuestions.filter((q) => q.isCorrect);
-    } else if (filter === "incorrect") {
-      return answeredQuestions.filter((q) => !q.isCorrect);
-    }
+    if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);
+    if (filter === "incorrect") return answeredQuestions.filter((q) => !q.isCorrect);
     return answeredQuestions;
   };
 
   const filtered = getFilteredQuestions();
 
-  const parseAnswer = (answer) => {
-    // Try to parse stringified objects
-    if (typeof answer === "string") {
-      try {
-        const parsed = JSON.parse(answer);
-        return parsed;
-      } catch (err) {
-        return answer;
-      }
-    }
-    return answer;
-  };
-
-  const renderAnswer = (answer) => {
-    const parsed = parseAnswer(answer);
-    if (parsed && typeof parsed === "object" && parsed.url) {
+  const renderVisualAnswer = (answer) => {
+    // If answer is an object with a valid `url`
+    if (answer && typeof answer === "object" && answer.url) {
       return (
         <img
-          src={parsed.url}
-          alt={parsed.description || "Answer image"}
+          src={answer.url}
+          alt={answer.description || "answer image"}
           className="result-thumbnail"
         />
       );
     }
-    return <span>{parsed}</span>;
+
+    // If answer is a stringified object with a `url` field
+    if (typeof answer === "string") {
+      try {
+        const parsed = JSON.parse(answer);
+        if (parsed.url) {
+          return (
+            <img
+              src={parsed.url}
+              alt={parsed.description || "answer image"}
+              className="result-thumbnail"
+            />
+          );
+        }
+      } catch (e) {
+        // not JSON, fall through
+      }
+    }
+
+    // Fallback for plain text answers
+    return <span>{typeof answer === "string" ? answer : JSON.stringify(answer)}</span>;
   };
 
   return (
@@ -58,9 +62,15 @@ const ResultPage = () => {
       </p>
 
       <div className="filter-buttons">
-        <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>All</button>
-        <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>Correct</button>
-        <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>Incorrect</button>
+        <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
+          All
+        </button>
+        <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
+          Correct
+        </button>
+        <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
+          Incorrect
+        </button>
       </div>
 
       <h2 className="section-title">Questions Answered</h2>
@@ -72,21 +82,24 @@ const ResultPage = () => {
             <div className="answer-pair">
               <div>
                 <strong>Your Answer:</strong><br />
-                {renderAnswer(q.selectedAnswer)}
+                {renderVisualAnswer(q.selectedAnswer)}
               </div>
+
               {!q.isCorrect && (
                 <div>
                   <strong>Correct Answer:</strong><br />
-                  {renderAnswer(q.correctAnswer)}
+                  {renderVisualAnswer(q.correctAnswer)}
                 </div>
               )}
             </div>
+
             {q.explanation && (
               <p className="explanation"><em>{q.explanation}</em></p>
             )}
           </div>
         ))}
       </div>
+
 
       <div className="result-buttons spaced-bottom">
         <button
