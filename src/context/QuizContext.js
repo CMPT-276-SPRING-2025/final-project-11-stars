@@ -12,6 +12,8 @@ export const QuizProvider = ({ children }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+
 
   const resetQuiz = () => {
     setScore(0);
@@ -22,6 +24,7 @@ export const QuizProvider = ({ children }) => {
     setQuestionType("text");
     setCurrentQuestion(0);
     setErrorMessage(null);
+    setAnsweredQuestions([]);
   };
 
   useEffect(() => {
@@ -310,6 +313,8 @@ export const QuizProvider = ({ children }) => {
         language,
         setLanguage,
         getBudEReply,
+        answeredQuestions,
+        setAnsweredQuestions,
       }}
     >
       {children}
