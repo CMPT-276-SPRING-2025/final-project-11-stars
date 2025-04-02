@@ -37,6 +37,7 @@ const QuizPage = () => {
       clearInterval(timerRef.current);
       setAnswered(true);
       setShowIncorrectPopup(true);
+      setIsBudEExpanded(true);
     }
   }, [answered]);
 
@@ -229,13 +230,16 @@ const QuizPage = () => {
                   }
 
                   return (
-                    <img
+                    <div
                       key={index}
-                      src={option.url}
-                      alt={option.description}
-                      className={optionClass}
+                      className={`image-option ${answered ? (isCorrect ? "correct-highlight" : isSelected ? "wrong-highlight" : "") : ""}`}
                       onClick={answered ? undefined : () => handleOptionClick(option)}
-                    />
+                    >
+                      <img
+                        src={option.url}
+                        alt={option.description}
+                      />
+                    </div>
                   );
                 })}
               </div>
