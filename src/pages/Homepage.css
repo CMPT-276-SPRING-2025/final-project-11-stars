@@ -22,10 +22,8 @@ html {
   scroll-behavior:smooth;
 }
 
-/* WELCOME SECTION — starts scaled up, then shrinks */
+ 
 .welcome-section {
-  /* transform: scale(2.5); 
-  transition: transform 1s ease-in; */
   animation: growShrinkFade 3.5s ease-in-out forwards;
   margin-bottom: 400px;
 }
@@ -43,9 +41,6 @@ html {
         transform: scale(2.5); /* Shrink to normal */
     }
 }
-/* .welcome-section.shrink {
-  transform: scale(2); 
-} */
 
 /* Title (h1) */
 .main-heading {
