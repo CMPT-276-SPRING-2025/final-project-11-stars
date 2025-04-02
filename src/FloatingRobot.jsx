@@ -17,7 +17,7 @@ function FloatingRobotModel() {
       <primitive
         ref={robotRef}
         object={scene}
-        scale={2.5}
+        scale={3}
         position={[0, 0, 0]}
         rotation={[0, -Math.PI*2, 0]} // Face forward
       />
@@ -27,7 +27,7 @@ function FloatingRobotModel() {
 
 export default function FloatingRobot() {
   return (
-    <Canvas style={{ height: "300px", width: "100%" }}>
+    <Canvas style={{ height: "200px", width: "100%" }}>
       <ambientLight intensity={0.7} />
       <directionalLight position={[3, 3, 3]} />
       <FloatingRobotModel />

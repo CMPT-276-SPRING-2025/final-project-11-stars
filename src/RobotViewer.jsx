@@ -17,8 +17,9 @@ function WavingRobot({ onWaveComplete }) {
     const wave = actions[animations[0].name];
     if (wave && group.current) {
       group.current.rotation.y = 0; // face forward
-      wave.reset().setLoop(THREE.LoopOnce, 1);
-      wave.clampWhenFinished = true;
+      wave.reset()
+        .setLoop(THREE.LoopOnce, 1)
+        .clampWhenFinished = true;
       wave.play();
 
       const duration = wave.getClip().duration * 1000;
@@ -39,45 +40,38 @@ function WavingRobot({ onWaveComplete }) {
     <primitive
       ref={group}
       object={scene}
-      scale={3}
+      scale={2.5}
       position={[0, -2, 0]}
     />
   );
 }
 
-
 function IdleRobot({ onClick }) {
   const group = useRef();
-  const { nodes } = useGLTF("/robot.glb");
-
-  // Refs for the leaf nodes
-  const leafLeftRef = useRef();
-  const leafRightRef = useRef();
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    const sway = 0.2 * Math.sin(t * 2); // Adjust amplitude and frequency as needed
-
-    // Apply swaying rotation to the leaves
-    if (leafLeftRef.current) {
-      leafLeftRef.current.rotation.z = sway;
-    }
-    if (leafRightRef.current) {
-      leafRightRef.current.rotation.z = -sway;
+  const { scene } = useGLTF("/robot.glb");
+  const clockRef = useRef(0);
+  useFrame((_, delta) => {
+    if (group.current) {
+      clockRef.current += delta;
+    const sway = 0.3 * Math.sin(clockRef.current * 2);
+    group.current.rotation.y = sway;
     }
   });
 
   return (
-    <group ref={group} onClick={onClick} style={{ cursor: "pointer" }}>
-      <primitive object={nodes.YourRobotMesh} />
-      <primitive ref={leafLeftRef} object={nodes.Leaf_Left} />
-      <primitive ref={leafRightRef} object={nodes.Leaf_Right} />
-    </group>
+    <primitive
+      object={scene}
+      ref={group}
+      scale={2.5}
+      position={[0, 0, 0]}
+      onClick={onClick}
+      style={{ cursor: "pointer" }}
+    />
   );
 }
 
 export default function RobotViewer() {
-  const [mode, setMode] = useState("wave");
+  const [mode, setMode] = useState("wave"); // Initial wave on load
 
   const handleWaveComplete = () => setMode("idle");
   const handleClick = () => {
