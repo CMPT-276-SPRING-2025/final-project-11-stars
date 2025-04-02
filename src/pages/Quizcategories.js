@@ -100,19 +100,21 @@ const QuizCategory = () => {
   
 
   const handleCustomStartQuiz = () => {
-    if (customDifficulty.trim() && customTopic.trim() && customLanguage.trim()) {
-      setSelectedCategory({
-        id: "custom_ai_quiz",
-        topic: customTopic.trim(),
-      });
-      setDifficulty(customDifficulty.trim());
-      setLanguage(customLanguage);
-      setQuestionType("text");
-      navigate("/quiz");
-    } else {
-      alert("Please enter difficulty and topic!");
+    if (!customDifficulty.trim() || !customTopic.trim() || !customLanguage.trim()) {
+      setErrorMessage("Please choose a difficulty and a topic!");
+      return;
     }
+  
+    setSelectedCategory({
+      id: "custom_ai_quiz",
+      topic: customTopic.trim(),
+    });
+    setDifficulty(customDifficulty.trim());
+    setLanguage(customLanguage);
+    setQuestionType("text");
+    navigate("/quiz");
   };
+
 
   return (
     <div className="quiz-category-container">
@@ -211,7 +213,7 @@ const QuizCategory = () => {
             <div className="custom-quiz-inputs">
               <div className="input-wrapper">
                 <label className="input-label">Difficulty</label>
-                <div className="Difficulty-dropdown">
+                <div className="difficulty-dropdown">
                   <select
                     value={customDifficulty}
                     onChange={(e) => setCustomDifficulty(e.target.value)}
