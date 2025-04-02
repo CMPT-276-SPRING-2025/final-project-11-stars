@@ -813,3 +813,52 @@ body.dark-mode .bud-e-floating-icon {
   80% { transform: translateX(10px); }
   100% { transform: translateX(0); }
 }
+
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1e1e1e;
+}
+
+.error-container {
+  text-align: center;
+  background: #2a2a2a;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+  color: #ffcccc;
+}
+
+.error-icon {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff5555;
+}
+
+.error-subtext {
+  font-size: 16px;
+  margin: 10px 0 30px;
+  color: #ddd;
+}
+
+.exit-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #cb5a5e;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.exit-button:hover {
+  background-color: #a04044;
+}
