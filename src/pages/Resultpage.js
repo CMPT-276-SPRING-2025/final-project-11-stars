@@ -60,60 +60,77 @@ const ResultPage = () => {
           ? "You are improving! Keep up the good work! 💪"
           : "Congratulations! You are officially BrainGoated! 😎"}
       </p>
-
-      <div className="filter-buttons">
-        <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
-          All
-        </button>
-        <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
-          Correct
-        </button>
-        <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
-          Incorrect
-        </button>
-      </div>
-
-      <h2 className="section-title">Questions Answered</h2>
-
-      <div className="review-section">
-        {filtered.map((q, index) => (
-          <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
-            <p><strong>Q{index + 1}:</strong> {q.question}</p>
-            <div className="answer-pair">
-              <div>
-                <strong>Your Answer:</strong><br />
-                {renderVisualAnswer(q.selectedAnswer)}
-              </div>
-
-              {!q.isCorrect && (
-                <div>
-                  <strong>Correct Answer:</strong><br />
-                  {renderVisualAnswer(q.correctAnswer)}
-                </div>
-              )}
-            </div>
-
-            {q.explanation && (
-              <p className="explanation"><em>{q.explanation}</em></p>
-            )}
+  
+      {answeredQuestions.length > 0 ? (
+        <>
+          <div className="filter-buttons">
+            <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
+              All
+            </button>
+            <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
+              Correct
+            </button>
+            <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
+              Incorrect
+            </button>
           </div>
-        ))}
-      </div>
-
-
-      <div className="result-buttons spaced-bottom">
-        <button
-          className="go-back-button"
-          onClick={() => {
-            resetQuiz();
-            navigate("/");
-          }}
-        >
-          Go back to Quiz Categories
-        </button>
-      </div>
+  
+          <h2 className="section-title">Questions Answered</h2>
+  
+          <div className="review-section">
+            {filtered.map((q, index) => (
+              <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
+                <p><strong>Q{index + 1}:</strong> {q.question}</p>
+                <div className="answer-pair">
+                  <div>
+                    <strong>Your Answer:</strong><br />
+                    {renderVisualAnswer(q.selectedAnswer)}
+                  </div>
+  
+                  {!q.isCorrect && (
+                    <div>
+                      <strong>Correct Answer:</strong><br />
+                      {renderVisualAnswer(q.correctAnswer)}
+                    </div>
+                  )}
+                </div>
+  
+                {q.explanation && (
+                  <p className="explanation"><em>{q.explanation}</em></p>
+                )}
+              </div>
+            ))}
+          </div>
+  
+          <div className="result-buttons spaced-bottom">
+            <button
+              className="go-back-button"
+              onClick={() => {
+                resetQuiz();
+                navigate("/");
+              }}
+            >
+              Go back to Quiz Categories
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="no-answers-placeholder">
+          <img src="/bud-e.png" alt="No answers yet" className="no-answers-icon" />
+          <p className="no-answers-text">You didn't answer any questions this time, but that's okay! 🌱<br />Try another quiz to grow your knowledge! 🚀</p>
+          <button
+            className="go-back-button"
+            onClick={() => {
+              resetQuiz();
+              navigate("/");
+            }}
+          >
+            Back to Categories
+          </button>
+        </div>
+      )}
     </div>
   );
-};
+}  
 
 export default ResultPage;

@@ -232,24 +232,34 @@ body.dark-mode .image-options img.wrong-highlight {
 
 .option {
   background-color: #CBD2A4;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 16px 20px;
+  border-radius: 8px;
   border: 1px solid #6F715B;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  min-width: 300px;
-  max-width: 300px; /* Fix the width */
-  height: 80px; /* Standard height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  display: block;
   text-align: center;
   white-space: normal;
   word-wrap: break-word;
+  line-height: 1.4;
+  cursor: pointer;
+  margin: 0 auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease, transform 0.2s ease;
+  max-height: 120px;
+  overflow: hidden;
 }
+
+.option:hover {
+  transform: scale(1.02);
+  max-height: 1000px; /* allow full expansion on hover */
+  background-color: #B0BA91;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+
 
 
 .option.correct-highlight {
@@ -267,10 +277,6 @@ body.dark-mode .image-options img.wrong-highlight {
 }
 
 
-
-.option:hover {
-  background-color: #B0B99D;
-}
 
 .correct-popup {
 background: #CBD2A4;
@@ -554,19 +560,31 @@ body.dark-mode .assistant-content {
   color: #CBD2A4;
 }
 
-body.dark-mode .option{
-  background: #2f2f2f;
+body.dark-mode .option {
+  background-color: #2f2f2f;
   color: #CBD2A4;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 15px;
   border: 1px solid #9A7E6F;
+  max-width: 500px;
+  width: 100%;
+  padding: 16px 20px;
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  margin: 0 auto 15px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease, transform 0.2s ease;
+  max-height: 120px;
+  overflow: hidden;
 }
 
 body.dark-mode .option:hover {
+  transform: scale(1.02);
+  max-height: 1000px;
   background-color: #816656;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
+
 
 body.dark-mode .feedback-popup-buttons button {
   background-color: #9A7E6F;
