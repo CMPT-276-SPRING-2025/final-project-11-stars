@@ -1,10 +1,19 @@
 @import url('https://fonts.google.com/share?selection.family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
 
-body {
-    font-family: "Arial", sans-serif;
-    background-color: #E9EED9;
-    margin: 0;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-family: "Arial", sans-serif;
 }
+
+.quizpage-background {
+  background-color: #CBD2A4;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .loading-message {
   margin: 50px;
 }
@@ -24,14 +33,15 @@ body {
   min-height: 95vh;
   width: 90%;
   max-width: 1200px;
-  padding: 40px;
-  background-color: #E9EED9;
+  padding: 20px;
+  background-color: transparent;
   border-radius: 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
+  align-items: center;
 }
 
 .header {
@@ -40,12 +50,12 @@ body {
   align-items: center;     /* vertically center */
   gap: 60px;               /* space between timer and score */
   margin-bottom: 10px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 
 .timer-box, .score-box {
-  background-color: #CBD2A4;
+  background-color: #E9EED9;
   color: #54473F;
   border: 2px solid #6F715B;
   border-radius: 12px;
@@ -60,35 +70,25 @@ body {
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-
-
 .question-box {
-background-color: #E9EED9;
-padding: 40px;
-border-radius: 10px;
-color: #54473F;
-border: 12px solid #9A7E6F;
-margin-bottom: 20px;
-justify-items: center;
+  background-color: #E9EED9;
+  padding: 50px 60px;
+  border-radius: 10px;
+  color: #54473F;
+  border: 4px solid #9A7E6F;
+  margin-bottom: 20px;
+
+  width: 100%;
+  max-width: 1400px; /* updated to go wide! */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .question-text {
 font-size: 24px;
 font-weight: bold;
 margin-bottom: 20px;
-
-.exit-button {
-background-color: #9A7E6F;
-padding: 10px 20px;
-border-radius: 5px;
-font-weight: bold;
-color: white;
-text-align: center;
-display: inline-block;
-cursor: pointer;
-border: none;
-font-size: 16px;
-width: fit-content;
 }
 
 
@@ -141,14 +141,15 @@ font-size: 16px;
 .complete-button:hover {
 background-color: #816656;
 }
+
+ .text-options {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* ⬅️ Responsive + stretched */
+  gap: 20px;
+  justify-content: center;
 }
 
-.text-options{
-margin-top: 20px;
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
- }
 .image-options{
   margin-top: 20px;
   display:grid;
@@ -177,8 +178,8 @@ gap: 20px;
  .image-options img:hover{
   background-color: #B0B99D;
  }
- /* ✅ Add this to your CSS */
-.image-options img.correct-highlight {
+
+ .image-options img.correct-highlight {
   border: 4px solid #2E7D32;
   box-shadow: 0 0 8px #2E7D32;
   opacity: 1;
@@ -194,13 +195,14 @@ gap: 20px;
   background-color: #CBD2A4;
   padding: 20px;
   border-radius: 5px;
-  border: 2px solid transparent;
+  border: 1px solid #6F715B;
   font-size: 20px;
   font-weight: bold;
   min-width: 200px;
   min-height: 80px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .option.correct-highlight {
@@ -217,38 +219,10 @@ gap: 20px;
   box-shadow: 0 0 10px 4px #C62828 !important;
 }
 
+
+
 .option:hover {
   background-color: #B0B99D;
-}
-
-.exit-button {
-background-color: #9A7E6F;
-padding: 10px 20px;
-border-radius: 5px;
-font-weight: bold;
-color: white;
-text-align: center;
-display: inline-block;
-cursor: pointer;
-border: none;
-font-size: 16px;
-width: fit-content;
-margin-top: 20px;
-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.incorrect {
-font-size: 24px;
-font-weight: bold;
-color: #D9534F;
-margin-bottom: 10px;
-}
-
-.correct {
-font-size: 24px;
-font-weight: bold;
-color: #4F8A10;
-margin-bottom: 10px;
 }
 
 .correct-popup {
@@ -410,16 +384,16 @@ background-color: #E9EED9;
 
 
 .budE-button:disabled{
-background-color:#9b928c;
-cursor: not-allowed;
+  background-color:#9b928c;
+  cursor: not-allowed;
 }
 
 .timer-box {
   position: relative;
   width: 200px;
   height: 40px;
-  background-color: #CBD2A4;  /* ⬅️ Match score box background */
-  border: 2px solid #54473F;  /* Optional for consistency */
+  background-color: #E9EED9;  
+  border: 2px solid #54473F;
   border-radius: 10px;
   overflow: hidden;
   font-weight: bold;
@@ -528,7 +502,7 @@ cursor: not-allowed;
 .bud-e-popup-floating {
   position: fixed;
   bottom: 100px;
-  right: 20px;     /* moved to bottom-right */
+  right: 280px;     /* moved to bottom-right */
   left: auto;      /* ensure left is not conflicting */
   width: 360px;
   background: #E9EED9;
@@ -539,6 +513,13 @@ cursor: not-allowed;
   animation: slideInUp 0.4s ease forwards;
 }
 
+.bud-e-popup-hidden {
+  display: none !important;
+}
+
+.bud-e-popup-visible {
+  display: block !important;
+}
 
 @media screen and (max-width: 768px) {
   .bud-e-popup-floating {
@@ -568,6 +549,40 @@ cursor: not-allowed;
 
 .bud-e-bottom-right {
   bottom: 100px !important; /* distance from bottom */
-  right: 20px !important;   /* align to right instead of left */
+  right: 180px;   /* align to right instead of left */
   left: auto !important;
+}
+
+/* Shift quiz content left to make space for Bud-E */
+.quiz-container.shift-left {
+  margin-right: 650px; /* Makes space for Bud-E popup (360px + padding) */
+  transition: margin-right 0.4s ease;
+}
+@media screen and (max-width: 768px) {
+  .quiz-container.shift-left {
+    margin-right: 0;
+  }
+}
+
+.quiz-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.finish-button {
+  background-color: #9A7E6F;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.finish-button:hover {
+  background-color: #816656;
 }

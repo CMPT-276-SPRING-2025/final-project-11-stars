@@ -27,7 +27,7 @@ const QuizPage = () => {
   const chatEndRef = useRef(null);
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [justStarted, setJustStarted] = useState(true);
-  const [isBudEExpanded, setIsBudEExpanded] = useState(true);
+  const [isBudEExpanded, setIsBudEExpanded] = useState(false);
 
   const normalize = (str) => str?.trim().toLowerCase();
 
@@ -94,22 +94,28 @@ const QuizPage = () => {
 
   if (errorMessage) {
     return (
-      <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
-        <h2 style={{ color: "#7B0323" }}>{errorMessage}</h2>
-        <button className="exit-button" onClick={() => navigate("/")}>
-          Go Back
-        </button>
+      <div className="quizpage-background">
+        <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
+          <h2 style={{ color: "#7B0323" }}>{errorMessage}</h2>
+          <div className="quiz-buttons">
+            <button className="finish-button" onClick={() => navigate("/result")}>
+              Finish Quiz
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
-        <h2>No questions available. Please try a different topic.</h2>
-        <button className="exit-button" onClick={() => navigate("/")}>
-          Go Back
-        </button>
+      <div className="quizpage-background">
+        <div className="quiz-container" style={{ textAlign: "center", marginTop: "100px" }}>
+          <h2>No questions available. Please try a different topic.</h2>
+          <button className="finish-button" onClick={() => navigate("/result")}>
+            Finish Quiz
+          </button>
+        </div>
       </div>
     );
   }
@@ -156,6 +162,7 @@ const QuizPage = () => {
       setBudEInput("");
       setIsTimerActive(true);
       setJustStarted(true);
+      setIsBudEExpanded(false);
     } else {
       navigate("/result");
     }
@@ -177,93 +184,100 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="quiz-container">
-      <div className="header">
-        <div className={`timer-box ${timeLeft <= 5 ? 'timer-box-critical' : ''}`}>
-          <div
-            className="timer-fill"
-            style={{
-              width: `${(timeLeft / 30) * 100}%`,
-              backgroundColor: timeLeft <= 5 ? '#D9534F' : '#9A7E6F',
-            }}
-          ></div>
-          <span className={`timer-text ${timeLeft <= 5 ? "timer-critical" : ""} ${timeLeft <= 14 && timeLeft > 5 ? "timer-on-white" : ""}`}>
-            {timeLeft === 0
-              ? "⏳ Time's up!"
-              : justStarted && !answered
-              ? `Timer: ${timeLeft}s`
-              : timeLeft}
-          </span>
-        </div>
-        <div className="score-box">Score: {score}</div>
-      </div>
-
-      <div className="question-box">
-        <p className="question-text">Q{currentQuestion + 1}: {questionText}</p>
-        <div className="options-container">
-        {questionType === "image" ? (
-          <div className="image-options">
-            {question.options.map((option, index) => {
-              const isCorrect = normalize(option.description) === normalize(question.answer || "");
-              const isSelected = selected === option;
-
-              let optionClass = "option";
-              if (answered) {
-                if (isCorrect) {
-                  optionClass += " correct-highlight";
-                }
-                if (isSelected && !isCorrect) {
-                  optionClass += " wrong-highlight";
-                }
-              }
-
-              return (
-                <img
-                  key={index}
-                  src={option.url}
-                  alt={option.description}
-                  className={optionClass}
-                  onClick={answered ? undefined : () => handleOptionClick(option)}
-                />
-              );
-            })}
+    <div className="quizpage-background">
+      <div className={`quiz-container ${isBudEExpanded ? "shift-left" : ""}`}>
+        <div className="header">
+          <div className={`timer-box ${timeLeft <= 5 ? "timer-box-critical" : ""}`}>
+            <div
+              className="timer-fill"
+              style={{
+                width: `${(timeLeft / 30) * 100}%`,
+                backgroundColor: timeLeft <= 5 ? "#D9534F" : "#9A7E6F",
+              }}
+            ></div>
+            <span
+              className={`timer-text ${timeLeft <= 5 ? "timer-critical" : ""} ${
+                timeLeft <= 14 && timeLeft > 5 ? "timer-on-white" : ""
+              }`}
+            >
+              {timeLeft === 0
+                ? "⏳ Time's up!"
+                : justStarted && !answered
+                ? `Timer: ${timeLeft}s`
+                : timeLeft}
+            </span>
           </div>
-        ) : (
-          <div className="text-options">
-            {question.options.map((option, index) => {
-              const isCorrect = normalize(option) === normalize(question.answer || "");
-              const isSelected = selected === option;
+          <div className="score-box">Score: {score}</div>
+        </div>
 
-              let optionClass = "option";
-              if (answered) {
-                if (isCorrect) {
-                  optionClass += " correct-highlight";
-                }
-                if (isSelected && !isCorrect) {
-                  optionClass += " wrong-highlight";
-                }
-              }
+        <div className="question-box spacious-box">
+          <p className="question-text">
+            Q{currentQuestion + 1}: {questionText}
+          </p>
+          <div className="options-container">
+            {questionType === "image" ? (
+              <div className="image-options">
+                {question.options.map((option, index) => {
+                  const isCorrect =
+                    normalize(option.description) === normalize(question.answer || "");
+                  const isSelected = selected === option;
 
-              return (
-                <button
-                  key={index}
-                  className={optionClass}
-                  onClick={() => handleOptionClick(option)}
-                  disabled={answered}
-                >
-                  {option}
-                </button>
-              );
-            })}
+                  let optionClass = "option";
+                  if (answered) {
+                    if (isCorrect) optionClass += " correct-highlight";
+                    if (isSelected && !isCorrect) optionClass += " wrong-highlight";
+                  }
+
+                  return (
+                    <img
+                      key={index}
+                      src={option.url}
+                      alt={option.description}
+                      className={optionClass}
+                      onClick={answered ? undefined : () => handleOptionClick(option)}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-options">
+                {question.options.map((option, index) => {
+                  const isCorrect = normalize(option) === normalize(question.answer || "");
+                  const isSelected = selected === option;
+
+                  let optionClass = "option";
+                  if (answered) {
+                    if (isCorrect) optionClass += " correct-highlight";
+                    if (isSelected && !isCorrect) optionClass += " wrong-highlight";
+                  }
+
+                  return (
+                    <button
+                      key={index}
+                      className={optionClass}
+                      onClick={() => handleOptionClick(option)}
+                      disabled={answered}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
+        </div>
+
+        <div className="quiz-buttons">
+          <button className="finish-button" onClick={() => navigate("/result")}>
+            Finish Quiz
+          </button>
+          {answered && (
+            <button className="next-button" onClick={handleNextQuestion}>
+              Next
+            </button>
+          )}
         </div>
       </div>
-
-      <button className="exit-button" onClick={() => {
-        resetQuiz();
-        navigate("/");
-      }}>Exit</button>
 
       {(showIncorrectPopup || showCorrectPopup) && (
         <>
@@ -294,6 +308,7 @@ const QuizPage = () => {
                     </div>
                   </>
                 )}
+
                 <div className="chatbot-container">
                   <p>Learn more with Bud-E!</p>
                   {budEHistory.length === 0 ? (
@@ -311,7 +326,9 @@ const QuizPage = () => {
                                 alt="Bud-E avatar"
                                 className="budE-avatar"
                               />
-                              <div><p>{msg.content}</p></div>
+                              <div>
+                                <p>{msg.content}</p>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -334,14 +351,6 @@ const QuizPage = () => {
                   />
                   <button onClick={handleAskBudE} className="budE-button">
                     Ask Bud-E
-                  </button>
-                </div>
-                <div className="feedback-popup-buttons">
-                  <button className="complete-button" onClick={() => navigate("/result")}>
-                    Complete Quiz
-                  </button>
-                  <button className="next-button" onClick={handleNextQuestion}>
-                    Next
                   </button>
                 </div>
               </div>
