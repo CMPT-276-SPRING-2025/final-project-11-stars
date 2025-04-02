@@ -10,10 +10,10 @@ const QuizPage = () => {
     score, setScore,
     questions,
     currentQuestion, setCurrentQuestion,
-    resetQuiz, getExplanation,
+    getExplanation,
     loading, questionType,
     errorMessage, getBudEReply,
-  } = useContext(QuizContext);
+  } = useContext(QuizContext); // ✅ removed resetQuiz
 
   const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
@@ -223,22 +223,21 @@ const QuizPage = () => {
                     normalize(option.description) === normalize(question.answer || "");
                   const isSelected = selected === option;
 
-                  let optionClass = "option";
-                  if (answered) {
-                    if (isCorrect) optionClass += " correct-highlight";
-                    if (isSelected && !isCorrect) optionClass += " wrong-highlight";
-                  }
-
                   return (
                     <div
                       key={index}
-                      className={`image-option ${answered ? (isCorrect ? "correct-highlight" : isSelected ? "wrong-highlight" : "") : ""}`}
+                      className={`image-option ${
+                        answered
+                          ? isCorrect
+                            ? "correct-highlight"
+                            : isSelected
+                            ? "wrong-highlight"
+                            : ""
+                          : ""
+                      }`}
                       onClick={answered ? undefined : () => handleOptionClick(option)}
                     >
-                      <img
-                        src={option.url}
-                        alt={option.description}
-                      />
+                      <img src={option.url} alt={option.description} />
                     </div>
                   );
                 })}
