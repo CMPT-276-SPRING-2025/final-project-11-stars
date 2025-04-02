@@ -46,9 +46,9 @@ html, body {
 
 .header {
   display: flex;
-  justify-content: center; /* horizontally center */
-  align-items: center;     /* vertically center */
-  gap: 60px;               /* space between timer and score */
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
   margin-bottom: 5px;
   margin-top: 5px;
 }
@@ -63,7 +63,7 @@ html, body {
   font-weight: 700;
   padding: 12px 24px;
   min-width: 120px;
-  height: 50px; /* Ensure matching height */
+  height: 50px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,12 +78,12 @@ html, body {
   border: 4px solid #9A7E6F;
 
   width: 100%;
-  max-width: 1400px; /* updated to go wide! */
+  max-width: 1400px; 
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
 
-  flex: 1; /* this allows it to take up remaining space */
+  flex: 1; 
   padding: 20px;
 }
 
@@ -145,7 +145,7 @@ font-size: 16px;
 background-color: #816656;
 }
 
-/* === IMAGE OPTIONS FIXED GRID === */
+
 .image-options {
   display: flex;
   flex-wrap: wrap;
@@ -157,7 +157,7 @@ background-color: #816656;
   justify-content: center;
 }
 
-/* Wrap each image inside this container (or apply this to the image parent div) */
+
 .image-option {
   width: 200px;
   height: 200px;
@@ -169,7 +169,7 @@ background-color: #816656;
 }
 
 
-/* Image itself resizes to stay inside the box */
+
 .image-option img {
   width: 100%;
   height: 100%;
@@ -212,7 +212,7 @@ background-color: #816656;
   transform: scale(1.05);
 }
 
-/* === DARK MODE SUPPORT === */
+
 body.dark-mode .image-options img.correct-highlight {
   border-color: #6dbd6d;
   box-shadow: 0 0 6px rgba(109, 189, 109, 0.4);
@@ -237,6 +237,15 @@ body.dark-mode .image-options img.wrong-highlight {
   border: 1px solid #6F715B;
   font-size: 18px;
   font-weight: bold;
+  min-width: 300px;
+  max-width: 300px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   max-width: 500px;
   width: 100%;
   display: block;
@@ -351,7 +360,8 @@ align-items: center;
 .chatbot-container p {
 font-weight: bold;
 }
-/*Chat History Scroll Area */
+
+
 .budE-chat-history{
 background: #f5f5f5;
 padding: 10px;
@@ -454,7 +464,7 @@ background-color: #E9EED9;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add soft shadow */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -466,7 +476,7 @@ background-color: #E9EED9;
   transition: width 1s linear;
   z-index: 0;
   border-radius: 10px;
-  background-color: #9A7E6F; /* Darker brown or red for contrast */
+  background-color: #9A7E6F; 
 }
 
 
@@ -481,19 +491,17 @@ background-color: #E9EED9;
 }
 
 
-/* When fill is under text */
 .timer-on-white {
   color: #9A7E6F;
 }
 
-/* When time is low */
+
 .timer-critical {
   color: #9A7E6F;
   font-size: 2rem;
   animation: heartbeat 0.6s ease-in-out infinite;
 }
 
-/* Combine both — override the brown if it's also critical */
 .timer-on-white.timer-critical {
   color: #FFD700;
 }
@@ -690,9 +698,10 @@ body.dark-mode .text-options {
 
 .bud-e-popup-floating {
   position: fixed;
+  margin-top: 80px !important;
   bottom: 100px;
-  right: 280px;     /* moved to bottom-right */
-  left: auto;      /* ensure left is not conflicting */
+  right: 280px;
+  left: auto;
   width: 360px;
   background: #E9EED9;
   border-radius: 12px;
@@ -738,21 +747,17 @@ body.dark-mode .text-options {
 }
 
 .bud-e-bottom-right {
-  bottom: 100px !important; /* distance from bottom */
-  right: 180px;   /* align to right instead of left */
+  bottom: 100px !important;
+  right: 180px;
   left: auto !important;
 }
 
-/* Shift quiz content left to make space for Bud-E */
+
 .quiz-container.shift-left {
-  margin-right: 650px; /* Makes space for Bud-E popup (360px + padding) */
+  margin-right: 650px;
   transition: margin-right 0.4s ease;
 }
-@media screen and (max-width: 768px) {
-  .quiz-container.shift-left {
-    margin-right: 0;
-  }
-}
+
 
 .quiz-buttons {
   display: flex;
@@ -776,19 +781,19 @@ body.dark-mode .text-options {
 .finish-button:hover {
   background-color: #816656;
 }
-/* Correct answer in dark mode */
+
 body.dark-mode .option.correct-highlight {
-  background-color: #3c5232 !important;  /* muted green */
-  color: #b5e3b1 !important;             /* soft light green text */
-  border: 2px solid #6dbd6d !important;  /* soft outline */
+  background-color: #3c5232 !important;
+  color: #b5e3b1 !important;
+  border: 2px solid #6dbd6d !important;  
   box-shadow: 0 0 6px rgba(109, 189, 109, 0.4) !important;
 }
 
-/* Incorrect answer in dark mode */
+
 body.dark-mode .option.wrong-highlight {
-  background-color: #552d2d !important;  /* muted red background */
-  color: #f2b4b4 !important;             /* light pinkish red text */
-  border: 2px solid #cc6666 !important;  /* soft red border */
+  background-color: #552d2d !important; 
+  color: #f2b4b4 !important;
+  border: 2px solid #cc6666 !important;
   box-shadow: 0 0 6px rgba(204, 102, 102, 0.4) !important;
 }
 
@@ -797,21 +802,21 @@ body.dark-mode .bud-e-popup-floating {
   background: #2f2f2f;
   border: 1px solid #444;
   color: #E9EED9;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* softer + darker */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); 
 }
 
 body.dark-mode .bud-e-popup-floating:hover {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.9); /* slightly deeper on hover */
-  transform: translateY(-2px); /* subtle lift */
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+  transform: translateY(-2px);
   transition: all 0.3s ease;
 
 }
 
 
 body.dark-mode .bud-e-floating-icon {
-  background: #2f2f2f; /* or try #3a3a3a or even #9A7E6F for contrast */
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15); /* subtle glow in dark mode */
-  border: 1px solid #444; /* optional border to enhance structure */
+  background: #2f2f2f;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  border: 1px solid #444;
 }
 
 .shake-wrapper {
@@ -831,6 +836,61 @@ body.dark-mode .bud-e-floating-icon {
   80% { transform: translateX(10px); }
   100% { transform: translateX(0); }
 }
+
+/* === Slide-In Drawer for Bud-E on Small Screens === */
+@media screen and (max-width: 768px) {
+  .bud-e-popup-floating {
+    position: fixed;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    max-width: 100%;
+    height: 70%;
+    background: #E9EED9;
+    padding: 0px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1002;
+    overflow-y: auto;
+    border-radius: 0;
+    margin-top:40px;
+  }
+
+  .bud-e-popup-visible {
+    transform: translateX(0) !important;
+  }
+
+  .quiz-container.shift-left {
+    margin-right: 0;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  .bud-e-popup-floating {
+    padding: 15px;
+    width: 70%;
+  }
+}
+
+.bud-e-popup-floating {
+  transition: transform 0.3s ease-in-out;
+}
+
+.bud-e-popup-hidden {
+  transform: translateX(100%);
+  display: block !important;
+}
+
+.bud-e-popup-visible {
+  display: block !important;
+  transform: translateX(0);
+}
+
+/* Keep the rest of your CSS as is below here */
 
 .error-page {
   display: flex;
