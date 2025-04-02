@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
 import confetti from "canvas-confetti"; 
 import "./Quizpage.css";
+import FloatingRobot from "../FloatingRobot"; 
 
 const QuizPage = () => {
   const navigate = useNavigate();
@@ -359,7 +360,7 @@ const QuizPage = () => {
                 <div className="chatbot-container">
                   <p>Learn more with Bud-E!</p>
                   {budEHistory.length === 0 ? (
-                    <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
+                     <FloatingRobot />
                   ) : (
                     <div className="budE-chat-history">
                       {budEHistory.map((msg, index) => (
