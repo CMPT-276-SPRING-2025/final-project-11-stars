@@ -253,7 +253,8 @@ export const QuizProvider = ({ children }) => {
                   If the message is completely **unrelated** to the quiz topic, reply:
                   "Hmm, that question’s a bit off-track. Let’s keep exploring our quiz topic instead! 😊"
       
-                  Never answer anything inappropriate (e.g. violence, explicit/adult content, or politics).`
+                  Never answer anything inappropriate (e.g. violence, explicit/adult content, or politics).
+                  If you are unsure or cannot verify the answer, say "I'm not totally sure about that—maybe we can learn more together!😁" Do not guess or make up facts.`
       },      
       {
         role: "user",

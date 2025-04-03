@@ -100,24 +100,26 @@ const QuizCategory = () => {
     setDifficulty(finalDifficulty);  // ensure it's applied
     navigate("/quiz");
   };
-  
-  
 
   const handleCustomStartQuiz = () => {
-    if (!customDifficulty.trim() || !customTopic.trim() || !customLanguage.trim()) {
-      setErrorMessage("Please choose a difficulty and a topic!");
+    if (!customTopic.trim() || !customLanguage.trim()) {
+      setErrorMessage("Please choose a topic and a language!");
       return;
     }
+  
+    const finalDifficulty = customDifficulty.trim() || "easy";
   
     setSelectedCategory({
       id: "custom_ai_quiz",
       topic: customTopic.trim(),
     });
-    setDifficulty(customDifficulty.trim());
+  
+    setDifficulty(finalDifficulty);
     setLanguage(customLanguage);
     setQuestionType("text");
     navigate("/quiz");
   };
+  
 
 
   return (
