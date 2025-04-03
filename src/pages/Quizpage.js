@@ -369,7 +369,6 @@ const QuizPage = () => {
                 )}
 
                 <div className="chatbot-container">
-                  <p>Learn more with Bud-E!</p>
                   {budEHistory.length === 0 ? (
                     <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
                   ) : (

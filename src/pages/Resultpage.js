@@ -10,7 +10,7 @@ const ResultPage = () => {
     document.body.classList.toggle("light-mode", !savedMode);
   }, []);
   const navigate = useNavigate();
-  const { score, resetQuiz, answeredQuestions } = useContext(QuizContext);
+  const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
   const [filter, setFilter] = useState("all");
 
   const getFilteredQuestions = () => {
@@ -57,13 +57,19 @@ const ResultPage = () => {
 
   return (
     <div className="result-container">
-      <h1 className="score-message">Score: {score}/10</h1>
+      <h1 className="score-message">Score: {score}/{questions.length}</h1>
       <p className="result-info">
-        {score <= 4
-          ? "Great effort! Every mistake is a step towards learning! 😊"
-          : score < 8
-          ? "You are improving! Keep up the good work! 💪"
-          : "Congratulations! You are officially BrainGoated! 😎"}
+      {(() => {
+        const percentage = (score / questions.length) * 100;
+
+        if (percentage <= 50) {
+          return "Great effort! Every mistake is a step towards learning! 😊";
+        } else if (percentage < 80) {
+          return "You are improving! Keep up the good work! 💪";
+        } else {
+          return "Congratulations! You are officially BrainGoated! 😎";
+        }
+      })()}
       </p>
   
       {answeredQuestions.length > 0 ? (
