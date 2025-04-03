@@ -40,13 +40,13 @@ label,
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-
 .quiz-category-grid {
   display: flex;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
 }
 
 .quiz-category-box {
@@ -61,7 +61,7 @@ label,
   cursor: pointer;
   font-size: 2.3rem;
   color: #54473F;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* ✅ New soft shadow */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .quiz-category-box:hover {
@@ -213,8 +213,8 @@ label,
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 30px;
-  margin: 20px 20px;
+  gap: 20px;
+  margin: 10px;
   align-items: center;
 }
 
@@ -234,12 +234,9 @@ label,
   appearance: none; /* Optional: make selects more consistent across browsers */
 }
 
-
 .input-wrapper {
-  margin-top: 15px;
-  margin-bottom: 13px;
-  display: flex;
-  flex-direction: column;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 #quiz-topic {
@@ -266,8 +263,9 @@ select {
 }
 
 .input-label {
-  font-size: 35px;
-  padding: 10px 0;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0 0 4px 4px; 
   margin-bottom: 6px; 
   color: #54473F;
   margin-left: 10px;
@@ -768,30 +766,154 @@ body.dark-mode .error-popup span:hover {
 }
 
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .quiz-category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-  }
-
-  .quiz-category-box {
-    max-width: 150px;
-    font-size: 1.4rem;
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 per row */
+    gap: 14px;
     padding: 10px;
   }
 
-  .category-image {
-    max-width: 120px;
+  .quiz-category-box {
+    max-width: 135px;
+    font-size: 1.2rem;
+    padding: 8px;
+    height: auto;
   }
+
+  .category-image {
+    max-width: 90px;
+    height: auto;
+    margin-bottom: 8px;
+  }
+
+  .category-name {
+    font-size: 0.85rem;
+  }
+
+  .quiz-category-title {
+    font-size: 2.5em;
+    padding: 10px 20px;
+  }
+
+  /* Adjust the last box to span two columns if odd number of boxes */
+  .quiz-category-grid > .quiz-category-box:last-child:nth-child(odd) {
+    grid-column: span 2;
+    justify-self: center;
+  }
+
   .toggle-difficulty-container {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 15px;
   }
+}
+
+@media (max-width: 450px) {
+  .custom-quiz-popup {
+    width: 95vw;
+    max-width: 360px;
+    max-height: 95vh;
+    padding: 8px;
+    border-radius: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .custom-title-block {
+    margin: 0;
+    gap: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .custom-quiz-title {
+    font-size: 1rem;
+    padding: 3px 8px;
+    margin-bottom: 6px;
+  }
+
+  .custom-quiz-popup-content {
+    width: 100%;
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-quiz-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-quiz-popup .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 260px;
+    margin: 0;
+  }
+
+  .custom-quiz-popup .input-wrapper .input-label {
+    font-size: 0.7rem;
+    margin: 0 0 3px;
+    text-align: left;
+    width: 100%;
+    padding-left: 4px;
+  }
+
+  /* Input & select styling */
+  .custom-quiz-popup .input-wrapper input,
+  .custom-quiz-popup .input-wrapper select,
+  .custom-quiz-inputs input,
+  .custom-quiz-inputs select,
+  #quiz-topic,
+  .difficulty-dropdown select,
+  .language-dropdown select {
+    width: 100%;
+    font-size: 0.75rem;
+    height: 24px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background-position: right 6px center;
+    background-size: 12px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #quiz-topic {
+    background-color: #CBD2A4;
+    color: #54473F;
+    border: 2px solid #54473F;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
 
   .difficulty-dropdown,
   .language-dropdown {
     width: 100%;
-    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .start-quiz-btn {
+    width: 100%;
+    max-width: 260px;
+    font-size: 1rem;
+    padding: 6px;
+    margin: 6px 0 0 0;
+    align-self: center;
   }
 }
