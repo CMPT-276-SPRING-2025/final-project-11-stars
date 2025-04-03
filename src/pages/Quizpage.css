@@ -14,22 +14,52 @@ html, body {
   width: 100%;
   overflow-x: hidden;
 }
-
-
-
-.loading-message {
-  margin: 50px;
+.loading-box {
+  background-color: transparent;
+  border: 3px solid #9A7E6F;
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 400px;
+  margin: 80px auto;
+  text-align: center;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  animation: popFade 0.6s ease;
 }
-.flower-wrapper{
-  height: 100%;
-  width: 100%;   
-  overflow: hidden; 
-  margin: 0 auto; 
+
+.loading-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #54473F;
+  margin-bottom: 10px;
 }
+
+.loading-subtext {
+  font-size: 1.1rem;
+  color: #6F715B;
+  margin-bottom: 20px;
+}
+
+
+@keyframes bounceIn {
+  0% { transform: scale(0.95); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.flower-iframe-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .loading-flower-frame {
-  width: 400px;     
-  height: 500px;
+  width: 280px;
+  height: 320px;
   border: none;
+  max-width: 90vw;
 }
 
 .quiz-container {
@@ -176,13 +206,14 @@ background-color: #816656;
 .image-option img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
+  object-fit: contain; /* <- changed from 'cover' to 'contain' */
+  border-radius: 18px;
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 0.5s forwards;
 }
+
 
 
 .image-option img:hover {
