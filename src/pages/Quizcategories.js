@@ -91,12 +91,16 @@ const QuizCategory = () => {
   };
 
   const handleStartQuiz = () => {
-    if (!difficulty || !language) {
+    const finalDifficulty = difficulty || "easy";
+    if (!language) {
       setErrorMessage("Please choose your difficulty!");
       return;
     }
+  
+    setDifficulty(finalDifficulty);  // ensure it's applied
     navigate("/quiz");
   };
+  
   
 
   const handleCustomStartQuiz = () => {

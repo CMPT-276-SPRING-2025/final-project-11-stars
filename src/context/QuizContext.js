@@ -136,7 +136,7 @@ export const QuizProvider = ({ children }) => {
         try {
           const params = {
             categoryName: selectedCategory.categoryName,
-            difficulty,
+            difficulty:difficulty||"easy",
             questionType,
             language,
           };
