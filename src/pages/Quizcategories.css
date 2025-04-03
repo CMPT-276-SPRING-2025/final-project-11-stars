@@ -810,11 +810,11 @@ body.dark-mode .error-popup span:hover {
 
 @media (max-width: 450px) {
   .custom-quiz-popup {
-    width: 95vw;
+    width: calc(100vw - 40px); /* Leaves 20px margin on each side */
     max-width: 360px;
-    max-height: 95vh;
-    padding: 8px;
-    border-radius: 12px;
+    max-height: 96vh;
+    padding: 12px 16px;
+    border-radius: 14px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -823,21 +823,22 @@ body.dark-mode .error-popup span:hover {
   }
 
   .custom-title-block {
-    margin: 0;
+    margin-top: 6px;
+    margin-bottom: 8px;
     gap: 0;
     align-items: center;
     text-align: center;
   }
 
   .custom-quiz-title {
-    font-size: 1rem;
-    padding: 3px 8px;
+    font-size: 1.1rem;
+    padding: 6px 12px;
     margin-bottom: 6px;
   }
 
   .custom-quiz-popup-content {
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     margin: 0;
     padding: 0;
     display: flex;
@@ -848,7 +849,7 @@ body.dark-mode .error-popup span:hover {
   .custom-quiz-inputs {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 8px;
     width: 100%;
     align-items: center;
     margin: 0;
@@ -860,19 +861,18 @@ body.dark-mode .error-popup span:hover {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 260px;
+    max-width: 270px;
     margin: 0;
   }
 
   .custom-quiz-popup .input-wrapper .input-label {
-    font-size: 0.7rem;
-    margin: 0 0 3px;
+    font-size: 0.8rem;
+    margin: 2px 0 4px;
     text-align: left;
     width: 100%;
     padding-left: 4px;
   }
 
-  /* Input & select styling */
   .custom-quiz-popup .input-wrapper input,
   .custom-quiz-popup .input-wrapper select,
   .custom-quiz-inputs input,
@@ -881,29 +881,29 @@ body.dark-mode .error-popup span:hover {
   .difficulty-dropdown select,
   .language-dropdown select {
     width: 100%;
-    font-size: 0.75rem;
-    height: 24px;
-    padding: 2px 6px;
+    font-size: 0.9rem;
+    height: 30px;
+    padding: 4px 8px;
     border-radius: 6px;
     background-position: right 6px center;
     background-size: 12px;
     box-sizing: border-box;
     text-align: center;
-    margin: 0 !important;
-    box-shadow: none !important;
+    margin: 0;
+    box-shadow: none;
   }
 
   #quiz-topic {
     background-color: #CBD2A4;
     color: #54473F;
     border: 2px solid #54473F;
-    box-shadow: none !important;
-    margin: 0 !important;
+    box-shadow: none;
+    margin: 0;
   }
 
   .difficulty-dropdown,
   .language-dropdown {
-    width: 100%;
+    width: 75%;
     padding: 0;
     margin: 0;
   }
@@ -911,9 +911,9 @@ body.dark-mode .error-popup span:hover {
   .start-quiz-btn {
     width: 100%;
     max-width: 260px;
-    font-size: 1rem;
-    padding: 6px;
-    margin: 6px 0 0 0;
+    font-size: 1.1rem;
+    padding: 8px;
+    margin-top: 10px;
     align-self: center;
   }
 }
