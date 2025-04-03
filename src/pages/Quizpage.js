@@ -116,18 +116,22 @@ const QuizPage = () => {
 
   if (loading) {
     return (
-      <div className="loading-message">
-        <h1>Generating your quiz... Please wait 😊</h1>
-        <div className="flower-iframe-wrapper">
-          <iframe
-            src="/flowerloading.html"
-            title="Flower-Loading Animation"
-            className="loading-flower-frame"
-          />
+      <div className="quizpage-background">
+        <div className="loading-box">
+          <h2 className="loading-title">🌱 Planting some fun questions...</h2>
+          <p className="loading-subtext">Please hang tight! 🕐</p>
+          <div className="flower-iframe-wrapper">
+            <iframe
+              src="/flowerloading.html"
+              title="Flower-Loading Animation"
+              className="loading-flower-frame"
+            />
+          </div>
         </div>
       </div>
     );
   }
+  
 
   if (errorMessage) {
     return (
