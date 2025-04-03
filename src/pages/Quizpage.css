@@ -710,17 +710,6 @@ body.dark-mode .text-options {
   display: block !important;
 }
 
-@media screen and (max-width: 768px) {
-  .bud-e-popup-floating {
-    width: 90%;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    bottom: 90px;
-  }
-}
-
-
 .bud-e-floating-icon:hover {
   transform: scale(1.1);
   animation-play-state: paused;
@@ -747,11 +736,6 @@ body.dark-mode .text-options {
 .quiz-container.shift-left {
   margin-right: 650px; /* Makes space for Bud-E popup (360px + padding) */
   transition: margin-right 0.4s ease;
-}
-@media screen and (max-width: 768px) {
-  .quiz-container.shift-left {
-    margin-right: 0;
-  }
 }
 
 .quiz-buttons {
@@ -1015,3 +999,90 @@ body.dark-mode .no-questions-message .finish-button:hover {
   background-color: #A87B69;
 }
 
+/* 🖥️ iMac / Ultra-Wide Desktop (1280px and up) */
+@media screen and (min-width: 1280px) {
+  .quiz-container {
+    max-width: 1400px;
+    padding: 40px;
+    margin-top: 60px;
+    font-size: 1.1rem;
+  }
+
+  .question-box {
+    max-width: 1200px;
+    padding: 40px 60px;
+    font-size: 1.2rem;
+  }
+
+  .image-options {
+    max-width: 1000px;
+    gap: 30px;
+  }
+
+  .option {
+    font-size: 20px;
+    padding: 20px 28px;
+  }
+
+  .score-box,
+  .timer-box {
+    font-size: 1.5rem;
+    padding: 16px 32px;
+    min-width: 160px;
+  }
+
+  .bud-e-popup-floating {
+    right: 100px;
+    width: 400px;
+  }
+
+  .bud-e-avatar-floating {
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .budE-chat-history {
+    font-size: 1rem;
+    max-height: 300px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .bud-e-popup-floating {
+    position: fixed;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: auto;
+    width: 100%;
+    max-width: 100%;
+    height: 70%;
+    background: #E9EED9;
+    padding: 0px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1002;
+    overflow-y: auto;
+    border-radius: 0;
+    margin-top:40px;
+  }
+
+  .bud-e-popup-visible {
+    transform: translateX(0) !important;
+  }
+
+  .quiz-container.shift-left {
+    margin-right: 0;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+  .bud-e-popup-floating {
+    padding: 15px;
+    width: 70%;
+  }
+}

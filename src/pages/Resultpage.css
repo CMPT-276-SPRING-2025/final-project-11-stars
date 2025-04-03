@@ -339,3 +339,187 @@ body.dark-mode .review-card.correct {
   background-color: #2c4c2c;
   color: #e9eed9;
 }
+/* 📱 Mobile (up to 600px) */
+@media (max-width: 600px) {
+  .result-container {
+    width: 90%;
+    padding: 20px;
+    margin: 60px auto;
+    margin-top: 100px;
+  }
+
+  .score-message {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .result-info {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .filter-buttons {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .filter-buttons button {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  .review-card {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .answer-pair {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .go-back-button {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+
+  .no-answers-text {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .no-answers-icon {
+    width: 180px;
+  }
+}
+
+/* 📱 Tablets (601px - 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .result-container {
+    width: 90%;
+    padding: 30px;
+    margin: 80px auto;
+  }
+
+  .score-message {
+    font-size: 24px;
+  }
+
+  .result-info {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .review-card {
+    font-size: 15px;
+  }
+
+  .go-back-button {
+    font-size: 16px;
+  }
+
+  .no-answers-icon {
+    width: 200px;
+  }
+}
+
+/* 🖥️ iMac / Large Screens (1280px and up) */
+@media (min-width: 1280px) {
+  .result-container {
+    width: 900px;
+    padding: 50px;
+    margin: 100px auto;
+  }
+
+  .score-message {
+    font-size: 30px;
+  }
+
+  .result-info {
+    font-size: 18px;
+  }
+
+  .review-card {
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  .go-back-button {
+    font-size: 17px;
+  }
+
+  .no-answers-icon {
+    width: 240px;
+  }
+}
+
+/* 📱 Extra-small devices (max 480px) */
+@media (max-width: 480px) {
+  .result-container {
+    width: 95%;
+    padding: 16px;
+    margin-top: 80px;
+  }
+
+  .score-message {
+    font-size: 18px;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .result-info {
+    font-size: 13px;
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  .filter-buttons {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .filter-buttons button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .review-card {
+    padding: 10px;
+    font-size: 13px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .answer-pair {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .result-thumbnail {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .go-back-button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .no-answers-text {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .no-answers-icon {
+    width: 140px;
+  }
+}
