@@ -760,8 +760,34 @@ body.dark-mode .error-popup span:hover {
     width: 100%;
     text-align: center;
   }
+  .custom-quiz-popup{
+    width: calc(200vw - 40px); /* Leaves 20px margin on each side */
+    max-width: 500px;
+    max-height: 80vh;
+    padding: 12px 16px;
+    border-radius: 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .custom-quiz-popup .custom-quiz-inputs .input-wrapper{
+    margin: -20px;
+  }
+  .custom-quiz-popup .custom-quiz-popup-content .custom-title-block .bud-e-frame{
+    height:350px;
+    width: 250px;
+  }
+  .custom-quiz-popup .custom-quiz-popup-content .custom-title-block .custom-quiz-title{
+    padding: 10px;
+    font-size: 20px;
+  }
+  .custom-quiz-popup .custom-quiz-popup-content .start-quiz-btn{
+    padding: 5px;
+    font-size: 25px;
+  }
 }
-
 
 @media (max-width: 450px) {
   .quiz-category-grid {
@@ -827,6 +853,12 @@ body.dark-mode .error-popup span:hover {
     text-align: center;
   }
 
+  .custom-quiz-popup .bud-e-frame{
+    height: 300px;
+    width: 200px;
+  }
+
+
   .custom-quiz-title {
     font-size: 1.1rem;
     padding: 6px 12px;
@@ -846,7 +878,6 @@ body.dark-mode .error-popup span:hover {
   .custom-quiz-inputs {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     width: 100%;
     align-items: center;
     margin: 0;
@@ -863,9 +894,8 @@ body.dark-mode .error-popup span:hover {
   }
 
   .custom-quiz-popup .input-wrapper .input-label {
-    font-size: 0.8rem;
-    margin: 2px 0 4px;
-    text-align: left;
+    font-size: 0.8rem;   
+    text-align: center;
     width: 100%;
     padding-left: 4px;
   }
@@ -880,7 +910,7 @@ body.dark-mode .error-popup span:hover {
     width: 100%;
     font-size: 0.9rem;
     height: 30px;
-    padding: 4px 8px;
+    padding: 2px 5px;
     border-radius: 6px;
     background-position: right 6px center;
     background-size: 12px;
@@ -888,6 +918,7 @@ body.dark-mode .error-popup span:hover {
     text-align: center;
     margin: 0;
     box-shadow: none;
+
   }
 
   #quiz-topic {
@@ -905,13 +936,16 @@ body.dark-mode .error-popup span:hover {
     margin: 0;
   }
 
-  .start-quiz-btn {
+  .custom-quiz-popup .start-quiz-btn {
     width: 100%;
     max-width: 260px;
     font-size: 1.1rem;
-    padding: 8px;
+    padding: 4px !important;
     margin-top: 10px;
     align-self: center;
+  }
+  .custom-quiz-popup .custom-quiz-inputs .input-wrapper{
+    margin: -25px !important;
   }
 }
 

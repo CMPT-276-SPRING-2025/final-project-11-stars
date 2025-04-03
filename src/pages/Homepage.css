@@ -249,29 +249,29 @@ html {
     transform: translateX(16px);
   }
   .welcome-section{
-    margin-top:-120px;  
+    margin-top:-150px;  
     margin-bottom:110px;
   }
   .iframe-wrapper{
-    margin-bottom:-50px;
+    margin-bottom:-100px;
   }
   .bud-e-frame{
-    height: 400px;
-    width: 300px;
+    height: 450px;
+    width: 350px;
   }
   
   @keyframes growShrinkFade {
     0% {
       opacity: 0;
-      transform: scale(0.7);
+      transform: scale(0.65);
     }
     50% {
       opacity: 1;
-      transform: scale(0.88);
+      transform: scale(0.79);
     }
     100% {
       opacity: 1;
-      transform: scale(0.8);
+      transform: scale(0.75);
     }
   }
 }
