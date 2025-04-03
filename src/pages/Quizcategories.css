@@ -729,13 +729,10 @@ body.dark-mode .error-popup span:hover {
 
 @media (max-width: 768px) {
   .quiz-category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* enables up to 3 in a row */
-    gap: 12px;
-    padding: 10px 8px;
-    justify-items: center;
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 per row */
+    gap: 14px;
+    padding: 10px;
   }
-
   .quiz-category-box {
     max-width: 120px;
     height: auto;
