@@ -56,15 +56,14 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="result-container">
-    {questions && (
-      <>
+    (questions && answeredQuestions) ? (
+      <div className="result-container">
         <h1 className="score-message">Score: {score}/{questions.length}</h1>
-
+  
         <p className="result-info">
           {(() => {
             const percentage = (score / questions.length) * 100;
-
+  
             if (percentage <= 50) {
               return "Great effort! Every mistake is a step towards learning! 😊";
             } else if (percentage < 80) {
@@ -74,54 +73,66 @@ const ResultPage = () => {
             }
           })()}
         </p>
-      </>
-    )}
-    {!questions && (
-      <h1 className="score-message">Score: 0/0</h1>
-    )}
+        {answeredQuestions.length > 0 ? (
+          <>
+            <div className="filter-buttons">
+              <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
+                All
+              </button>
+              <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
+                Correct
+              </button>
+              <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
+                Incorrect
+              </button>
+            </div>
   
-      {answeredQuestions.length > 0 ? (
-        <>
-          <div className="filter-buttons">
-            <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
-              All
-            </button>
-            <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
-              Correct
-            </button>
-            <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
-              Incorrect
-            </button>
-          </div>
+            <h2 className="section-title">Questions Answered</h2>
   
-          <h2 className="section-title">Questions Answered</h2>
+            <div className="review-section">
+              {filtered.map((q, index) => (
+                <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
+                  <p><strong>Q{index + 1}:</strong> {q.question}</p>
+                  <div className="answer-pair">
+                    <div>
+                      <strong>Your Answer:</strong><br />
+                      {renderVisualAnswer(q.selectedAnswer)}
+                    </div>
   
-          <div className="review-section">
-            {filtered.map((q, index) => (
-              <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
-                <p><strong>Q{index + 1}:</strong> {q.question}</p>
-                <div className="answer-pair">
-                  <div>
-                    <strong>Your Answer:</strong><br />
-                    {renderVisualAnswer(q.selectedAnswer)}
+                    {!q.isCorrect && (
+                      <div>
+                        <strong>Correct Answer:</strong><br />
+                        {renderVisualAnswer(q.correctAnswer)}
+                      </div>
+                    )}
                   </div>
   
-                  {!q.isCorrect && (
-                    <div>
-                      <strong>Correct Answer:</strong><br />
-                      {renderVisualAnswer(q.correctAnswer)}
-                    </div>
+                  {q.explanation && (
+                    <p className="explanation"><em>{q.explanation}</em></p>
                   )}
                 </div>
+              ))}
+            </div>
   
-                {q.explanation && (
-                  <p className="explanation"><em>{q.explanation}</em></p>
-                )}
-              </div>
-            ))}
-          </div>
-  
-          <div className="result-buttons spaced-bottom">
+            <div className="result-buttons spaced-bottom">
+              <button
+                className="go-back-button"
+                onClick={() => {
+                  resetQuiz();
+                  navigate("/");
+                }}
+              >
+                Go back to Quiz Categories
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="no-answers-placeholder">
+            <img src="/bud-e.png" alt="No answers yet" className="no-answers-icon" />
+            <p className="no-answers-text">
+              You didn't answer any questions this time, but that's okay! 🌱<br />
+              Try another quiz to grow your knowledge! 🚀
+            </p>
             <button
               className="go-back-button"
               onClick={() => {
@@ -129,27 +140,18 @@ const ResultPage = () => {
                 navigate("/");
               }}
             >
-              Go back to Quiz Categories
+              Back to Categories
             </button>
           </div>
-        </>
-      ) : (
-        <div className="no-answers-placeholder">
-          <img src="/bud-e.png" alt="No answers yet" className="no-answers-icon" />
-          <p className="no-answers-text">You didn't answer any questions this time, but that's okay! 🌱<br />Try another quiz to grow your knowledge! 🚀</p>
-          <button
-            className="go-back-button"
-            onClick={() => {
-              resetQuiz();
-              navigate("/");
-            }}
-          >
-            Back to Categories
-          </button>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    ) : (
+      <div className="result-container">
+        <h1 className="score-message">Score: 0/0</h1>
+        <p className="result-info">Results unavailable — please complete a quiz first.</p>
+      </div>
+    )
+  );  
 }  
 
 export default ResultPage;
