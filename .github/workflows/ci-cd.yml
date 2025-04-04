@@ -21,14 +21,19 @@ jobs:
         with: 
           node-version: 20
 
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install Dependencies
         run: npm install
 
       - name: Run Tests
-        #env: 
-          # MOCK_TRIVIA_API_URL: ${{ secrets.MOCK_TRIVIA_API_URL }}
-          # MOCK_OPENAI_API_KEY: ${{ secrets.MOCK_OPENAI_API_KEY }}
-        run: npm test || echo "No tests found, skipping..."
+        run: npm test -- --watchAll=false
 
       - name: Build Project
         run: npm run build
@@ -46,6 +51,14 @@ jobs:
         uses: actions/setup-node@v4 
         with: 
           node-version: 20
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Dependencies
         run: npm install
