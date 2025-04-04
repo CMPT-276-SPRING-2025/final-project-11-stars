@@ -6,22 +6,26 @@ import HomePage from './pages/Homepage';
 import QuizCategory from './pages/Quizcategories';
 import QuizPage from './pages/Quizpage';
 import ResultPage from './pages/Resultpage';
+import Footer from './pages/Footer'; // Footer component
 import './App.css';
 
 const App = () => {
   return (
-    <QuizProvider> {/* Wraps the entire app inside the provider so all components inside can access the quiz context */}
+    <QuizProvider>
       <Router>
         <div className="App">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/quiz-categories" element={<QuizCategory />} />
-            <Route path="/quiz" element={<QuizPage />} />
-            <Route path="/result" element={<ResultPage />} />
-          </Routes>
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/quiz-categories" element={<QuizCategory />} />
+              <Route path="/quiz" element={<QuizPage />} />
+              <Route path="/result" element={<ResultPage />} />
+            </Routes>
+          </main>
+          <Footer />
         </div>
       </Router>
-      </QuizProvider>
+    </QuizProvider>
   );
 };
 
