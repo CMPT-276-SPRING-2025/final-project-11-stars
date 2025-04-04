@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import ResultPage from "../pages/Resultpage";
 import { QuizContext } from "../context/QuizContext";
 import { MemoryRouter } from "react-router-dom";
-import * as routerDom from "react-router-dom";
+
 
 // Mock useNavigate before each test
 const mockNavigate = jest.fn();
@@ -11,6 +11,7 @@ jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockNavigate,
 }));
+
 describe("ResultPage", () => {
   const mockResetQuiz = jest.fn();
 
@@ -20,8 +21,8 @@ describe("ResultPage", () => {
         value={{
           score,
           resetQuiz: mockResetQuiz,
-          questions: new Array(10).fill({}), // Simulate 10 total questions
-          answeredQuestions: new Array(score).fill({ isCorrect: true }), // Simulate answered questions
+          questions: new Array(10).fill({}),
+          answeredQuestions: new Array(score).fill({ isCorrect: true }),
         }}
       >
         <MemoryRouter>
@@ -30,7 +31,6 @@ describe("ResultPage", () => {
       </QuizContext.Provider>
     );
   };
-
 
   test("displays the correct score", () => {
     renderWithContext(9);
@@ -45,7 +45,21 @@ describe("ResultPage", () => {
   });
 
   test("displays Bud-E image", () => {
-    renderWithContext();
+    render(
+      <QuizContext.Provider
+        value={{
+          score: 0,
+          resetQuiz: mockResetQuiz,
+          questions: [],
+          answeredQuestions: [],
+        }}
+      >
+        <MemoryRouter>
+          <ResultPage />
+        </MemoryRouter>
+      </QuizContext.Provider>
+    );
+
     const image = screen.getByAltText(/Bud-E/i);
     expect(image).toBeInTheDocument();
     expect(image.getAttribute("src")).toBe("/bud-e.png");
