@@ -1,29 +1,51 @@
-// App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { QuizProvider } from './context/QuizContext'; 
 import HomePage from './pages/Homepage';
 import QuizCategory from './pages/Quizcategories';
 import QuizPage from './pages/Quizpage';
 import ResultPage from './pages/Resultpage';
-import Footer from './pages/Footer'; // Footer component
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import Footer from './pages/Footer';
 import './App.css';
 
+const AppContent = ({ darkMode, setDarkMode }) => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  return (
+    <div className="App">
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<HomePage darkMode={darkMode} setDarkMode={setDarkMode} />} />
+          <Route path="/quiz-categories" element={<QuizCategory />} />
+          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/result" element={<ResultPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </main>
+      {isHome && <Footer />}
+    </div>
+  );
+};
+
 const App = () => {
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+    document.body.classList.toggle("light-mode", !darkMode);
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
   return (
     <QuizProvider>
       <Router>
-        <div className="App">
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/quiz-categories" element={<QuizCategory />} />
-              <Route path="/quiz" element={<QuizPage />} />
-              <Route path="/result" element={<ResultPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+        <AppContent darkMode={darkMode} setDarkMode={setDarkMode} />
       </Router>
     </QuizProvider>
   );

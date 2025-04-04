@@ -1,47 +1,10 @@
 .quiz-footer {
     background-color: #E9EED9;
     color: #54473F;
-    padding: 20px 10px;
-    text-align: center;
+    padding: 20px;
     font-family: 'Comic Neue', sans-serif;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     border-top: 2px solid #CBD2A4;
-  }
-  
-  .footer-content {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .footer-links {
-    margin: 10px 0;
-  }
-  
-  .footer-links a {
-    color: #54473F;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-links a:hover {
-    color: #A7C957;
-  }
-  
-  .footer-note {
-    font-size: 0.85rem;
-    opacity: 0.7;
-  }
-  
-  .quiz-footer {
-    background-color: #E9EED9;
-    color: #54473F;
-    padding: 20px 10px;
-    text-align: center;
-    font-family: 'Comic Neue', sans-serif;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    border-top: 2px solid #CBD2A4;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
@@ -52,17 +15,27 @@
     box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05);
   }
   
-  .footer-content {
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 900px;
     margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .footer-content {
+    flex: 1;
+    min-width: 200px;
+    text-align: left;
   }
   
   .footer-links {
     margin: 10px 0;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
   }
   
   .footer-links a {
@@ -81,16 +54,42 @@
     opacity: 0.7;
   }
   
+  .bude-footer-icon-inline {
+    width: 70px;
+    height: auto;
+    animation: floatUpDown 3s ease-in-out infinite;
+  }
+  
+  @keyframes floatUpDown {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+  
   /* Responsive */
   @media screen and (max-width: 600px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .bude-footer-icon-inline {
+      margin-top: 10px;
+      width: 60px;
+    }
+  
     .footer-content {
-      padding: 0 15px;
+      text-align: center;
     }
   
     .footer-links {
+      justify-content: center;
+      gap: 10px;
       flex-direction: column;
-      align-items: center;
-      gap: 8px;
     }
   }
   
