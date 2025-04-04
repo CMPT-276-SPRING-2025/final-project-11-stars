@@ -57,7 +57,9 @@ const ResultPage = () => {
 
   return (
     <div className="result-container">
-      <h1 className="score-message">Score: {score}/{questions.length}</h1>
+        {questions && (
+        <h1 className="score-message">Score: {score}/{questions.length}</h1>
+        )}
       <p className="result-info">
       {(() => {
         const percentage = (score / questions.length) * 100;
