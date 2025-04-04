@@ -1,0 +1,156 @@
+.static-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: #E9EED9;
+    color: #54473F;
+    font-family: 'Chakra Petch', sans-serif;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  /* Centered card */
+  .static-page-content {
+    background-color: #F4F8E1;
+    border: 2px solid #6F715B;
+    border-radius: 16px;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .static-page-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #54473F;
+    margin-bottom: 20px;
+    background-color: #CBD2A4;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 2px solid #6F715B;
+    display: inline-block;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .static-page-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  
+  /* Styled email / links */
+  .static-page-content a {
+    color: #6F715B;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .static-page-content a:hover {
+    color: #A7C957;
+    text-decoration: underline;
+  }
+  
+  /* Dark Mode */
+  body.dark-mode .static-page {
+    background-color: #1e1e1e;
+    color: #E9EED9;
+  }
+  
+  body.dark-mode .static-page-content {
+    background-color: #2f2f2f;
+    color: #E9EED9;
+    border: 2px solid #121212;
+    box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
+  }
+  
+  body.dark-mode .static-page-content h2 {
+    background-color: #3a3a3a;
+    color: #CBD2A4;
+    border: 2px solid #000000;
+  }
+  
+  body.dark-mode .static-page-content a {
+    color: #B0DC78;
+  }
+  
+  body.dark-mode .static-page-content a:hover {
+    color: #E9EED9;
+  }
+  
+  /* Responsive tweaks */
+  @media screen and (max-width: 600px) {
+    .static-page-content {
+      padding: 24px 16px;
+    }
+  
+    .static-page-content h2 {
+      font-size: 1.8rem;
+    }
+  
+    .static-page-content p {
+      font-size: 1.05rem;
+    }
+  }
+  
+  /* Bud-E mascot in corner */
+  .static-bude {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: auto;
+    animation: floatBudE 3s ease-in-out infinite;
+    z-index: 1000;
+  }
+  
+  @keyframes floatBudE {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  
+  body.dark-mode .static-bude {
+    filter: brightness(1.1);
+  }
+  
+  /* Back to Home Button */
+  .back-home-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 24px;
+    background-color: #CBD2A4;
+    color: #54473F;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #6F715B;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .back-home-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Dark Mode - Button */
+  body.dark-mode .back-home-btn {
+    background-color: #54473F;
+    color: #E9EED9;
+    border-color: #9A7E6F;
+    box-shadow: 0 0 12px rgba(203, 210, 164, 0.25);
+  }
+  
+  body.dark-mode .back-home-btn:hover {
+    background-color: #3a3a3a;
+    color: #CBD2A4;
+  }
+  
