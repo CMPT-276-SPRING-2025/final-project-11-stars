@@ -1,10 +1,8 @@
 body {
-    font-family: "Arial", sans-serif;
     background-color: #E9EED9;
     margin: 0;
+    font-family: 'Chakra Petch', sans-serif ;;
 }
-
-
 body.dark-mode {
     background-color: #1e1e1e;
     color: #E9EED9;
@@ -30,10 +28,11 @@ body.dark-mode .result-content {
 body.dark-mode .score-message{
     background-color: #2f2f2f;
     color: #CBD2A4;
+    border: solid #CBD2A4;
+    box-shadow: 0 0 8px #CBD2A4;
 }
 body.dark-mode .result-info {
     background-color: #2f2f2f;
-    border: 1.5px solid #9A7E6F;
     color: #CBD2A4;
 }
 
@@ -59,18 +58,8 @@ body.dark-mode .go-back-button:hover {
     margin: 70px auto;
     margin-top: 150px;
     border: solid 1px #9A7E6F;
+    
 }
-
-
-.result-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-
 .result-content {
     background-color: transparent;
     border: none;
@@ -83,47 +72,34 @@ body.dark-mode .go-back-button:hover {
 .score-message {
     background-color: #9A7E6F;
     color: white;
-    font-size: 24px;
     font-weight: bold;
-    padding: 10px;
+    padding: 20px;
+    margin: 300px;
+    margin-top: 0;
     margin-bottom: 10px;
     border-radius: 5px;
 }
-
-
 .result-info {
     background-color: #CBD2A4;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 5px;
     font-weight: bold;
+    font-size: 25px !important;
 }
-
-
-ai-assistant {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.ai-icon {
-    width: 250px;
-    height: auto;
-}
-
-
 .result-buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
+    
 }
-
 .go-back-button {
     background-color: #9A7E6F;
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 22px !important;
+    font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
@@ -149,6 +125,7 @@ ai-assistant {
     cursor: pointer;
     color: #54473F;
     transition: background-color 0.2s ease;
+    font-size: 20px;
   }
   
   .filter-buttons button:hover {
@@ -166,6 +143,7 @@ ai-assistant {
     display: flex;
     flex-direction: column;
     gap: 15px;
+
   }
   
   .review-card {
@@ -175,21 +153,16 @@ ai-assistant {
     text-align: left;
     border: 2px solid transparent;
     transition: all 0.3s ease;
+    
   }
   
   .review-card p {
     margin: 8px 0;
     color: #333;
+    
   }
   
-  /* 💬 Explanation style */
-  .explanation {
-    font-style: italic;
-    color: #54473F;
-    margin-top: 5px;
-  }
-  
-  /* ❌ No Results Message (optional fallback) */
+  /* No Results Message (optional fallback) */
   .no-results {
     font-style: italic;
     text-align: center;
@@ -218,10 +191,10 @@ ai-assistant {
     border-color: #5e8f5e;
     background-color: #2c4c2c;
     color: #e9eed9;
+    box-shadow: 0 0 10px #5e8f5e;
   }
-  
   body.dark-mode .review-card p,
-  body.dark-mode .explanation,
+  body.dark-mode .explanation
   body.dark-mode .no-results {
     color: #e9eed9;
   }
@@ -272,23 +245,11 @@ ai-assistant {
     margin-bottom: 20px;
     text-align: left;
   }
-  .review-card.correct {
-    border-color: #4CAF50;
-    background-color: #EBF7ED;
-    color: #333;
-  }
-  
-  body.dark-mode .review-card.correct {
-    border-color: #5e8f5e;
-    background-color: #2c4c2c;
-    color: #e9eed9;
-  }
-  
-  
+
   .section-title {
-    font-size: 22px;
     font-weight: bold;
-    margin-top: 40px;
+    font-size: 25px;
+    margin-top: 20px;
     margin-bottom: 15px;
     color: #54473F;
   }
@@ -307,18 +268,28 @@ ai-assistant {
     margin-bottom: 20px;
     opacity: 0.8;
   }
-  
-  .no-answers-text {
-    font-size: 1.2rem;
-    color: #555;
+
+  .no-answers-text{
+    font-size: 1.4rem;
+    color: #54473F;
     margin-bottom: 20px;
   }
   
+  body.dark-mode .no-answers-text {
+    font-size: 1.4rem;
+    color: #9A7E6F;
+    margin-bottom: 20px;
+  }
+  
+.review-card p, .answer-pair{
+  font-size: 20px;
+}
   /* Light mode */
 .review-card.incorrect {
   border-color: #D9534F;
   background-color: #FCE9E9;
   color: #333;
+  box-shadow: 0 0 5px #b44b4b;
 }
 
 /* Dark mode override */
@@ -326,12 +297,14 @@ body.dark-mode .review-card.incorrect {
   border-color: #b44b4b;
   background-color: #4c2c2c;
   color: #e9eed9;
+  box-shadow: 0 0 10px #b44b4b;
 }
 
 .review-card.correct {
   border-color: #4CAF50;
   background-color: #EBF7ED;
   color: #333;
+  box-shadow: 0 0 5px #4CAF50;
 }
 
 body.dark-mode .review-card.correct {
@@ -339,6 +312,7 @@ body.dark-mode .review-card.correct {
   background-color: #2c4c2c;
   color: #e9eed9;
 }
+
 /* 📱 Mobile (up to 600px) */
 @media (max-width: 600px) {
   .result-container {

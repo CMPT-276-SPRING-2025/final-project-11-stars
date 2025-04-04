@@ -9,9 +9,11 @@ const ResultPage = () => {
     document.body.classList.toggle("dark-mode", savedMode);
     document.body.classList.toggle("light-mode", !savedMode);
   }, []);
+
   const navigate = useNavigate();
   const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
   const [filter, setFilter] = useState("all");
+  const [showAnswers, setShowAnswers] = useState(true); // 👈 added toggle state
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);
@@ -22,7 +24,6 @@ const ResultPage = () => {
   const filtered = getFilteredQuestions();
 
   const renderVisualAnswer = (answer) => {
-    // If answer is an object with a valid `url`
     if (answer && typeof answer === "object" && answer.url) {
       return (
         <img
@@ -33,7 +34,6 @@ const ResultPage = () => {
       );
     }
 
-    // If answer is a stringified object with a `url` field
     if (typeof answer === "string") {
       try {
         const parsed = JSON.parse(answer);
@@ -51,7 +51,6 @@ const ResultPage = () => {
       }
     }
 
-    // Fallback for plain text answers
     return <span>{typeof answer === "string" ? answer : JSON.stringify(answer)}</span>;
   };
 
@@ -59,11 +58,10 @@ const ResultPage = () => {
     (questions && answeredQuestions) ? (
       <div className="result-container">
         <h1 className="score-message">Score: {score}/{questions.length}</h1>
-  
+
         <p className="result-info">
           {(() => {
             const percentage = (score / questions.length) * 100;
-  
             if (percentage <= 50) {
               return "Great effort! Every mistake is a step towards learning! 😊";
             } else if (percentage < 80) {
@@ -73,47 +71,74 @@ const ResultPage = () => {
             }
           })()}
         </p>
-        {answeredQuestions.length > 0 ? (
+
+        {answeredQuestions.length > 0 && (
           <>
             <div className="filter-buttons">
-              <button onClick={() => setFilter("all")} className={filter === "all" ? "active" : ""}>
+              <button
+                onClick={() => {
+                  if (filter === "all" && showAnswers) {
+                    setShowAnswers(false);
+                  } else {
+                    setFilter("all");
+                    setShowAnswers(true);
+                  }
+                }}
+                className={filter === "all" && showAnswers ? "active" : ""}
+              >
                 All
               </button>
-              <button onClick={() => setFilter("correct")} className={filter === "correct" ? "active" : ""}>
+              <button
+                onClick={() => {
+                  setFilter("correct");
+                  setShowAnswers(true);
+                }}
+                className={filter === "correct" ? "active" : ""}
+              >
                 Correct
               </button>
-              <button onClick={() => setFilter("incorrect")} className={filter === "incorrect" ? "active" : ""}>
+              <button
+                onClick={() => {
+                  setFilter("incorrect");
+                  setShowAnswers(true);
+                }}
+                className={filter === "incorrect" ? "active" : ""}
+              >
                 Incorrect
               </button>
             </div>
-  
-            <h2 className="section-title">Questions Answered</h2>
-  
-            <div className="review-section">
-              {filtered.map((q, index) => (
-                <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
-                  <p><strong>Q{index + 1}:</strong> {q.question}</p>
-                  <div className="answer-pair">
-                    <div>
-                      <strong>Your Answer:</strong><br />
-                      {renderVisualAnswer(q.selectedAnswer)}
-                    </div>
-  
-                    {!q.isCorrect && (
-                      <div>
-                        <strong>Correct Answer:</strong><br />
-                        {renderVisualAnswer(q.correctAnswer)}
+
+            {showAnswers && (
+              <>
+                <h2 className="section-title">Questions Answered</h2>
+
+                <div className="review-section">
+                  {filtered.map((q, index) => (
+                    <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
+                      <p><strong>Q{index + 1}:</strong> {q.question}</p>
+                      <div className="answer-pair">
+                        <div>
+                          <strong>Your Answer:</strong><br />
+                          {renderVisualAnswer(q.selectedAnswer)}
+                        </div>
+
+                        {!q.isCorrect && (
+                          <div>
+                            <strong>Correct Answer:</strong><br />
+                            {renderVisualAnswer(q.correctAnswer)}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-  
-                  {q.explanation && (
-                    <p className="explanation"><em>{q.explanation}</em></p>
-                  )}
+
+                      {q.explanation && (
+                        <p className="explanation"><em>{q.explanation}</em></p>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-  
+              </>
+            )}
+
             <div className="result-buttons spaced-bottom">
               <button
                 className="go-back-button"
@@ -126,7 +151,9 @@ const ResultPage = () => {
               </button>
             </div>
           </>
-        ) : (
+        )}
+
+        {answeredQuestions.length === 0 && (
           <div className="no-answers-placeholder">
             <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
             <p className="no-answers-text">
@@ -151,7 +178,7 @@ const ResultPage = () => {
         <p className="result-info">Results unavailable — please complete a quiz first.</p>
       </div>
     )
-  );  
-}  
+  );
+};
 
 export default ResultPage;
