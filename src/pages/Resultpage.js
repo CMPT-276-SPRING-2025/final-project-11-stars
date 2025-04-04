@@ -128,7 +128,7 @@ const ResultPage = () => {
           </>
         ) : (
           <div className="no-answers-placeholder">
-            <img src="/bud-e.png" alt="No answers yet" className="no-answers-icon" />
+            <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
             <p className="no-answers-text">
               You didn't answer any questions this time, but that's okay! 🌱<br />
               Try another quiz to grow your knowledge! 🚀
