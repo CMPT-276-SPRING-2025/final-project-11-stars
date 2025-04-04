@@ -57,22 +57,28 @@ const ResultPage = () => {
 
   return (
     <div className="result-container">
-        {questions && (
+    {questions && (
+      <>
         <h1 className="score-message">Score: {score}/{questions.length}</h1>
-        )}
-      <p className="result-info">
-      {(() => {
-        const percentage = (score / questions.length) * 100;
 
-        if (percentage <= 50) {
-          return "Great effort! Every mistake is a step towards learning! 😊";
-        } else if (percentage < 80) {
-          return "You are improving! Keep up the good work! 💪";
-        } else {
-          return "Congratulations! You are officially BrainGoated! 😎";
-        }
-      })()}
-      </p>
+        <p className="result-info">
+          {(() => {
+            const percentage = (score / questions.length) * 100;
+
+            if (percentage <= 50) {
+              return "Great effort! Every mistake is a step towards learning! 😊";
+            } else if (percentage < 80) {
+              return "You are improving! Keep up the good work! 💪";
+            } else {
+              return "Congratulations! You are officially BrainGoated! 😎";
+            }
+          })()}
+        </p>
+      </>
+    )}
+    {!questions && (
+      <h1 className="score-message">Score: 0/0</h1>
+    )}
   
       {answeredQuestions.length > 0 ? (
         <>
