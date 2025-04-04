@@ -16,13 +16,21 @@ describe("ResultPage", () => {
 
   const renderWithContext = (score = 8) => {
     return render(
-      <QuizContext.Provider value={{ score, resetQuiz: mockResetQuiz }}>
+      <QuizContext.Provider
+        value={{
+          score,
+          resetQuiz: mockResetQuiz,
+          questions: new Array(10).fill({}), // Simulate 10 total questions
+          answeredQuestions: new Array(score).fill({ isCorrect: true }), // Simulate answered questions
+        }}
+      >
         <MemoryRouter>
           <ResultPage />
         </MemoryRouter>
       </QuizContext.Provider>
     );
   };
+
 
   test("displays the correct score", () => {
     renderWithContext(9);
