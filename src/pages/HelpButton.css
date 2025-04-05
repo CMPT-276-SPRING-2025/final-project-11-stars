@@ -1,0 +1,156 @@
+.help-button-wrapper {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* Help Button Styling */
+.help-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-btn:hover {
+  transform: scale(1.1);
+}
+
+.help-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: filter 0.3s ease;
+}
+
+/* Dark mode icon inversion */
+body.dark-mode .help-btn {
+  background-color: transparent;
+}
+
+body.dark-mode .help-icon {
+  filter: invert(1) brightness(1.2);
+}
+
+/* Help Popup Styling */
+.help-popup {
+  margin-top: 10px;
+  background-color: #fff;
+  color: #54473F;
+  padding: 20px;
+  border-radius: 18px;
+  width: 300px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-family: 'Chakra Petch', sans-serif;
+  animation: fadeIn 0.3s ease;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  z-index: 5;
+}
+
+body.dark-mode .help-popup {
+  background-color: #1e1e1e;
+  color: #E9EED9;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.08);
+}
+
+.help-popup h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.help-popup ul {
+  padding-left: 1.2rem;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.help-popup ul li {
+  margin-bottom: 8px;
+}
+
+.close-help {
+  margin-top: 10px;
+  background-color: #CBD2A4;
+  color: #54473F;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .close-help {
+  background-color: #E9EED9;   /* light background for contrast */
+  color: #1e1e1e;              /* dark text to pop */
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2); /* subtle glow */
+}
+
+
+.close-help:hover {
+  background-color: #9A7E6F;
+  color: white;
+}
+
+/* Fade-in animation for popup */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .help-btn {
+    width: 42px;
+    height: 42px;
+    padding: 6px;
+  }
+
+  .help-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .help-popup {
+    top: 50px;
+    width: 90%;
+    right: 0;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .help-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .help-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .help-popup {
+    font-size: 12.5px;
+    padding: 14px;
+  }
+}
