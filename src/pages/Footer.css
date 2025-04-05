@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Delius&family=Fontdiner+Swanky&display=swap");
 .quiz-footer {
   background-color: #E9EED9;
   color: #54473F;
   padding: 20px;
-  font-family: 'Comic Neue', sans-serif;
+  font-family:'Chakra Petch', sans-serif ;
   border-top: 2px solid #CBD2A4;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s ease, color 0.3s ease;
+  align-items: center;
 }
 
 body.dark-mode .quiz-footer {
@@ -17,18 +19,20 @@ body.dark-mode .quiz-footer {
 
 .footer-inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; 
   align-items: center;
-  max-width: 900px;
+  max-width: 700px;
   margin: 0 auto;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-wrap: wrap; 
+  text-align: center;
 }
 
 .footer-content {
-  flex: 1;
+  flex: none;
   min-width: 200px;
-  text-align: left;
+  text-align: center;
+  justify-items: center;
+  font-weight:400;
 }
 
 .footer-links {
@@ -54,9 +58,12 @@ body.dark-mode .quiz-footer {
     text-align: center;
     margin-top: 20px;
     font-size: 0.9rem;
-    color: #A3A692;
+    color: #6e705e;
     opacity: 0.7;
   }
+body.dark-mode .footer-note{
+  color: #A3A692;
+}
   
 
 .bude-footer-icon-inline {

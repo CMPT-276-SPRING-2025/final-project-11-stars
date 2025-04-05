@@ -86,7 +86,7 @@ body.dark-mode .go-back-button:hover {
     margin-bottom: 20px;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 25px !important;
+    font-size: 25px;
 }
 .result-buttons {
     display: flex;
@@ -99,7 +99,7 @@ body.dark-mode .go-back-button:hover {
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 22px !important;
+    font-size: 22px;
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
@@ -445,25 +445,26 @@ body.dark-mode .review-card.correct {
   }
 
   .result-info {
-    font-size: 13px;
+    font-size: 20px;
     text-align: center;
-    padding: 10px;
-    margin-bottom: -10px;
+    padding: 5px;
+    margin-bottom: 20px;
   }
 
   .filter-buttons {
     flex-wrap: wrap;
     gap: 6px;
     justify-content: center;
+    font-size: 10px;
   }
 
   .filter-buttons button {
-    font-size: 12px;
+    font-size: 15px;
     padding: 6px 10px;
   }
 
   .section-title {
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
   }
 
@@ -473,10 +474,14 @@ body.dark-mode .review-card.correct {
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
+  .review-section p {
+    font-size: 20px;
+  }
 
   .answer-pair {
     flex-direction: column;
     gap: 10px;
+    font-size: 20px;
   }
 
   .result-thumbnail {
@@ -486,7 +491,7 @@ body.dark-mode .review-card.correct {
   }
 
   .go-back-button {
-    font-size: 14px;
+    font-size: 18px;
     padding: 8px 14px;
   }
 
