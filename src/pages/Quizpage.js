@@ -294,6 +294,7 @@ const QuizPage = () => {
       setShakeEffect(false);
       setHasManuallyClosedBudE(false);
     } else {
+      isNavigatingToResult.current = true;
       navigate("/result");
     }
   };
