@@ -436,6 +436,13 @@ height: 32px;
 border-radius: 50%;
 align-self: flex-start;
 }
+.budE-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* ⬅️ Controls spacing between the buttons */
+  margin-top: 10px;
+}
+
 .assistant-content{
 background-color: #f1f1f1;
 border-radius: 10px;

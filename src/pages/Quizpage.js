@@ -420,7 +420,6 @@ const QuizPage = () => {
                   </>
                 )}
 
-
                 <div className="chatbot-container">
                   {budEHistory.length === 0 ? (
                     <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
@@ -460,15 +459,27 @@ const QuizPage = () => {
                     rows={3}
                     className="ask-input"
                   />
-                  <button onClick={handleAskBudE} className="budE-button">
-                    Ask Bud-E
-                  </button>
+                  <div className="budE-actions">
+                    <button onClick={handleAskBudE} className="budE-button">
+                      Ask Bud-E
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsBudEExpanded(false);
+                        handleNextQuestion();
+                      }}
+                      className="budE-button"
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           )}
-        </>
-      )}
+      </>
+    )}
+
       <audio ref={correctAudioRef} src="/correct.mp3" preload="auto" />
       <audio ref={incorrectAudioRef} src="/incorrect.mp3" preload="auto" />
     </div>
