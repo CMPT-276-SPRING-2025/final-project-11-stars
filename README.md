@@ -1,6 +1,6 @@
 # Project Title: BrainGoated
 
-![BrainGoated Status](https://img.shields.io/uptimerobot/status/m799396409?label=BrainGoated%20Status&style=flat-square)
+![BrainGoated Status](https://img.shields.io/uptimerobot/status/m799396409-636acff0ba0f55d0904943e0?label=BrainGoated%20Status&style=flat-square)
 
  
 ## Description:
