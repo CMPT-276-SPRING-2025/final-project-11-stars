@@ -49,13 +49,12 @@ const QuizPage = () => {
 
   useEffect(() => {
     const navType = performance.getEntriesByType("navigation")[0]?.type;
-
-    //if the user goes back during the quiz
+    //if the user goes back from the quiz page, reset everything
     if (navType === "back_forward") {
-      resetQuiz(); //  full quiz reset
+      resetQuiz();
       navigate("/");
     }
-  }, [location.key]);
+  }, [location.key, resetQuiz, navigate]);
 
   const normalize = (str) => {
     if (typeof str === "string") {
@@ -216,11 +215,19 @@ const QuizPage = () => {
       if (isCorrect) {
         confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
         setScore((prev) => prev + 1);
-        correctAudioRef.current?.play();
+        if (typeof window !== "undefined" && correctAudioRef.current) {
+          correctAudioRef.current.play().catch(() => {
+            // ignore autoplay or JSDOM errors
+          });
+        }
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
-        incorrectAudioRef.current?.play();
+        if (typeof window !== "undefined" && incorrectAudioRef.current) {
+          incorrectAudioRef.current.play().catch(() => {
+            // ignore autoplay or JSDOM errors
+          });
+        }
         setShakeEffect(true);
       }
 

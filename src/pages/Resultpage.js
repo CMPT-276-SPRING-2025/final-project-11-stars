@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { QuizContext } from "../context/QuizContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import "./Resultpage.css";
 
 const ResultPage = () => {
@@ -13,9 +13,12 @@ const ResultPage = () => {
   }, []);
 
   useEffect(() => {
-    finalChimeRef.current?.play();
+  if (typeof window !== "undefined" && finalChimeRef.current) {
+    finalChimeRef.current.play().catch(() => {
+      // Fail silently in case autoplay is blocked or unsupported
+    });
+  }
   }, []);
-  
 
   const navigate = useNavigate();
   const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
@@ -24,8 +27,8 @@ const ResultPage = () => {
 
   useEffect(() => {
     const blockPopState = () => {
-      resetQuiz(); // optional, if needed
-      window.location.replace("/"); // hard redirect
+      resetQuiz();
+      window.location.replace("/");
     };
   
     window.history.pushState(null, "", window.location.href);
@@ -34,7 +37,7 @@ const ResultPage = () => {
     return () => {
       window.removeEventListener("popstate", blockPopState);
     };
-  }, []);
+  }, [resetQuiz]); 
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);
