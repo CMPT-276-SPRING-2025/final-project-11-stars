@@ -17,14 +17,14 @@ const QuizPage = () => {
     setAnsweredQuestions, resetQuiz
   } = useContext(QuizContext);
 
-  // 🧼 Define reset logic
+  //Define reset logic
   const resetQuizState = useCallback(() => {
     setScore(0);
     setCurrentQuestion(0);
     setAnsweredQuestions([]);
   }, [setScore, setCurrentQuestion, setAnsweredQuestions]);
 
-  // 💥 Reset on mount and on unmount (refresh or leave)
+  //Reset on mount and on unmount (refresh or leave)
   useEffect(() => {
       resetQuizState();
   
