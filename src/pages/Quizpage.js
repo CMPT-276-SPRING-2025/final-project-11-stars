@@ -41,8 +41,9 @@ const QuizPage = () => {
   const [quizReady, setQuizReady] = useState(false); 
   const [hasSeenTooltip, setHasSeenTooltip] = useState(false);
   const [hasManuallyClosedBudE, setHasManuallyClosedBudE] = useState(false);
-
-
+  const correctAudioRef = useRef(null);
+  const incorrectAudioRef = useRef(null);
+  
 
 
   const normalize = (str) => {
@@ -204,9 +205,11 @@ const QuizPage = () => {
       if (isCorrect) {
         confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
         setScore((prev) => prev + 1);
+        correctAudioRef.current?.play();
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
+        incorrectAudioRef.current?.play();
         setShakeEffect(true);
       }
 
@@ -466,6 +469,8 @@ const QuizPage = () => {
           )}
         </>
       )}
+      <audio ref={correctAudioRef} src="/correct.mp3" preload="auto" />
+      <audio ref={incorrectAudioRef} src="/incorrect.mp3" preload="auto" />
     </div>
   );
 };
