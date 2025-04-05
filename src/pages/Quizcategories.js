@@ -14,7 +14,7 @@ const categories = [
   { name: 'Sports', categoryName: 'sport_and_leisure', image: '/sports.svg', alt_text: 'Sports category icon' },
   { name: 'Science', categoryName: 'science', image: '/science.svg', alt_text: 'Science category icon' },
   { name: 'History', categoryName: 'history', image: '/history.svg', alt_text: 'History category icon' },
-  { name: 'Custom', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'Custom category icon' }
+  { name: 'Build a Quiz', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'Custom category icon' }
 ];
 
 const triviaApiLanguages = [

@@ -8,6 +8,7 @@ import ResultPage from './pages/Resultpage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import Footer from './pages/Footer';
+import HelpButton from './pages/HelpButton';
 import './App.css';
 
 const AppContent = ({ darkMode, setDarkMode }) => {
@@ -26,7 +27,9 @@ const AppContent = ({ darkMode, setDarkMode }) => {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
+
       {isHome && <Footer />}
+      {isHome && <HelpButton />}
     </div>
   );
 };
