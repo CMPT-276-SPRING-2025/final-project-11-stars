@@ -603,7 +603,7 @@ body.dark-mode .assistant-content {
 
 body.dark-mode .option {
   background-color: #2f2f2f;
-  color: #CBD2A4;
+  color: #CBD2A4 !important;
   border: 1px solid #9A7E6F;
   max-width: 500px;
   width: 100%;
@@ -617,19 +617,15 @@ body.dark-mode .option {
   transition: all 0.3s ease, transform 0.2s ease;
   max-height: 120px;
   overflow: hidden;
+  font-weight: bold;
 }
+
 
 body.dark-mode .option:hover {
   transform: scale(1.02);
   max-height: 1000px;
   background-color: #816656;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
-}
-
-
-body.dark-mode .feedback-popup-buttons button {
-  background-color: #9A7E6F;
-  color: #fff;
 }
 
 body.dark-mode .timer-box {
@@ -800,6 +796,63 @@ body.dark-mode .text-options {
 .finish-button:hover {
   background-color: #816656;
 }
+/* ==== 🌑 DARK MODE DROPDOWNS FIX ==== */
+body.dark-mode select,
+body.dark-mode option {
+  background-color: #2f2f2f !important;
+  color: #CBD2A4 !important;
+  border: 1px solid #9A7E6F;
+}
+
+body.dark-mode select:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(203, 210, 164, 0.5);
+}
+
+/* For react-select if you're using it */
+body.dark-mode .react-select__control {
+  background-color: #2f2f2f !important;
+  color: #CBD2A4 !important;
+  border-color: #9A7E6F !important;
+}
+
+body.dark-mode .react-select__single-value {
+  color: #CBD2A4 !important;
+}
+
+body.dark-mode .react-select__placeholder {
+  color: #b0ba91 !important;
+  opacity: 0.8;
+}
+/* ✅ Corrected for your new requirement */
+body.dark-mode .finish-button,
+body.dark-mode .complete-button,
+body.dark-mode .next-button,
+body.dark-mode .budE-button,
+body.dark-mode .feedback-popup-buttons button {
+  background-color: #9A7E6F;
+  color: #CBD2A4;
+  border: 1px solid #9A7E6F;
+}
+
+body.dark-mode .finish-button:hover,
+body.dark-mode .complete-button:hover,
+body.dark-mode .next-button:hover,
+body.dark-mode .budE-button:hover {
+  background-color: #816656;
+}
+
+body.dark-mode .timer-fill {
+  background-color: #9A7E6F;
+}
+
+body.dark-mode .option,
+body.dark-mode .score-box,
+body.dark-mode .timer-box {
+  border: 1px solid #9A7E6F;
+  color: #CBD2A4;
+}
+
 /* Correct answer in dark mode */
 body.dark-mode .option.correct-highlight {
   background-color: #3c5232 !important;  /* muted green */
@@ -917,6 +970,14 @@ body.dark-mode .bud-e-floating-icon {
   background-color: #91cf61;
   transform: scale(1.05);
 }
+
+:root {
+  --accent-green: #91cf61;
+  --accent-green-dark: #659a3b;
+  --text-dark: #54473F;
+  --text-light: #E9EED9;
+}
+
 
 /* 🌚 Dark Mode */
 body.dark-mode .error-page {
