@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { QuizContext } from "../context/QuizContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import "./Resultpage.css";
 
 const ResultPage = () => {
@@ -24,7 +24,7 @@ const ResultPage = () => {
 
   useEffect(() => {
     const blockPopState = () => {
-      resetQuiz(); // optional, if needed
+      resetQuiz(); 
       window.location.replace("/"); // hard redirect
     };
   
@@ -34,7 +34,8 @@ const ResultPage = () => {
     return () => {
       window.removeEventListener("popstate", blockPopState);
     };
-  }, []);
+  }, [resetQuiz]);
+  
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);

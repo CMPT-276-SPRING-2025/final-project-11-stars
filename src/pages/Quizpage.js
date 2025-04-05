@@ -80,7 +80,7 @@ const QuizPage = () => {
       resetQuiz(); //  full quiz reset
       navigate("/");
     }
-  }, [location.key]);
+  }, [location.key, resetQuiz, navigate]);
 
   const normalize = (str) => {
     if (typeof str === "string") {
