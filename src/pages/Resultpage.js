@@ -13,11 +13,19 @@ const ResultPage = () => {
   }, []);
 
   useEffect(() => {
-  if (typeof window !== "undefined" && finalChimeRef.current) {
-    finalChimeRef.current.play().catch(() => {
-      // Fail silently in case autoplay is blocked or unsupported
-    });
-  }
+    if (
+      typeof window !== "undefined" &&
+      finalChimeRef.current &&
+      typeof finalChimeRef.current.play === "function"
+    ) {
+      try {
+        finalChimeRef.current.play().catch(() => {
+          // autoplay might be blocked
+        });
+      } catch (e) {
+        // In jsdom, .play() throws immediately (not a promise), so we handle that too
+      }
+    }
   }, []);
 
   const navigate = useNavigate();
@@ -26,18 +34,19 @@ const ResultPage = () => {
   const [showAnswers, setShowAnswers] = useState(true); // 👈 added toggle state
 
   useEffect(() => {
-    const blockPopState = () => {
-      resetQuiz();
-      window.location.replace("/");
-    };
-  
-    window.history.pushState(null, "", window.location.href);
-    window.addEventListener("popstate", blockPopState);
-  
-    return () => {
-      window.removeEventListener("popstate", blockPopState);
-    };
-  }, [resetQuiz]); 
+  const blockPopState = () => {
+    resetQuiz();
+    window.location.replace("/"); // hard redirect
+  };
+
+  window.history.pushState(null, "", window.location.href);
+  window.addEventListener("popstate", blockPopState);
+
+  return () => {
+    window.removeEventListener("popstate", blockPopState);
+  };
+}, [resetQuiz]);
+
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);

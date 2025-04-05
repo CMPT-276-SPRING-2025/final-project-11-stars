@@ -5,14 +5,7 @@ import confetti from "canvas-confetti";
 import "./Quizpage.css";
 
 const QuizPage = () => {
-  useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode") === "true";
-    document.body.classList.toggle("dark-mode", savedMode);
-    document.body.classList.toggle("light-mode", !savedMode);
-  }, []);
-  
   const navigate = useNavigate();
-  
 
   const {
     score, setScore,
@@ -23,6 +16,38 @@ const QuizPage = () => {
     errorMessage, getBudEReply,
     setAnsweredQuestions, resetQuiz
   } = useContext(QuizContext);
+
+  //Define reset logic
+  const resetQuizState = useCallback(() => {
+    setScore(0);
+    setCurrentQuestion(0);
+    setAnsweredQuestions([]);
+  }, [setScore, setCurrentQuestion, setAnsweredQuestions]);
+
+  //Reset on mount and on unmount (refresh or leave)
+  useEffect(() => {
+      resetQuizState();
+  
+      const handleUnload = () => {
+        if (!isNavigatingToResult.current) {
+          resetQuizState();
+        }
+      };
+  
+      window.addEventListener("beforeunload", handleUnload);
+      return () => {
+        window.removeEventListener("beforeunload", handleUnload);
+        if (!isNavigatingToResult.current) {
+          resetQuizState();
+        }
+      };
+    }, [resetQuizState]);
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode") === "true";
+    document.body.classList.toggle("dark-mode", savedMode);
+    document.body.classList.toggle("light-mode", !savedMode);
+  }, []);
 
   const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
@@ -43,7 +68,7 @@ const QuizPage = () => {
   const [hasManuallyClosedBudE, setHasManuallyClosedBudE] = useState(false);
   const correctAudioRef = useRef(null);
   const incorrectAudioRef = useRef(null);
-  
+  const isNavigatingToResult = useRef(false);
 
   const location = useLocation(); // add this too
 
@@ -142,7 +167,7 @@ const QuizPage = () => {
     }
   }, [answered, hasManuallyClosedBudE]);
 
-
+  
   if (loading) {
     return (
       <div className="quizpage-background">
@@ -180,13 +205,19 @@ const QuizPage = () => {
       </div>
     );
   }
-
+  
+  const handleFinishQuiz = () => {
+    isNavigatingToResult.current = true;
+    navigate("/result");
+  };
+  
+  
   if (questions.length === 0) {
     return (
       <div className="quizpage-background no-questions">
         <div className="no-questions-message">
           <h2>No questions available. Please try a different topic.</h2>
-          <button className="finish-button" onClick={() => navigate("/result")}>
+          <button className="finish-button" onClick={handleFinishQuiz}>
             Finish Quiz
           </button>
         </div>
@@ -281,7 +312,7 @@ const QuizPage = () => {
     const updatedHistory = await getBudEReply(budEInput, budEHistory);
     setBudEHistory(updatedHistory);
   };
-
+  
   return (
     <div className="quizpage-background">
       <div className={`quiz-container ${isBudEExpanded ? "shift-left" : ""}`}>
@@ -371,7 +402,7 @@ const QuizPage = () => {
         </div>
 
         <div className="quiz-buttons">
-          <button className="finish-button" onClick={() => navigate("/result")}>
+        <button className="finish-button" onClick={handleFinishQuiz}>
             Finish Quiz
           </button>
           {answered && (
@@ -438,7 +469,6 @@ const QuizPage = () => {
                   </>
                 )}
 
-
                 <div className="chatbot-container">
                   {budEHistory.length === 0 ? (
                     <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
@@ -478,15 +508,27 @@ const QuizPage = () => {
                     rows={3}
                     className="ask-input"
                   />
-                  <button onClick={handleAskBudE} className="budE-button">
-                    Ask Bud-E
-                  </button>
+                  <div className="budE-actions">
+                    <button onClick={handleAskBudE} className="budE-button">
+                      Ask Bud-E
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsBudEExpanded(false);
+                        handleNextQuestion();
+                      }}
+                      className="budE-button"
+                    >
+                      Next
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           )}
-        </>
-      )}
+      </>
+    )}
+
       <audio ref={correctAudioRef} src="/correct.mp3" preload="auto" />
       <audio ref={incorrectAudioRef} src="/incorrect.mp3" preload="auto" />
     </div>

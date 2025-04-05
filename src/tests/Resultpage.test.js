@@ -4,6 +4,17 @@ import ResultPage from "../pages/Resultpage";
 import { QuizContext } from "../context/QuizContext";
 import { MemoryRouter } from "react-router-dom";
 
+beforeAll(() => {
+  Object.defineProperty(window.HTMLMediaElement.prototype, "play", {
+    configurable: true,
+    value: () => Promise.resolve(),
+  });
+
+  Object.defineProperty(window.HTMLMediaElement.prototype, "pause", {
+    configurable: true,
+    value: () => {},
+  });
+});
 
 // Mock useNavigate before each test
 const mockNavigate = jest.fn();
