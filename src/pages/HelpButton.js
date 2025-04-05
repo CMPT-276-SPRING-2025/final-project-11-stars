@@ -11,8 +11,16 @@ const HelpButton = () => {
         onClick={() => setShowHelp(!showHelp)}
         title="How to use this app"
       >
-        <img src="/question.png" alt="Help" className="help-icon" />
+        <img
+          src="/question.png"
+          alt="Help"
+          className="help-icon"
+          onError={(e) => {
+            e.target.style.display = 'none'; // Hide if broken
+          }}
+        />
       </button>
+
 
       {showHelp && (
         <div className="help-popup">
