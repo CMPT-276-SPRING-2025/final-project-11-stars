@@ -13,11 +13,19 @@ const ResultPage = () => {
   }, []);
 
   useEffect(() => {
-  if (typeof window !== "undefined" && finalChimeRef.current) {
-    finalChimeRef.current.play().catch(() => {
-      // Fail silently in case autoplay is blocked or unsupported
-    });
-  }
+    if (
+      typeof window !== "undefined" &&
+      finalChimeRef.current &&
+      typeof finalChimeRef.current.play === "function"
+    ) {
+      try {
+        finalChimeRef.current.play().catch(() => {
+          // autoplay might be blocked
+        });
+      } catch (e) {
+        // In jsdom, .play() throws immediately (not a promise), so we handle that too
+      }
+    }
   }, []);
 
   const navigate = useNavigate();
