@@ -118,39 +118,57 @@ body.dark-mode .close-help {
 }
 
 /* Mobile responsiveness */
+/* Medium screens (tablets and below) */
 @media (max-width: 768px) {
-  .help-btn {
-    width: 42px;
-    height: 42px;
-    padding: 6px;
-  }
-
-  .help-icon {
-    width: 22px;
-    height: 22px;
-  }
-
   .help-popup {
-    top: 50px;
-    width: 90%;
+    width: 92vw;
+    padding: 18px;
+    font-size: 14px;
+    line-height: 1.6;
     right: 0;
-    font-size: 13px;
+  }
+
+  .help-popup h3 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+
+  .help-popup ul {
+    padding-left: 1.2rem;
+    margin: 12px 0;
+  }
+
+  .help-popup ul li {
+    margin-bottom: 10px;
+  }
+
+  .close-help {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    margin-top: 16px;
   }
 }
 
+/* Small screens (phones) */
 @media (max-width: 480px) {
-  .help-btn {
-    width: 38px;
-    height: 38px;
-  }
-
-  .help-icon {
-    width: 20px;
-    height: 20px;
-  }
-
   .help-popup {
-    font-size: 12.5px;
-    padding: 14px;
+    width: 70vw;
+    padding: 20px;
+    font-size: 14.2px;
+    line-height: 1.7;
+    align-self: center;
+  }
+
+  .help-popup h3 {
+    font-size: 1.2rem;
+  }
+
+  .help-popup ul li {
+    font-size: 14.5px;
+  }
+
+  .close-help {
+    padding: 10px 18px;
+    font-size: 1rem;
   }
 }
