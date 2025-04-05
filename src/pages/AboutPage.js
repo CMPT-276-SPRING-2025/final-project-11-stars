@@ -10,8 +10,12 @@ const AboutPage = () => (
         Welcome to <strong>BrainGoated</strong>, the playful learning space where curiosity grows!
       </p>
       <p>
-        Our goal is to make learning fun and interactive for kids around the world. With Bud-E, the
-        brainy robot cheering you on, we turn trivia into an adventure!
+        We are a team of computer science students from SFU and trivia lovers, dedicated to creating a fun and
+        engaging platform for kids and trivia buffs alike. Our mission is to make learning exciting and
+        interactive, turning every question into an <strong>adventure</strong>.
+      </p>
+      <p>
+        With <strong>Bud-E</strong>, the brainy robot cheering you on, we turn trivia into an adventure!
       </p>
       <p>
         Whether you're playing for fun, exploring new facts, or challenging yourself,
