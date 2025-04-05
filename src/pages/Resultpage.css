@@ -60,6 +60,9 @@ body.dark-mode .go-back-button:hover {
     border: solid 1px #9A7E6F;
     
 }
+.result-container p{
+  font-size: 25px;
+}
 .result-content {
     background-color: transparent;
     border: none;
@@ -88,12 +91,6 @@ body.dark-mode .go-back-button:hover {
     font-weight: bold;
     font-size: 25px;
 }
-.result-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    
-}
 .go-back-button {
     background-color: #9A7E6F;
     color: white;
@@ -105,7 +102,6 @@ body.dark-mode .go-back-button:hover {
     cursor: pointer;
     margin-top: 20px;
 }
-
 .go-back-button:hover {
     background-color: #816656;
 }
@@ -440,7 +436,7 @@ body.dark-mode .review-card.correct {
   }
 
   .score-message {
-    font-size: 25px;
+    font-size: 30px;
     text-align: center;
   }
 
