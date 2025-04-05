@@ -368,7 +368,7 @@ const QuizPage = () => {
         <>
           <div className="bud-e-icon-wrapper">
             {!hasSeenTooltip&& (
-              <div className="bud-e-tooltip">👋 Click me!</div>
+              <div className="bud-e-tooltip">👋 Tap to show or hide me!</div>
             )}
             <img
               src="/bud-e.png"
