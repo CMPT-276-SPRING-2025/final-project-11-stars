@@ -1,14 +1,21 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { QuizContext } from "../context/QuizContext";
 import { useNavigate } from "react-router-dom";
 import "./Resultpage.css";
 
 const ResultPage = () => {
+  const finalChimeRef = useRef(null);
+  
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     document.body.classList.toggle("dark-mode", savedMode);
     document.body.classList.toggle("light-mode", !savedMode);
   }, []);
+
+  useEffect(() => {
+    finalChimeRef.current?.play();
+  }, []);
+  
 
   const navigate = useNavigate();
   const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
@@ -55,91 +62,112 @@ const ResultPage = () => {
   };
 
   return (
-    (questions && answeredQuestions) ? (
-      <div className="result-container">
-        <h1 className="score-message">Score: {score}/{questions.length}</h1>
-
-        <p className="result-info">
-          {(() => {
-            const percentage = (score / questions.length) * 100;
-            if (percentage <= 50) {
-              return "Great effort! Every mistake is a step towards learning! 😊";
-            } else if (percentage < 80) {
-              return "You are improving! Keep up the good work! 💪";
-            } else {
-              return "Congratulations! You are officially BrainGoated! 😎";
-            }
-          })()}
-        </p>
-
-        {answeredQuestions.length > 0 && (
-          <>
-            <div className="filter-buttons">
-              <button
-                onClick={() => {
-                  if (filter === "all" && showAnswers) {
-                    setShowAnswers(false);
-                  } else {
-                    setFilter("all");
+    <>
+      {(questions && answeredQuestions) ? (
+        <div className="result-container">
+          <h1 className="score-message">Score: {score}/{questions.length}</h1>
+  
+          <p className="result-info">
+            {(() => {
+              const percentage = (score / questions.length) * 100;
+              if (percentage <= 50) {
+                return "Great effort! Every mistake is a step towards learning! 😊";
+              } else if (percentage < 80) {
+                return "You are improving! Keep up the good work! 💪";
+              } else {
+                return "Congratulations! You are officially BrainGoated! 😎";
+              }
+            })()}
+          </p>
+  
+          {answeredQuestions.length > 0 && (
+            <>
+              <div className="filter-buttons">
+                <button
+                  onClick={() => {
+                    if (filter === "all" && showAnswers) {
+                      setShowAnswers(false);
+                    } else {
+                      setFilter("all");
+                      setShowAnswers(true);
+                    }
+                  }}
+                  className={filter === "all" && showAnswers ? "active" : ""}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => {
+                    setFilter("correct");
                     setShowAnswers(true);
-                  }
-                }}
-                className={filter === "all" && showAnswers ? "active" : ""}
-              >
-                All
-              </button>
-              <button
-                onClick={() => {
-                  setFilter("correct");
-                  setShowAnswers(true);
-                }}
-                className={filter === "correct" ? "active" : ""}
-              >
-                Correct
-              </button>
-              <button
-                onClick={() => {
-                  setFilter("incorrect");
-                  setShowAnswers(true);
-                }}
-                className={filter === "incorrect" ? "active" : ""}
-              >
-                Incorrect
-              </button>
-            </div>
-
-            {showAnswers && (
-              <>
-                <h2 className="section-title">Questions Answered</h2>
-
-                <div className="review-section">
-                  {filtered.map((q, index) => (
-                    <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
-                      <p><strong>Q{index + 1}:</strong> {q.question}</p>
-                      <div className="answer-pair">
-                        <div>
-                          <strong>Your Answer:</strong><br />
-                          {renderVisualAnswer(q.selectedAnswer)}
-                        </div>
-
-                        {!q.isCorrect && (
+                  }}
+                  className={filter === "correct" ? "active" : ""}
+                >
+                  Correct
+                </button>
+                <button
+                  onClick={() => {
+                    setFilter("incorrect");
+                    setShowAnswers(true);
+                  }}
+                  className={filter === "incorrect" ? "active" : ""}
+                >
+                  Incorrect
+                </button>
+              </div>
+  
+              {showAnswers && (
+                <>
+                  <h2 className="section-title">Questions Answered</h2>
+  
+                  <div className="review-section">
+                    {filtered.map((q, index) => (
+                      <div key={index} className={`review-card ${q.isCorrect ? "correct" : "incorrect"}`}>
+                        <p><strong>Q{index + 1}:</strong> {q.question}</p>
+                        <div className="answer-pair">
                           <div>
-                            <strong>Correct Answer:</strong><br />
-                            {renderVisualAnswer(q.correctAnswer)}
+                            <strong>Your Answer:</strong><br />
+                            {renderVisualAnswer(q.selectedAnswer)}
                           </div>
+  
+                          {!q.isCorrect && (
+                            <div>
+                              <strong>Correct Answer:</strong><br />
+                              {renderVisualAnswer(q.correctAnswer)}
+                            </div>
+                          )}
+                        </div>
+  
+                        {q.explanation && (
+                          <p className="explanation"><em>{q.explanation}</em></p>
                         )}
                       </div>
-
-                      {q.explanation && (
-                        <p className="explanation"><em>{q.explanation}</em></p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            <div className="result-buttons spaced-bottom">
+                    ))}
+                  </div>
+                </>
+              )}
+  
+              <div className="result-buttons spaced-bottom">
+                <button
+                  className="go-back-button"
+                  onClick={() => {
+                    resetQuiz();
+                    navigate("/");
+                  }}
+                >
+                  Go back to Quiz Categories
+                </button>
+              </div>
+            </>
+          )}
+  
+          {answeredQuestions.length === 0 && (
+            <div className="no-answers-placeholder">
+              <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
+              <p className="no-answers-text">
+                You didn't answer any questions this time, but that's okay! 🌱<br />
+                Try another quiz to grow your knowledge! 🚀
+              </p>
               <button
                 className="go-back-button"
                 onClick={() => {
@@ -147,38 +175,20 @@ const ResultPage = () => {
                   navigate("/");
                 }}
               >
-                Go back to Quiz Categories
+                Back to Categories
               </button>
             </div>
-          </>
-        )}
-
-        {answeredQuestions.length === 0 && (
-          <div className="no-answers-placeholder">
-            <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
-            <p className="no-answers-text">
-              You didn't answer any questions this time, but that's okay! 🌱<br />
-              Try another quiz to grow your knowledge! 🚀
-            </p>
-            <button
-              className="go-back-button"
-              onClick={() => {
-                resetQuiz();
-                navigate("/");
-              }}
-            >
-              Back to Categories
-            </button>
-          </div>
-        )}
-      </div>
-    ) : (
-      <div className="result-container">
-        <h1 className="score-message">Score: 0/0</h1>
-        <p className="result-info">Results unavailable — please complete a quiz first.</p>
-      </div>
-    )
+          )}
+        </div>
+      ) : (
+        <div className="result-container">
+          <h1 className="score-message">Score: 0/0</h1>
+          <p className="result-info">Results unavailable — please complete a quiz first.</p>
+        </div>
+      )}
+  
+        <audio ref={finalChimeRef} src="/final-chime.mp3" preload="auto" />
+    </>
   );
-};
-
-export default ResultPage;
+}
+export default ResultPage;  
