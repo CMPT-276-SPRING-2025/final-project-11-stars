@@ -1035,7 +1035,7 @@ body.dark-mode .no-questions-message .finish-button:hover {
 @media screen and (max-width: 768px) {
   .bud-e-popup-floating {
     position: absolute;
-    top: 130px; /* below the header */
+    top: 100px; /* below the header */
     left: 50%;
     right:20px;
     transform: translateX(-50%);
@@ -1118,7 +1118,7 @@ body.dark-mode .bud-e-close-btn {
   
   position: absolute;
   bottom: 60px;
-  right: 20px;
+  right: 10px;
   z-index: 1004;
 
   max-width: 180px;
@@ -1142,6 +1142,19 @@ body.dark-mode .bud-e-close-btn {
 @keyframes fadeInTooltip {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media screen and (max-width: 480px) {
+  .bud-e-tooltip {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: 110%;
+    transform: translateY(-50%);
+    font-size: 0.7rem; 
+    padding: 4px 8px; 
+    border-radius: 6px;
+  }
 }
 
 /* Dark mode compatibility */
