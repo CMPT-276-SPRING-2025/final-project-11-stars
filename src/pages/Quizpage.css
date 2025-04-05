@@ -1173,3 +1173,40 @@ body.dark-mode .bud-e-tooltip {
 body.dark-mode .bud-e-tooltip::after {
   border-color: #E9EED9 transparent transparent transparent;
 }
+
+/* ✅ Prevent blue focus on iOS Safari and Android */
+button,
+textarea,
+select,
+input {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+}
+
+/* ✅ Force consistent text color even when autofilled or tapped */
+button,
+textarea,
+select,
+input {
+  color: #54473F !important; /* or #E9EED9 in dark mode */
+}
+
+/* ✅ Remove iOS default inner shadow from inputs */
+input,
+textarea {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* ✅ Specifically override iOS autofill background */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #CBD2A4 inset !important;
+  box-shadow: 0 0 0 1000px #CBD2A4 inset !important;
+  -webkit-text-fill-color: #54473F !important;
+}
