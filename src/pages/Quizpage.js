@@ -27,7 +27,7 @@ const QuizPage = () => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
-  const [showIncorrectPopup, setShowIncorrectPopup] = useState(false);
+  const [, setShowIncorrectPopup] = useState(false);
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   const [explanation, setExplanation] = useState(null);
   const timerRef = useRef(null);
@@ -38,7 +38,11 @@ const QuizPage = () => {
   const [justStarted, setJustStarted] = useState(true);
   const [isBudEExpanded, setIsBudEExpanded] = useState(false);
   const [shakeEffect, setShakeEffect] = useState(false); 
-  const [quizReady, setQuizReady] = useState(false); // ✅ NEW
+  const [quizReady, setQuizReady] = useState(false); 
+  const [hasSeenTooltip, setHasSeenTooltip] = useState(false);
+  const [hasManuallyClosedBudE, setHasManuallyClosedBudE] = useState(false);
+
+
 
 
   const normalize = (str) => {
@@ -113,6 +117,20 @@ const QuizPage = () => {
       return () => clearTimeout(timeout);
     }
   }, [shakeEffect]);
+
+  useEffect(() => {
+    if (currentQuestion === 0) {
+      setHasSeenTooltip(false);
+    }
+  }, [currentQuestion]);
+
+  // Show tooltip immediately after answering each question unless user closed it
+  useEffect(() => {
+    if (answered && !hasManuallyClosedBudE) {
+      setHasSeenTooltip(false);
+    }
+  }, [answered, hasManuallyClosedBudE]);
+
 
   if (loading) {
     return (
@@ -222,6 +240,7 @@ const QuizPage = () => {
       setJustStarted(true);
       setIsBudEExpanded(false);
       setShakeEffect(false);
+      setHasManuallyClosedBudE(false);
     } else {
       navigate("/result");
     }
@@ -342,16 +361,42 @@ const QuizPage = () => {
         </div>
       </div>
 
-      {(showIncorrectPopup || showCorrectPopup) && (
+      {answered&& (
         <>
-          <img
-            src="/bud-e.png"
-            alt="Bud-E toggle"
-            className="bud-e-floating-icon"
-            onClick={() => setIsBudEExpanded((prev) => !prev)}
-          />
+          <div className="bud-e-icon-wrapper">
+            {!hasSeenTooltip&& (
+              <div className="bud-e-tooltip">👋 Click me!</div>
+            )}
+            <img
+              src="/bud-e.png"
+              alt="Bud-E toggle"
+              className="bud-e-floating-icon"
+              onClick={() => {
+                if (!isBudEExpanded) {
+                  setIsBudEExpanded(true);
+                } else {
+                  setIsBudEExpanded(false);
+                  setHasManuallyClosedBudE(true); // ✅ hides tooltip for rest of question
+                }
+                setHasSeenTooltip(true); // hide tooltip immediately on any click
+              }}
+              
+            />
+          </div>
+
           {isBudEExpanded && (
             <div className="bud-e-popup-floating bud-e-bottom-right">
+              <img
+                src="/crossbtn.png"
+                alt="Close Bud-E"
+                className="bud-e-close-btn"
+                onClick={() => {
+                  setIsBudEExpanded(false)
+                  setHasManuallyClosedBudE(true);}
+                  
+                }
+                
+              />
               <div className="popup-box popup-bottom">
                 {showCorrectPopup ? (
                   <>
@@ -371,6 +416,7 @@ const QuizPage = () => {
                     </div>
                   </>
                 )}
+
 
                 <div className="chatbot-container">
                   {budEHistory.length === 0 ? (
