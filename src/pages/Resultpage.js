@@ -13,9 +13,12 @@ const ResultPage = () => {
   }, []);
 
   useEffect(() => {
-    finalChimeRef.current?.play();
+  if (typeof window !== "undefined" && finalChimeRef.current) {
+    finalChimeRef.current.play().catch(() => {
+      // Fail silently in case autoplay is blocked or unsupported
+    });
+  }
   }, []);
-  
 
   const navigate = useNavigate();
   const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
@@ -23,19 +26,19 @@ const ResultPage = () => {
   const [showAnswers, setShowAnswers] = useState(true); // 👈 added toggle state
 
   useEffect(() => {
-    const blockPopState = () => {
-      resetQuiz(); 
-      window.location.replace("/"); // hard redirect
-    };
-  
-    window.history.pushState(null, "", window.location.href);
-    window.addEventListener("popstate", blockPopState);
-  
-    return () => {
-      window.removeEventListener("popstate", blockPopState);
-    };
-  }, [resetQuiz]);
-  
+  const blockPopState = () => {
+    resetQuiz();
+    window.location.replace("/"); // hard redirect
+  };
+
+  window.history.pushState(null, "", window.location.href);
+  window.addEventListener("popstate", blockPopState);
+
+  return () => {
+    window.removeEventListener("popstate", blockPopState);
+  };
+}, [resetQuiz]);
+
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);
