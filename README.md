@@ -1,5 +1,7 @@
 # Project Title: BrainGoated
 
+[![Check BrainGoated Status](https://img.shields.io/uptimerobot/status/m799396409-636acff0ba0f55d0904943e0?label=BrainGoated%20Status&style=flat-square)](https://stats.uptimerobot.com/I4KtZdeNvh)
+
  
 ## Description:
 **BrainGoated** is an interactive educational platform designed for children aged 8-16, offering fun and engaging trivia quizzes across various categories and difficulty levels.
