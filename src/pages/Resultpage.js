@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { QuizContext } from "../context/QuizContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Resultpage.css";
 
 const ResultPage = () => {
@@ -21,6 +21,20 @@ const ResultPage = () => {
   const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
   const [filter, setFilter] = useState("all");
   const [showAnswers, setShowAnswers] = useState(true); // 👈 added toggle state
+
+  useEffect(() => {
+    const blockPopState = () => {
+      resetQuiz(); // optional, if needed
+      window.location.replace("/"); // hard redirect
+    };
+  
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", blockPopState);
+  
+    return () => {
+      window.removeEventListener("popstate", blockPopState);
+    };
+  }, []);
 
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);

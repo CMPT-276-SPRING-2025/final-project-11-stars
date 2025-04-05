@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
 import confetti from "canvas-confetti"; 
 import "./Quizpage.css";
@@ -21,7 +21,7 @@ const QuizPage = () => {
     getExplanation,
     loading, questionType,
     errorMessage, getBudEReply,
-    setAnsweredQuestions
+    setAnsweredQuestions, resetQuiz
   } = useContext(QuizContext);
 
   const [timeLeft, setTimeLeft] = useState(30);
@@ -45,6 +45,17 @@ const QuizPage = () => {
   const incorrectAudioRef = useRef(null);
   
 
+  const location = useLocation(); // add this too
+
+  useEffect(() => {
+    const navType = performance.getEntriesByType("navigation")[0]?.type;
+
+    //if the user goes back during the quiz
+    if (navType === "back_forward") {
+      resetQuiz(); //  full quiz reset
+      navigate("/");
+    }
+  }, [location.key]);
 
   const normalize = (str) => {
     if (typeof str === "string") {
@@ -67,7 +78,7 @@ const QuizPage = () => {
     }
   }, [answered]);
 
-  // ✅ Start timer only when quiz is ready and timer is active
+  //  Start timer only when quiz is ready and timer is active
   useEffect(() => {
     if (!quizReady || !isTimerActive) return;
 
