@@ -597,9 +597,13 @@ body.dark-mode .question-box{
 
 
 body.dark-mode .correct-answer,
-body.dark-mode .assistant-content {
-  color: #CBD2A4;
+body.dark-mode .assistant-content,
+body.dark-mode .budE-message,
+body.dark-mode .budE-message.assistant,
+body.dark-mode .chatbot-container p {
+  color: #E9EED9 !important;
 }
+
 
 body.dark-mode .option {
   background-color: #2f2f2f;
@@ -824,14 +828,14 @@ body.dark-mode .react-select__placeholder {
   color: #b0ba91 !important;
   opacity: 0.8;
 }
-/* ✅ Corrected for your new requirement */
+
 body.dark-mode .finish-button,
 body.dark-mode .complete-button,
 body.dark-mode .next-button,
 body.dark-mode .budE-button,
 body.dark-mode .feedback-popup-buttons button {
   background-color: #9A7E6F;
-  color: #CBD2A4;
+  color: #E9EED9 !important;
   border: 1px solid #9A7E6F;
 }
 
@@ -1248,13 +1252,23 @@ input {
   outline: none;
 }
 
-/* ✅ Force consistent text color even when autofilled or tapped */
 button,
 textarea,
 select,
 input {
-  color: #54473F !important; /* or #E9EED9 in dark mode */
+  color: #54473F !important;
 }
+
+/* Override for dark mode */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode .ask-input {
+  color: #E9EED9 !important;
+  -webkit-text-fill-color: #E9EED9 !important;
+  background-color: #2f2f2f !important;
+  border-color: #9A7E6F;
+}
+
 
 /* ✅ Remove iOS default inner shadow from inputs */
 input,
