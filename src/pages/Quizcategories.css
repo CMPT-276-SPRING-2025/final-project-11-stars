@@ -610,7 +610,7 @@ body.dark-mode .custom-quiz-popup select,
 body.dark-mode .custom-quiz-popup input
 {
   background-color: #54473F !important;
-  color: #E9EED9;
+  color: #E9EED9 !important;
   border: 2px solid #9A7E6F;
   box-shadow: 0 0 16px rgba(203, 210, 164, 0.15);
 }
