@@ -6,7 +6,7 @@
 
 ## Project Preview
 
-> Deployed at: [https://braingoated.netlify.app](https://braingoated.netlify.app)  
+Deployed at: [https://braingoated.netlify.app](https://braingoated.netlify.app)  
 
 ---
 
@@ -146,7 +146,7 @@ npm run dev
 > This command uses `netlify dev` to serve both the React frontend and backend functions locally.
 > Note: The app uses Netlify Functions and won’t work properly with `npm start`. Please use `npm run dev`.
 
-> If successful, Netlify CLI will show:
+If successful, Netlify CLI will show:
 ```bash
 Server now ready on http://localhost:8888
 ```
@@ -165,7 +165,7 @@ This will:
 - Exit automatically after running, without requiring keyboard input.
 ---
 
-## ⚖️ License
+## License
 This project is licensed under the **MIT License**.  
 For educational and academic use only.
 
