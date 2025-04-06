@@ -64,7 +64,13 @@ describe("QuizCategory", () => {
     fireEvent.click(screen.getByText("Start Quiz"));
     expect(screen.getByText(/Please choose your difficulty!/i)).toBeInTheDocument();
   });
-
+    test("toggles between text and image quiz", () => {
+    const setQuestionTypeMock = jest.fn();
+    setup({ setQuestionType: setQuestionTypeMock, questionType: "text" });
+    const toggle = screen.getByRole("checkbox");
+    fireEvent.click(toggle);
+    expect(setQuestionTypeMock).toHaveBeenCalledWith("image");
+  });
   test("custom quiz shows error if fields missing", () => {
     setup();
     const customBox = screen.getByAltText("Custom category icon");
@@ -73,10 +79,3 @@ describe("QuizCategory", () => {
     expect(screen.getByText(/Please choose a topic and a language!/i)).toBeInTheDocument();
   });
 });
-  test("toggles between text and image quiz", () => {
-    const setQuestionTypeMock = jest.fn();
-    setup({ setQuestionType: setQuestionTypeMock, questionType: "text" });
-    const toggle = screen.getByRole("checkbox");
-    fireEvent.click(toggle);
-    expect(setQuestionTypeMock).toHaveBeenCalledWith("image");
-  });
