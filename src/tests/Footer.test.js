@@ -7,7 +7,7 @@ describe("Footer", () => {
     render(<Footer />);
 
     expect(
-      screen.getByText(/From seed to screen — by the BrainGoated Team/i)
+      screen.getByText(/From seed to screen 🌱 — by the BrainGoated Team/i)
     ).toBeInTheDocument();
 
     expect(screen.getByRole("link", { name: /About Us/i })).toBeInTheDocument();

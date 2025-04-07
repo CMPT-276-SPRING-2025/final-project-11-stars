@@ -1,10 +1,8 @@
 // src/tests/Homepage.test.js
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import HomePage from '../pages/Homepage';
-
-
 
 jest.mock('../pages/Quizcategories', () => () => <div data-testid="quiz-category">Mocked QuizCategory</div>);
 
@@ -12,6 +10,8 @@ beforeEach(() => {
   localStorage.clear();
   document.body.className = '';
   jest.useFakeTimers();
+  //  Mock scrollIntoView for scroll test
+  Element.prototype.scrollIntoView = jest.fn();
 });
 
 afterEach(() => {
@@ -76,7 +76,11 @@ describe('HomePage', () => {
     document.body.appendChild(div);
 
     render(<HomePage />);
-    jest.advanceTimersByTime(3500);
+
+    // Fast-forward time by 3.5 seconds
+    act(() => {
+      jest.advanceTimersByTime(3500);
+    });
 
     await waitFor(() => {
       expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
