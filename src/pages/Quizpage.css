@@ -1102,7 +1102,7 @@ body.dark-mode .no-questions-message .finish-button:hover {
 @media screen and (max-width: 768px) {
   .bud-e-popup-floating {
     position: absolute;
-    top: 100px; /* below the header */
+    top: 50px; /* below the header */
     left: 50%;
     right:20px;
     transform: translateX(-50%);
@@ -1113,6 +1113,10 @@ body.dark-mode .no-questions-message .finish-button:hover {
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 1002;
+  }
+
+  .bud-e-floating-icon {
+    bottom: 50px; 
   }
   .header {
     gap: 16px;
@@ -1213,14 +1217,16 @@ body.dark-mode .bud-e-close-btn {
 
 @media screen and (max-width: 480px) {
   .bud-e-tooltip {
-    bottom: auto;
-    top: 50%;
-    left: auto;
-    right: 110%;
-    transform: translateY(-50%);
-    font-size: 0.7rem; 
-    padding: 4px 8px; 
+    top: auto; 
+    bottom: 10px; 
+    left: auto; 
+    transform: none; 
+
+    font-size: 0.7rem;
+    padding: 4px 8px;
     border-radius: 6px;
+    max-width: 160px; 
+    text-align: center;
   }
 }
 
