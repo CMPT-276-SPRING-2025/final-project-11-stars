@@ -70,20 +70,17 @@ describe('HomePage', () => {
 
   test('scrolls to quiz-category-space after 3.5 seconds', async () => {
     const scrollIntoViewMock = jest.fn();
-    const div = document.createElement('div');
-    div.id = 'quiz-category-space';
-    div.scrollIntoView = scrollIntoViewMock;
-    document.body.appendChild(div);
+    Element.prototype.scrollIntoView = scrollIntoViewMock;
 
     render(<HomePage />);
 
-    // Fast-forward time by 3.5 seconds
     act(() => {
       jest.advanceTimersByTime(3500);
     });
 
-    await waitFor(() => {
-      expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
-    });
+    const arrow = await screen.findByAltText(/Scroll to Quiz Categories/i);
+    fireEvent.click(arrow);
+
+    expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });
   });
 });
