@@ -290,3 +290,47 @@ html {
   gap: 10px;
   z-index: 1000;
 }
+
+/* Scroll Arrow Styles */
+.bouncing-arrow {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  margin-top: -130px;
+}
+
+/* Bounce effect */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* Dark mode styling */
+.dark-mode .bouncing-arrow {
+  background-color: transparent;
+  filter: invert(100%);
+}
+
+/* Hover effect */
+.bouncing-arrow:hover {
+  transform: translateY(4px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .bouncing-arrow {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+}
