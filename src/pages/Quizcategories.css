@@ -634,7 +634,7 @@ body.dark-mode .start-popup-content h2 {
 
 body.dark-mode .start-quiz-btn {
   background-color: #9A7E6F;
-  color: #fff;
+  color: #E9EED9 !important;
   border: #9A7E6F;
 }
 
