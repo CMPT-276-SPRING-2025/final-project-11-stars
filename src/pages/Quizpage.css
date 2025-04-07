@@ -531,7 +531,7 @@ background-color: #E9EED9;
 .timer-critical {
   color: #9A7E6F;
   font-size: 2rem;
-  animation: heartbeat 0.6s ease-in-out infinite;
+  animation: heartbeat 0.6s ease-in-out 5;
 }
 
 /* Combine both — override the brown if it's also critical */
@@ -595,8 +595,11 @@ body.dark-mode .question-box{
   color: #CBD2A4
 }
 
+body.dark-mode .correct-answer{
+  color: #3c5232 !important;
+}
 
-body.dark-mode .correct-answer,
+
 body.dark-mode .assistant-content,
 body.dark-mode .budE-message,
 body.dark-mode .budE-message.assistant,
@@ -634,7 +637,7 @@ body.dark-mode .option:hover {
 
 body.dark-mode .timer-box {
   background-color: #2f2f2f;
-  color: #E9EED9;
+  color: #E9EED9!important;
   border: 2px solid #9A7E6F;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   transition: background-color 0.3s;
@@ -849,8 +852,13 @@ body.dark-mode .option,
 body.dark-mode .score-box,
 body.dark-mode .timer-box {
   border: 1px solid #9A7E6F;
-  color: #CBD2A4;
+  color: #CBD2A4 !important;
 }
+
+body.dark-mode .timer-text {
+  color: #E9EED9 !important;
+}
+
 
 /* Correct answer in dark mode */
 body.dark-mode .option.correct-highlight {
@@ -1119,18 +1127,20 @@ body.dark-mode .no-questions-message .finish-button:hover {
     bottom: 50px; 
   }
   .header {
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 auto 8px auto;
+    gap: 10px;
   }
 
   .timer-box, .score-box {
-    min-width: 100px;
+    flex: 1;
     height: 40px;
-    font-size: 1rem;
-    padding: 8px 16px;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
+    font-size: 0.9rem;
+    padding: 6px;
+    min-width: unset;
   }
   .question-box {
     max-width: 95%;
@@ -1304,5 +1314,43 @@ select:-webkit-autofill {
 @media screen and (max-width: 768px) {
   .hide-on-mobile {
     display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .quiz-container {
+    height: auto; /* allow it to shrink based on content */
+    padding: 10px 10px 40px 10px; /* more compact */
+    justify-content: flex-start; /* no extra bottom space */
+    gap: 12px;
+    align-self: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .timer-text.timer-critical {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .quiz-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .finish-button,
+  .next-button {
+    width: auto;
+    min-width: 120px;
+    max-width: 160px;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    flex: none;
   }
 }

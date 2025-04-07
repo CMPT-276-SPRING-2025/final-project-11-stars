@@ -429,16 +429,18 @@ const QuizPage = () => {
             <div className="popup-box popup-bottom">
               {showCorrectPopup ? (
                 <>
-                  <h2 className="correct">Correct!</h2>
+                  <h2 style={{ color: "#1B5E20", fontWeight: "bold" }}>Correct!</h2>
                   <div className="explanation-box">
                     <p>{explanation || "Fetching fun fact..."}</p>
                   </div>
                 </>
               ) : (
                 <>
-                  <h2 className="incorrect">Incorrect!</h2>
+                  <h2 style={{ color: "#8B0000", fontWeight: "bold" }}>Incorrect!</h2>
                   {questionType === "text" && (
-                    <p className="correct-answer">Correct Answer: {question.answer}</p>
+                    <p className="correct-answer" style={{ color: "#1B5E20" }}>
+                    Correct Answer: {question.answer}
+                  </p>
                   )}
                   <div className="explanation-box">
                     <p>{explanation || "Fetching fun fact..."}</p>
