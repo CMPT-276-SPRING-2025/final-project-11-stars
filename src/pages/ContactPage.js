@@ -1,3 +1,8 @@
+// ContactPage.js
+// This component displays the Contact Us page for BrainGoated.
+// It includes contact information, a message of encouragement, 
+// and a link to return to the homepage.
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './StaticPage.css';

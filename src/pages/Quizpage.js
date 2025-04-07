@@ -1,3 +1,11 @@
+// QuizPage.js
+// This component renders the quiz experience in BrainGoated.
+// Features:
+// - Displays questions (text/image-based)
+// - Handles timer, score, feedback animations
+// - Shows Bud-E chatbot for explanations and Q&A
+// - Supports quiz reset, navigation, and user interaction feedback
+
 import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { QuizContext } from "../context/QuizContext";
@@ -17,6 +25,7 @@ const QuizPage = () => {
     setAnsweredQuestions, resetQuiz
   } = useContext(QuizContext);
 
+  // Resets quiz state on load and refreshes
   const resetQuizState = useCallback(() => {
     setScore(0);
     setCurrentQuestion(0);
@@ -26,6 +35,7 @@ const QuizPage = () => {
   useEffect(() => {
     resetQuizState();
 
+     // Cleanup on page unload
     const handleUnload = () => {
       if (!isNavigatingToResult.current) {
         resetQuizState();
@@ -41,6 +51,7 @@ const QuizPage = () => {
     };
   }, [resetQuizState]);
 
+  // Applies saved theme preference
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     document.body.classList.toggle("dark-mode", savedMode);
@@ -50,7 +61,6 @@ const QuizPage = () => {
   const [timeLeft, setTimeLeft] = useState(30);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
-  const [, setShowIncorrectPopup] = useState(false);
   const [showCorrectPopup, setShowCorrectPopup] = useState(false);
   const [explanation, setExplanation] = useState(null);
   const timerRef = useRef(null);
@@ -70,6 +80,7 @@ const QuizPage = () => {
   const location = useLocation();
   const [shouldHideQuizContent, setShouldHideQuizContent] = useState(false);
 
+  // Responsive logic for mobile views
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth <= 768;
@@ -81,7 +92,7 @@ const QuizPage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isBudEExpanded]);
 
-
+  // Handles browser back/forward nav reset
   useEffect(() => {
     const navType = performance.getEntriesByType("navigation")[0]?.type;
     if (navType === "back_forward") {
@@ -90,6 +101,7 @@ const QuizPage = () => {
     }
   }, [location.key, resetQuiz, navigate]);
 
+  // Helper for comparing answers
   const normalize = (str) => {
     if (typeof str === "string") {
       return str.trim().toLowerCase();
@@ -100,17 +112,18 @@ const QuizPage = () => {
     return "";
   };
 
+  // Called when time runs out
   const handleTimeout = useCallback(() => {
     if (!answered) {
       setIsTimerActive(false);
       clearInterval(timerRef.current);
       setAnswered(true);
-      setShowIncorrectPopup(true);
       setIsBudEExpanded(true);
       setShakeEffect(true); 
     }
   }, [answered]);
 
+  // Timer logic: countdown and timeout trigger
   useEffect(() => {
     if (!quizReady || !isTimerActive) return;
 
@@ -134,12 +147,14 @@ const QuizPage = () => {
     };
   }, [quizReady, currentQuestion, isTimerActive, handleTimeout]);
 
+  // Flag that quiz is ready once loading is complete
   useEffect(() => {
     if (!loading && questions.length > 0) {
       setQuizReady(true);
     }
   }, [loading, questions]);
 
+  // Fetch fun fact/explanation after question is answered
   useEffect(() => {
     if (answered && questions[currentQuestion]?.explanation === null) {
       getExplanation(currentQuestion).then((fact) => setExplanation(fact));
@@ -148,12 +163,14 @@ const QuizPage = () => {
     }
   }, [answered, currentQuestion, questions, getExplanation]);
 
+  // Automatically scrolls Bud-E chat to the bottom when a new message is added
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [budEHistory]);
 
+  // Temporarily triggers shake animation
   useEffect(() => {
     if (shakeEffect) {
       const timeout = setTimeout(() => setShakeEffect(false), 500);
@@ -161,12 +178,14 @@ const QuizPage = () => {
     }
   }, [shakeEffect]);
 
+  // Bud-E tooltip reset on first question
   useEffect(() => {
     if (currentQuestion === 0) {
       setHasSeenTooltip(false);
     }
   }, [currentQuestion]);
 
+  // Tooltip reset on answer if Bud-E wasn't manually closed
   useEffect(() => {
     if (answered && !hasManuallyClosedBudE) {
       setHasSeenTooltip(false);
@@ -253,7 +272,6 @@ const QuizPage = () => {
         }
         setShowCorrectPopup(true);
       } else {
-        setShowIncorrectPopup(true);
         if (typeof window !== "undefined" && incorrectAudioRef.current) {
           incorrectAudioRef.current.play().catch(() => {});
         }
@@ -281,7 +299,6 @@ const QuizPage = () => {
       setSelected(null);
       setAnswered(false);
       setShowCorrectPopup(false);
-      setShowIncorrectPopup(false);
       setExplanation(null);
       setTimeLeft(30);
       setBudEHistory([]);

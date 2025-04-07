@@ -20,6 +20,7 @@ label,
   text-align: center;
   background-color: #E9EED9;
   padding: 20px;
+  margin-top: -20px;
 }
 
 .quiz-category-title {
