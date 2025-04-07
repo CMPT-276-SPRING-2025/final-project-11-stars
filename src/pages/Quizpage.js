@@ -68,6 +68,19 @@ const QuizPage = () => {
   const incorrectAudioRef = useRef(null);
   const isNavigatingToResult = useRef(false);
   const location = useLocation();
+  const [shouldHideQuizContent, setShouldHideQuizContent] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth <= 768;
+      setShouldHideQuizContent(isMobile && isBudEExpanded);
+    };
+
+    handleResize(); // Run once initially
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isBudEExpanded]);
+
 
   useEffect(() => {
     const navType = performance.getEntriesByType("navigation")[0]?.type;
@@ -302,7 +315,7 @@ const QuizPage = () => {
   return (
     <div className="quizpage-background">
       <div className="quiz-main-layout">
-        <div className="quiz-container">
+      <div className={`quiz-container ${shouldHideQuizContent ? "hide-on-mobile" : ""}`}>
           {/* HEADER */}
           <div className="header">
             <div className={`timer-box ${timeLeft <= 5 ? "timer-box-critical" : ""}`}>

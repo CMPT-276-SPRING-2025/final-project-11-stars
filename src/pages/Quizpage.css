@@ -1294,3 +1294,9 @@ select:-webkit-autofill {
   box-sizing: border-box;
   flex-wrap: nowrap;
 }
+
+@media screen and (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
