@@ -1,3 +1,8 @@
+// AboutPage.js
+// This component renders the About Us page for the BrainGoated app.
+// It introduces the team, their mission, and what the platform is about,
+// with a welcoming message and a return link to the homepage.
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './StaticPage.css';

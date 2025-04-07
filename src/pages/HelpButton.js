@@ -1,3 +1,7 @@
+// HelpButton.js
+// This component renders a help button with a toggleable popup.
+// It provides users with a quick guide on how to use the BrainGoated app.
+
 import React, { useState } from 'react';
 import './HelpButton.css';
 

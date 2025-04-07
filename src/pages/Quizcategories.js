@@ -1,8 +1,15 @@
+// QuizCategory.js
+// This component renders the main quiz category selection screen for BrainGoated.
+// Users can select from standard quiz categories or build a custom AI quiz.
+// It supports difficulty, language, and format selection (text/image).
+// Displays popups for quiz confirmation and custom quiz setup with Bud-E.
+
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from "../context/QuizContext";
 import './Quizcategories.css';
 
+// Predefined quiz categories with icons and IDs
 const categories = [
   { name: 'General', categoryName: 'general_knowledge', image: '/general_knowledge.svg', alt_text: 'General category icon' },
   { name: 'Culture', categoryName: 'society_and_culture', image: '/culture.svg', alt_text: 'Culture category icon' },
@@ -17,6 +24,7 @@ const categories = [
   { name: 'Build a Quiz', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'Custom category icon' }
 ];
 
+// Language options for pre-made quizzes (from Trivia API)
 const triviaApiLanguages = [
   { code: "en", label: "🇺🇸 English" },
   { code: "fr", label: "🇫🇷 French" },
@@ -27,6 +35,7 @@ const triviaApiLanguages = [
   { code: "de", label: "🇩🇪 German" },
 ];
 
+// Language options for AI-generated custom quizzes
 const customLanguages = [
   { code: "en", label: "🇺🇸 English" },
   { code: "ar", label: "🇸🇦 Arabic" },
@@ -52,6 +61,7 @@ const customLanguages = [
 ];
 
 const QuizCategory = () => {
+  // Global state from QuizContext
   const {
     setSelectedCategory,
     difficulty,
@@ -61,7 +71,8 @@ const QuizCategory = () => {
     language,
     setLanguage,
   } = useContext(QuizContext);
-
+  
+  // Local UI state
   const [quizDisplayName, setQuizDisplayName] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showCustomPopup, setShowCustomPopup] = useState(false);
@@ -73,11 +84,13 @@ const QuizCategory = () => {
 
   const navigate = useNavigate();
 
+  // Handlers for settings
   const handleDifficultyChange = (level) => setDifficulty(level);
   const handleLanguageChange = (e) => setLanguage(e.target.value);
   const handleCustomLanguageChange = (e) => setCustomLanguage(e.target.value);
   const handleToggle = () => setQuestionType(questionType === "text" ? "image" : "text");
 
+  // Handles category click: opens normal or custom popup
   const handleCategoryClick = (category) => {
     if (category.categoryName === "custom_ai_quiz") {
       setShowCustomPopup(true);
@@ -90,6 +103,7 @@ const QuizCategory = () => {
     }
   };
 
+  // Starts normal quiz after category & difficulty are selected
   const handleStartQuiz = () => {
     const finalDifficulty = difficulty || "easy";
     if (!language) {
@@ -101,6 +115,7 @@ const QuizCategory = () => {
     navigate("/quiz");
   };
 
+  // Starts custom AI quiz
   const handleCustomStartQuiz = () => {
     if (!customTopic.trim() || !customLanguage.trim()) {
       setErrorMessage("Please choose a topic and a language!");

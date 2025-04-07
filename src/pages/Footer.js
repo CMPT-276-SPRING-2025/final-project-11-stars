@@ -1,3 +1,8 @@
+// Footer.js
+// This component renders the footer section for the BrainGoated site.
+// It includes navigation links, copyright info,
+// and the Bud-E mascot icon.
+
 import React from 'react';
 import './Footer.css';
 

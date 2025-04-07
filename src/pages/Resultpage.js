@@ -1,3 +1,11 @@
+// ResultPage.js
+// This component displays the final quiz results in BrainGoated.
+// Features:
+// - Shows score summary and performance message
+// - Lets users filter reviewed questions (all/correct/incorrect)
+// - Displays explanations and visual answers
+// - Handles redirect and state reset
+
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { QuizContext } from "../context/QuizContext";
 import { useNavigate} from "react-router-dom";
@@ -5,13 +13,19 @@ import "./Resultpage.css";
 
 const ResultPage = () => {
   const finalChimeRef = useRef(null);
+  const navigate = useNavigate();
+  const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
+  const [filter, setFilter] = useState("all"); // Filter: all, correct, incorrect
+  const [showAnswers, setShowAnswers] = useState(true); // Toggle visibility of answer review
   
+  // Apply saved theme on load
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     document.body.classList.toggle("dark-mode", savedMode);
     document.body.classList.toggle("light-mode", !savedMode);
   }, []);
 
+  // Auto-play final chime sound after quiz ends
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
@@ -20,7 +34,7 @@ const ResultPage = () => {
     ) {
       try {
         finalChimeRef.current.play().catch(() => {
-          // autoplay might be blocked
+          // Autoplay might be blocked by browser
         });
       } catch (e) {
         // In jsdom, .play() throws immediately (not a promise), so we handle that too
@@ -28,11 +42,7 @@ const ResultPage = () => {
     }
   }, []);
 
-  const navigate = useNavigate();
-  const { score, resetQuiz, answeredQuestions, questions } = useContext(QuizContext);
-  const [filter, setFilter] = useState("all");
-  const [showAnswers, setShowAnswers] = useState(true); // 👈 added toggle state
-
+  // Prevents user from navigating back into quiz state via browser back button
   useEffect(() => {
   const blockPopState = () => {
     resetQuiz();
@@ -47,7 +57,7 @@ const ResultPage = () => {
   };
 }, [resetQuiz]);
 
-
+  // Returns filtered list of answered questions
   const getFilteredQuestions = () => {
     if (filter === "correct") return answeredQuestions.filter((q) => q.isCorrect);
     if (filter === "incorrect") return answeredQuestions.filter((q) => !q.isCorrect);
@@ -56,6 +66,7 @@ const ResultPage = () => {
 
   const filtered = getFilteredQuestions();
 
+  // Helper to display text or image answers
   const renderVisualAnswer = (answer) => {
     if (answer && typeof answer === "object" && answer.url) {
       return (
@@ -67,6 +78,7 @@ const ResultPage = () => {
       );
     }
 
+    // Support stringified image answer format
     if (typeof answer === "string") {
       try {
         const parsed = JSON.parse(answer);
@@ -105,7 +117,8 @@ const ResultPage = () => {
               }
             })()}
           </p>
-  
+          
+          {/* Only show filters and answers if user answered questions */}
           {answeredQuestions.length > 0 && (
             <>
               <div className="filter-buttons">
@@ -141,7 +154,8 @@ const ResultPage = () => {
                   Incorrect
                 </button>
               </div>
-  
+              
+              {/* Display reviewed answers */}
               {showAnswers && (
                 <>
                   <h2 className="section-title">Questions Answered</h2>
@@ -172,7 +186,8 @@ const ResultPage = () => {
                   </div>
                 </>
               )}
-  
+
+              {/* Navigation button back to category selection */}
               <div className="result-buttons spaced-bottom">
                 <button
                   className="go-back-button"
@@ -186,7 +201,8 @@ const ResultPage = () => {
               </div>
             </>
           )}
-  
+
+          {/* Fallback if no questions were answered */}
           {answeredQuestions.length === 0 && (
             <div className="no-answers-placeholder">
               <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
@@ -212,7 +228,8 @@ const ResultPage = () => {
           <p className="result-info">Results unavailable — please complete a quiz first.</p>
         </div>
       )}
-  
+      
+        {/* Audio for final success chime */}
         <audio ref={finalChimeRef} src="/final-chime.mp3" preload="auto" />
     </>
   );
