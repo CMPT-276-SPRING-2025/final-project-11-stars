@@ -302,7 +302,7 @@ html {
   animation: bounce 2s infinite;
   cursor: pointer;
   transition: transform 0.3s ease, filter 0.3s ease;
-  margin-top: -130px;
+  margin-top: -180px;
 }
 
 /* Bounce effect */
@@ -311,7 +311,7 @@ html {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
 }
 
