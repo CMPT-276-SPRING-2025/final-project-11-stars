@@ -38,7 +38,7 @@ body.dark-mode .result-info {
 
 body.dark-mode .go-back-button {
     background-color: #9A7E6F;
-    color: #fff;
+    color: #E9EED9!important;
 }
 
 body.dark-mode .go-back-button:hover {
@@ -170,12 +170,11 @@ body.dark-mode .go-back-button:hover {
   /* 🌙 Dark Mode Support */
   body.dark-mode .filter-buttons button {
     background-color: #3a3a3a;
-    color: #e9eed9;
+    color: #e9eed9 !important;
   }
   
   body.dark-mode .filter-buttons .active {
     background-color: #9A7E6F;
-    color: white;
   }
   
   .review-card.correct {

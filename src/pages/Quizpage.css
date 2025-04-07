@@ -733,9 +733,9 @@ body.dark-mode .text-options {
 }
 
 .bud-e-popup-floating {
-  position: fixed;
-  bottom: 100px;
-  right: 280px;     /* moved to bottom-right */
+  position: static; /* not fixed */
+  align-self: center; /* aligns with top of quiz */
+  margin-top: 40px;
   left: auto;      /* ensure left is not conflicting */
   width: 360px;
   background: #E9EED9;
@@ -772,11 +772,6 @@ body.dark-mode .text-options {
   left: auto !important;
 }
 
-/* Shift quiz content left to make space for Bud-E */
-.quiz-container.shift-left {
-  margin-right: 650px; /* Makes space for Bud-E popup (360px + padding) */
-  transition: margin-right 0.4s ease;
-}
 
 .quiz-buttons {
   display: flex;
@@ -1284,4 +1279,18 @@ select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #CBD2A4 inset !important;
   box-shadow: 0 0 0 1000px #CBD2A4 inset !important;
   -webkit-text-fill-color: #54473F !important;
+}
+
+/*To ensure everything in the popup is ok in bigger screens*/
+.quiz-main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
 }

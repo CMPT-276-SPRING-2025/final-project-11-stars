@@ -28,9 +28,9 @@ const HelpButton = () => {
           <ul>
             <li>Choose a quiz category or tap <strong>Build a Quiz</strong> to create your own quiz.</li>
             <li>Each quiz has 10 questions. Select the best answer.</li>
-            <li>Use the Bud-E bot for tips after each question!</li>
+            <li>Use the Bud-E bot for tips after each question and keep an eye out for those <strong>fun facts</strong>!</li>
             <li>Try quizzes in different languages and formats.</li>
-            <li>See your results and learn from your mistakes and become <strong>BrainGoated</strong>!</li>
+            <li>See your results and learn from your mistakes to become <strong>BrainGoated</strong>!</li>
           </ul>
           <button className="close-help" onClick={() => setShowHelp(false)}>Got it!</button>
         </div>

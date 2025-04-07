@@ -17,31 +17,29 @@ const QuizPage = () => {
     setAnsweredQuestions, resetQuiz
   } = useContext(QuizContext);
 
-  //Define reset logic
   const resetQuizState = useCallback(() => {
     setScore(0);
     setCurrentQuestion(0);
     setAnsweredQuestions([]);
   }, [setScore, setCurrentQuestion, setAnsweredQuestions]);
 
-  //Reset on mount and on unmount (refresh or leave)
   useEffect(() => {
-      resetQuizState();
-  
-      const handleUnload = () => {
-        if (!isNavigatingToResult.current) {
-          resetQuizState();
-        }
-      };
-  
-      window.addEventListener("beforeunload", handleUnload);
-      return () => {
-        window.removeEventListener("beforeunload", handleUnload);
-        if (!isNavigatingToResult.current) {
-          resetQuizState();
-        }
-      };
-    }, [resetQuizState]);
+    resetQuizState();
+
+    const handleUnload = () => {
+      if (!isNavigatingToResult.current) {
+        resetQuizState();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+      if (!isNavigatingToResult.current) {
+        resetQuizState();
+      }
+    };
+  }, [resetQuizState]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
@@ -69,12 +67,10 @@ const QuizPage = () => {
   const correctAudioRef = useRef(null);
   const incorrectAudioRef = useRef(null);
   const isNavigatingToResult = useRef(false);
-
-  const location = useLocation(); // add this too
+  const location = useLocation();
 
   useEffect(() => {
     const navType = performance.getEntriesByType("navigation")[0]?.type;
-    //if the user goes back from the quiz page, reset everything
     if (navType === "back_forward") {
       resetQuiz();
       navigate("/");
@@ -102,7 +98,6 @@ const QuizPage = () => {
     }
   }, [answered]);
 
-  //  Start timer only when quiz is ready and timer is active
   useEffect(() => {
     if (!quizReady || !isTimerActive) return;
 
@@ -126,7 +121,6 @@ const QuizPage = () => {
     };
   }, [quizReady, currentQuestion, isTimerActive, handleTimeout]);
 
-  // ✅ When loading is done and questions are ready, mark quiz as ready
   useEffect(() => {
     if (!loading && questions.length > 0) {
       setQuizReady(true);
@@ -160,14 +154,12 @@ const QuizPage = () => {
     }
   }, [currentQuestion]);
 
-  // Show tooltip immediately after answering each question unless user closed it
   useEffect(() => {
     if (answered && !hasManuallyClosedBudE) {
       setHasSeenTooltip(false);
     }
   }, [answered, hasManuallyClosedBudE]);
 
-  
   if (loading) {
     return (
       <div className="quizpage-background">
@@ -185,7 +177,6 @@ const QuizPage = () => {
       </div>
     );
   }
-  
 
   if (errorMessage) {
     return (
@@ -205,13 +196,12 @@ const QuizPage = () => {
       </div>
     );
   }
-  
+
   const handleFinishQuiz = () => {
     isNavigatingToResult.current = true;
     navigate("/result");
   };
-  
-  
+
   if (questions.length === 0) {
     return (
       <div className="quizpage-background no-questions">
@@ -224,7 +214,6 @@ const QuizPage = () => {
       </div>
     );
   }
-  
 
   const question = questions[currentQuestion];
   const questionText = question?.text || "Question not available";
@@ -247,17 +236,13 @@ const QuizPage = () => {
         confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
         setScore((prev) => prev + 1);
         if (typeof window !== "undefined" && correctAudioRef.current) {
-          correctAudioRef.current.play().catch(() => {
-            // ignore autoplay or JSDOM errors
-          });
+          correctAudioRef.current.play().catch(() => {});
         }
         setShowCorrectPopup(true);
       } else {
         setShowIncorrectPopup(true);
         if (typeof window !== "undefined" && incorrectAudioRef.current) {
-          incorrectAudioRef.current.play().catch(() => {
-            // ignore autoplay or JSDOM errors
-          });
+          incorrectAudioRef.current.play().catch(() => {});
         }
         setShakeEffect(true);
       }
@@ -313,222 +298,216 @@ const QuizPage = () => {
     const updatedHistory = await getBudEReply(budEInput, budEHistory);
     setBudEHistory(updatedHistory);
   };
-  
+
   return (
     <div className="quizpage-background">
-      <div className={`quiz-container ${isBudEExpanded ? "shift-left" : ""}`}>
-        <div className="header">
-          <div className={`timer-box ${timeLeft <= 5 ? "timer-box-critical" : ""}`}>
-            <div
-              className="timer-fill"
-              style={{
-                width: `${(timeLeft / 30) * 100}%`,
-                backgroundColor: timeLeft <= 5 ? "#D9534F" : "#9A7E6F",
-              }}
-            ></div>
-            <span
-              className={`timer-text ${timeLeft <= 5 ? "timer-critical" : ""} ${
-                timeLeft <= 14 && timeLeft > 5 ? "timer-on-white" : ""
-              }`}
-            >
-              {timeLeft === 0
-                ? "⏳ Time's up!"
-                : justStarted && !answered
-                ? `Timer: ${timeLeft}s`
-                : timeLeft}
-            </span>
+      <div className="quiz-main-layout">
+        <div className="quiz-container">
+          {/* HEADER */}
+          <div className="header">
+            <div className={`timer-box ${timeLeft <= 5 ? "timer-box-critical" : ""}`}>
+              <div
+                className="timer-fill"
+                style={{
+                  width: `${(timeLeft / 30) * 100}%`,
+                  backgroundColor: timeLeft <= 5 ? "#D9534F" : "#9A7E6F",
+                }}
+              ></div>
+              <span
+                className={`timer-text ${timeLeft <= 5 ? "timer-critical" : ""} ${
+                  timeLeft <= 14 && timeLeft > 5 ? "timer-on-white" : ""
+                }`}
+              >
+                {timeLeft === 0
+                  ? "⏳ Time's up!"
+                  : justStarted && !answered
+                  ? `Timer: ${timeLeft}s`
+                  : timeLeft}
+              </span>
+            </div>
+            <div className="score-box">Score: {score}</div>
           </div>
-          <div className="score-box">Score: {score}</div>
-        </div>
 
-        <div className={`shake-wrapper ${shakeEffect ? "shake" : ""}`}>
-          <div className="question-box spacious-box">
-            <p className="question-text">
-              Q{currentQuestion + 1}: {questionText}
-            </p>
-            <div className="options-container">
-              {questionType === "image" ? (
-                <div className="image-options">
-                  {question.options.map((option, index) => {
-                    const isCorrect =
-                      normalize(option.description) === normalize(question.answer || "");
-                    const isSelected = selected === option;
+          <div className={`shake-wrapper ${shakeEffect ? "shake" : ""}`}>
+            <div className="question-box spacious-box">
+              <p className="question-text">
+                Q{currentQuestion + 1}: {questionText}
+              </p>
+              <div className="options-container">
+                {questionType === "image" ? (
+                  <div className="image-options">
+                    {question.options.map((option, index) => {
+                      const isCorrect =
+                        normalize(option.description) === normalize(question.answer || "");
+                      const isSelected = selected === option;
 
-                    return (
-                      <div
-                        key={index}
-                        className={`image-option ${
-                          answered
-                            ? isCorrect
-                              ? "correct-highlight"
-                              : isSelected
-                              ? "wrong-highlight"
+                      return (
+                        <div
+                          key={index}
+                          className={`image-option ${
+                            answered
+                              ? isCorrect
+                                ? "correct-highlight"
+                                : isSelected
+                                ? "wrong-highlight"
+                                : ""
                               : ""
-                            : ""
-                        }`}
-                        onClick={answered ? undefined : () => handleOptionClick(option)}
-                      >
-                        <img src={option.url} alt={option.description} />
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="text-options">
-                  {question.options.map((option, index) => {
-                    const isCorrect = normalize(option) === normalize(question.answer || "");
-                    const isSelected = selected === option;
+                          }`}
+                          onClick={answered ? undefined : () => handleOptionClick(option)}
+                        >
+                          <img src={option.url} alt={option.description} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-options">
+                    {question.options.map((option, index) => {
+                      const isCorrect = normalize(option) === normalize(question.answer || "");
+                      const isSelected = selected === option;
 
-                    let optionClass = "option";
-                    if (answered) {
-                      if (isCorrect) optionClass += " correct-highlight";
-                      if (isSelected && !isCorrect) optionClass += " wrong-highlight";
-                    }
+                      let optionClass = "option";
+                      if (answered) {
+                        if (isCorrect) optionClass += " correct-highlight";
+                        if (isSelected && !isCorrect) optionClass += " wrong-highlight";
+                      }
 
-                    return (
-                      <button
-                        key={index}
-                        className={optionClass}
-                        onClick={() => handleOptionClick(option)}
-                        disabled={answered}
-                      >
-                        {option}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+                      return (
+                        <button
+                          key={index}
+                          className={optionClass}
+                          onClick={() => handleOptionClick(option)}
+                          disabled={answered}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="quiz-buttons">
-        <button className="finish-button" onClick={handleFinishQuiz}>
-            Finish Quiz
-          </button>
-          {answered && (
-            <button className="next-button" onClick={handleNextQuestion}>
-              Next
+          <div className="quiz-buttons">
+            <button className="finish-button" onClick={handleFinishQuiz}>
+              Finish Quiz
             </button>
-          )}
-        </div>
-      </div>
-
-      {answered&& (
-        <>
-          <div className="bud-e-icon-wrapper">
-            {!hasSeenTooltip&& (
-              <div className="bud-e-tooltip">👋 Tap to show or hide me!</div>
+            {answered && (
+              <button className="next-button" onClick={handleNextQuestion}>
+                Next
+              </button>
             )}
-            <img
-              src="/bud-e.png"
-              alt="Bud-E toggle"
-              className="bud-e-floating-icon"
-              onClick={() => {
-                if (!isBudEExpanded) {
-                  setIsBudEExpanded(true);
-                } else {
-                  setIsBudEExpanded(false);
-                  setHasManuallyClosedBudE(true); // ✅ hides tooltip for rest of question
-                }
-                setHasSeenTooltip(true); // hide tooltip immediately on any click
-              }}
-              
-            />
           </div>
+        </div>
 
-          {isBudEExpanded && (
-            <div className="bud-e-popup-floating bud-e-bottom-right">
-              <img
-                src="/crossbtn.png"
-                alt="Close Bud-E"
-                className="bud-e-close-btn"
-                onClick={() => {
-                  setIsBudEExpanded(false)
-                  setHasManuallyClosedBudE(true);}
-                  
-                }
-                
-              />
-              <div className="popup-box popup-bottom">
-                {showCorrectPopup ? (
-                  <>
-                    <h2 className="correct">Correct!</h2>
-                    <div className="explanation-box">
-                      <p>{explanation || "Fetching fun fact..."}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="incorrect">Incorrect!</h2>
-                    {questionType === "text" && (
-                      <p className="correct-answer">Correct Answer: {question.answer}</p>
-                    )}
-                    <div className="explanation-box">
-                      <p>{explanation || "Fetching fun fact..."}</p>
-                    </div>
-                  </>
-                )}
-
-                <div className="chatbot-container">
-                  {budEHistory.length === 0 ? (
-                    <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
-                  ) : (
-                    <div className="budE-chat-history">
-                      {budEHistory.map((msg, index) => (
-                        <div key={index} className={`budE-message ${msg.role}`}>
-                          {msg.role === "user" ? (
-                            <p>{msg.content}</p>
-                          ) : (
-                            <div className="assistant-bubble">
-                              <img
-                                src="/bud-e.png"
-                                alt="Bud-E avatar"
-                                className="budE-avatar"
-                              />
-                              <div>
-                                <p>{msg.content}</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                      <div ref={chatEndRef} />
-                    </div>
-                  )}
-                  <textarea
-                    value={budEInput}
-                    onChange={(e) => setBudEInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
-                        handleAskBudE();
-                      }
-                    }}
-                    placeholder="Ask Bud-E to learn more!"
-                    rows={3}
-                    className="ask-input"
-                  />
-                  <div className="budE-actions">
-                    <button onClick={handleAskBudE} className="budE-button">
-                      Ask Bud-E
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsBudEExpanded(false);
-                        handleNextQuestion();
-                      }}
-                      className="budE-button"
-                    >
-                      Next
-                    </button>
+        {/* Bud-E Popup (visible only when expanded) */}
+        {answered && isBudEExpanded && (
+          <div className="bud-e-popup-floating bud-e-bottom-right">
+            <img
+              src="/crossbtn.png"
+              alt="Close Bud-E"
+              className="bud-e-close-btn"
+              onClick={() => {
+                setIsBudEExpanded(false);
+                setHasManuallyClosedBudE(true);
+              }}
+            />
+            <div className="popup-box popup-bottom">
+              {showCorrectPopup ? (
+                <>
+                  <h2 className="correct">Correct!</h2>
+                  <div className="explanation-box">
+                    <p>{explanation || "Fetching fun fact..."}</p>
                   </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="incorrect">Incorrect!</h2>
+                  {questionType === "text" && (
+                    <p className="correct-answer">Correct Answer: {question.answer}</p>
+                  )}
+                  <div className="explanation-box">
+                    <p>{explanation || "Fetching fun fact..."}</p>
+                  </div>
+                </>
+              )}
+
+              <div className="chatbot-container">
+                {budEHistory.length === 0 ? (
+                  <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
+                ) : (
+                  <div className="budE-chat-history">
+                    {budEHistory.map((msg, index) => (
+                      <div key={index} className={`budE-message ${msg.role}`}>
+                        {msg.role === "user" ? (
+                          <p>{msg.content}</p>
+                        ) : (
+                          <div className="assistant-bubble">
+                            <img src="/bud-e.png" alt="Bud-E avatar" className="budE-avatar" />
+                            <div>
+                              <p>{msg.content}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    <div ref={chatEndRef} />
+                  </div>
+                )}
+                <textarea
+                  value={budEInput}
+                  onChange={(e) => setBudEInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleAskBudE();
+                    }
+                  }}
+                  placeholder="Ask Bud-E to learn more!"
+                  rows={3}
+                  className="ask-input"
+                />
+                <div className="budE-actions">
+                  <button onClick={handleAskBudE} className="budE-button">
+                    Ask Bud-E
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsBudEExpanded(false);
+                      handleNextQuestion();
+                    }}
+                    className="budE-button"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </div>
-          )}
-      </>
-    )}
+          </div>
+        )}
+      </div>
+
+      {/* Floating Bud-E icon */}
+      {answered && (
+        <div className="bud-e-icon-wrapper">
+          {!hasSeenTooltip && <div className="bud-e-tooltip">👋 Tap to show or hide me!</div>}
+          <img
+            src="/bud-e.png"
+            alt="Bud-E toggle"
+            className="bud-e-floating-icon"
+            onClick={() => {
+              if (!isBudEExpanded) {
+                setIsBudEExpanded(true);
+              } else {
+                setIsBudEExpanded(false);
+                setHasManuallyClosedBudE(true);
+              }
+              setHasSeenTooltip(true);
+            }}
+          />
+        </div>
+      )}
 
       <audio ref={correctAudioRef} src="/correct.mp3" preload="auto" />
       <audio ref={incorrectAudioRef} src="/incorrect.mp3" preload="auto" />

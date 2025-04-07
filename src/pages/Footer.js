@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-inner">
         {/* Left: Text Content */}
         <div className="footer-content">
-          <p>From seed to screen — by the BrainGoated Team</p>
+          <p>From seed to screen 🌱 — by the BrainGoated Team</p>
           <div className="footer-links">
             <a href="/about">About Us</a>
             <a href="/contact">Contact Us</a>

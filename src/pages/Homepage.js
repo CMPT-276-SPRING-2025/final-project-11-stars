@@ -8,18 +8,20 @@ const HomePage = () => {
     return localStorage.getItem("darkMode") === "true";
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      document.getElementById('quiz-category-space')?.scrollIntoView({ behavior: 'smooth' });
-    }, 3500);
-    return () => clearTimeout(timer);
-  }, []);
+  const [showArrow, setShowArrow] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
     document.body.classList.toggle("light-mode", !darkMode);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowArrow(true);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="landing-page">
@@ -51,6 +53,17 @@ const HomePage = () => {
         </div>
         <p className="tagline">Water your curiosity, Watch it grow!</p>
       </div>
+
+      {showArrow && (
+        <img
+          src="/arrow-down.png"
+          alt="Scroll to Quiz Categories"
+          className="bouncing-arrow"
+          onClick={() => {
+            document.getElementById('quiz-category-space')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      )}
 
       <div id="quiz-category-space" className="quiz-category-space"></div>
       <QuizCategory />
