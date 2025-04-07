@@ -150,13 +150,6 @@ font-weight: bold;
 margin-bottom: 20px;
 }
 
-.correct-answer {
-font-size: 18px;
-font-weight: bold;
-color: #54473F;
-margin-bottom: 15px;
-}
-
 .explanation-box {
 background: #CBD2A4;
 padding: 15px;
@@ -206,7 +199,7 @@ background-color: #816656;
 .image-option img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* <- changed from 'cover' to 'contain' */
+  object-fit: contain; 
   border-radius: 18px;
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
@@ -321,12 +314,20 @@ font-size: 18px;
 font-weight: bold;
 margin-bottom: 20px;
 }
-
+.quiz-container, .popup-box .popup-correct-feedback-text{
+ color: #1B5E20;
+}
+.quiz-container, .popup-box .popup-incorrect-feedback-text{
+  color: #C62828;
+}
 .correct-answer {
 font-size: 18px;
 font-weight: bold;
-color: #54473F;
+color: #1B5E20;
 margin-bottom: 15px;
+}
+body.dark-mode .correct-answer{
+  color:#6dbd6d;
 }
 
 .explanation-box {
@@ -334,6 +335,7 @@ background: #CBD2A4;
 padding: 15px;
 border-radius: 5px;
 margin-bottom: 15px;
+color:#1c1a1a;
 }
 
 .feedback-popup-buttons {
@@ -365,6 +367,7 @@ border-radius: 5px;
 cursor: pointer;
 font-size: 16px;
 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+font-weight: bold;
 }
 
 .next-button:hover {
@@ -474,6 +477,7 @@ background-color: #E9EED9;
   cursor: pointer;
   align-self: flex-end;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 
@@ -515,8 +519,8 @@ background-color: #E9EED9;
 .timer-text {
   position: relative;
   z-index: 1;
-  font-size: 1.3rem;
-  color: #54473F;
+  font-size: 1.5rem;
+  color: white;
   width: 100%;
   text-align: center;
 }
@@ -595,10 +599,10 @@ body.dark-mode .question-box{
   color: #CBD2A4
 }
 
-body.dark-mode .correct-answer{
-  color: #3c5232 !important;
+body.dark-mode .quiz-container,
+body.dark-mode .popup-box, .h2{
+  color: #e54444;
 }
-
 
 body.dark-mode .assistant-content,
 body.dark-mode .budE-message,
@@ -670,7 +674,7 @@ body.dark-mode .assistant-bubble {
 
 body.dark-mode .explanation-box {
   background: #2f2f2f;
-  color: #CBD2A4;
+  color: #E9EED9;
   border: 1px solid #444; 
   border: 1px solid #9A7E6F;
 
@@ -1263,7 +1267,7 @@ input {
   outline: none;
 }
 
-button,
+
 textarea,
 select,
 input {
