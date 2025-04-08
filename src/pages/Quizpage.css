@@ -1309,14 +1309,16 @@ select:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 40px;
+  gap: 32px;                 /* reduce unnecessary horizontal space */
+  max-width: 1200px;         /* reduced from 1600px for better centering */
   width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;             /* gives equal side padding */
   box-sizing: border-box;
   flex-wrap: nowrap;
 }
+
 
 @media screen and (max-width: 768px) {
   .hide-on-mobile {
