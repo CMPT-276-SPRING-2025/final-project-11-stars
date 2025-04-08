@@ -18,6 +18,6 @@ describe("Footer", () => {
       screen.getByText(`© ${currentYear} BrainGoated. All rights reserved.`)
     ).toBeInTheDocument();
 
-    expect(screen.getByAltText(/Bud-E mascot/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/A friendly robot mascot named Bud-E with a sprout growing from its head, symbolizing growth and technology. It has a round face, a smiling expression, and a plant-like element on top, reflecting the growth theme of the website./i)).toBeInTheDocument();
   });
 });

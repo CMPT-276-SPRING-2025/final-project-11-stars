@@ -20,8 +20,7 @@ const Footer = () => {
           <p className="footer-note">© {new Date().getFullYear()} BrainGoated. All rights reserved.</p>
         </div>
         <img src="/bud-e.png" 
-          alt="A friendly robot mascot named Bud-E with a sprout growing from its head, symbolizing growth and technology. 
-          It has a round face, a smiling expression, and a plant-like element on top, reflecting the growth theme of the website." 
+          alt="A friendly robot mascot named Bud-E with a sprout growing from its head, symbolizing growth and technology. It has a round face, a smiling expression, and a plant-like element on top, reflecting the growth theme of the website." 
           className="bude-footer-icon-inline" 
         />
       </div>
