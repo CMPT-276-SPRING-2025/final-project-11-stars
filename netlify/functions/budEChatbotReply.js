@@ -1,8 +1,10 @@
+// This function takes a conversation array as input (via event.body), sends it to the OpenAI API, and returns the response
+
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
   try {
-    // Expect a JSON body with the conversation array
+    // Parse the incoming request body to extract the conversation
     const { conversation } = JSON.parse(event.body);
     const apiKey = process.env.OPENAI_API_KEY;
 

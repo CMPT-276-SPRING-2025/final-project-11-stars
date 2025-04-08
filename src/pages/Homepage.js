@@ -58,6 +58,7 @@ const HomePage = () => {
             src="/BudE_animation.html"
             title="Bud-E Animation"
             className="bud-e-frame"
+            aria-label="Animated robot named Bud-E with a sprouting plant looping around him to greet the user"
           />
         </div>
         <p className="tagline">Water your curiosity, Watch it grow!</p>

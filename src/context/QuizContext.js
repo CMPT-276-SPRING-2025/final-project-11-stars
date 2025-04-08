@@ -121,7 +121,6 @@ export const QuizProvider = ({ children }) => {
 
           if (validQuestions.length === 10) {
             setQuestions(validQuestions);
-            console.log(`✅ Topic accepted: "${topic}" — 10 valid questions generated.`);
           } else {
             console.warn(`⚠️ Only ${validQuestions.length}/10 valid questions generated after retries.`);
             setErrorMessage("⚠️ Not enough valid questions generated. Try rewording the topic.");

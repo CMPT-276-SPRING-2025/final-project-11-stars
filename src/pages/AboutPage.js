@@ -28,7 +28,11 @@ const AboutPage = () => (
       </p>
       <Link to="/" className="back-home-btn">← Back to Home</Link>
     </div>
-    <img src="/bud-e.png" alt="Bud-E mascot" className="static-bude" />
+    <img src="/bud-e.png" 
+      alt="A friendly robot mascot named Bud-E with a sprout growing from its head, symbolizing growth and technology. 
+      It has a round face, a smiling expression, and a plant-like element on top, reflecting the growth theme of the website." 
+      className="static-bude" 
+    />
   </div>
 );
 

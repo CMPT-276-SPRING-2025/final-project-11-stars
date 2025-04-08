@@ -1,3 +1,6 @@
+// This Netlify serverless function receives quiz settings (topic, difficulty, language, and number of remaining questions), 
+// forwards them to the OpenAI API with a system prompt tailored for school-appropriate trivia, and returns either generated questions or a rejection status.
+
 const fetch = require("node-fetch");
 
 exports.handler = async(event, context) =>{
@@ -5,6 +8,8 @@ exports.handler = async(event, context) =>{
         // Parse the POST body to get topic, difficulty, language, remaining
         const { topic, difficulty, language, remaining } = JSON.parse(event.body);
         const apiKey = process.env.OPENAI_API_KEY
+
+        // Send request to OpenAI to generate quiz questions
         const openAiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {

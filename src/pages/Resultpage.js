@@ -205,7 +205,9 @@ const ResultPage = () => {
           {/* Fallback if no questions were answered */}
           {answeredQuestions.length === 0 && (
             <div className="no-answers-placeholder">
-              <img src="/bud-e.png" alt="Bud-E" className="no-answers-icon" />
+              <img src="/bud-e.png" 
+                alt="Bud-E, a cute robot character with a sprout on its head, smiling and standing with sparkles around it"
+                className="no-answers-icon" />
               <p className="no-answers-text">
                 You didn't answer any questions this time, but that's okay! 🌱<br />
                 Try another quiz to grow your knowledge! 🚀
@@ -228,7 +230,7 @@ const ResultPage = () => {
           <p className="result-info">Results unavailable — please complete a quiz first.</p>
         </div>
       )}
-      
+
         {/* Audio for final success chime */}
         <audio ref={finalChimeRef} src="/final-chime.mp3" preload="auto" />
     </>

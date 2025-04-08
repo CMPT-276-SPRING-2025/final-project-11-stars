@@ -1,3 +1,6 @@
+// This serverless function securely fetches 10 trivia questions from The Trivia API based on selected category, difficulty, language, and type (text or image).
+// It uses an API key stored in environment variables and returns the questions to the frontend.
+
 const axios = require("axios");
 
 exports.handler = async (event, context) => {

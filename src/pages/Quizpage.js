@@ -202,6 +202,7 @@ const QuizPage = () => {
             <iframe
               src="/flowerloading.html"
               title="Flower-Loading Animation"
+              aria-label="Animated colourful flower growing in a pot, indicating the quiz is loading"
               className="loading-flower-frame"
             />
           </div>
@@ -214,7 +215,9 @@ const QuizPage = () => {
     return (
       <div className="quizpage-background error-page">
         <div className="error-container">
-          <img src="/warning.png" alt="Warning" className="error-icon" />
+          <img src="/warning.png" 
+          alt="A disappointed-looking cartoon cactus in a flower pot, indicating the selected quiz topic is unavailable" 
+          className="error-icon" />
           <h2 className="error-message">
             {typeof errorMessage === "string"
               ? errorMessage
@@ -467,7 +470,11 @@ const QuizPage = () => {
 
               <div className="chatbot-container">
                 {budEHistory.length === 0 ? (
-                  <img src="/bud-e.png" alt="Bud-E" className="ai-icon" />
+                  <img src="/bud-e.png" 
+                    alt="A friendly robot mascot named Bud-E with a sprout growing from its head, symbolizing growth and technology. 
+                    It has a round face, a smiling expression, and a plant-like element on top, reflecting the growth theme of the website." 
+                    className="ai-icon" 
+                  />
                 ) : (
                   <div className="budE-chat-history">
                     {budEHistory.map((msg, index) => (
@@ -476,7 +483,7 @@ const QuizPage = () => {
                           <p>{msg.content}</p>
                         ) : (
                           <div className="assistant-bubble">
-                            <img src="/bud-e.png" alt="Bud-E avatar" className="budE-avatar" />
+                            <img src="/bud-e.png" alt="Bud-E avatar, a friendly robot moscot, with a sprout growing from its head" className="budE-avatar" />
                             <div>
                               <p>{msg.content}</p>
                             </div>
@@ -526,7 +533,8 @@ const QuizPage = () => {
           {!hasSeenTooltip && <div className="bud-e-tooltip">👋 Tap to show or hide me!</div>}
           <img
             src="/bud-e.png"
-            alt="Bud-E toggle"
+            alt="Floating Bud-E character icon"
+            aria-label="Tap to show or hide the Bud-E assistant panel"
             className="bud-e-floating-icon"
             onClick={() => {
               if (!isBudEExpanded) {

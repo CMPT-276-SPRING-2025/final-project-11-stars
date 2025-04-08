@@ -326,6 +326,9 @@ font-weight: bold;
 color: #1B5E20;
 margin-bottom: 15px;
 }
+body.dark-mode .quiz-container, .popup-box .popup-correct-feedback-text{
+  color:#6dbd6d;
+}
 body.dark-mode .correct-answer{
   color:#6dbd6d;
 }

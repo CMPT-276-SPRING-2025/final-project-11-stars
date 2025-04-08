@@ -1,12 +1,15 @@
+// This Netlify function generates a short, fun fact related to a trivia question and its correct answer using the OpenAI API. 
+// It's kid-friendly, supports multiple languages, and includes a relevant emoji to keep it engaging.
+
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
   try {
-    // Parse the incoming POST body
+    // Extract trivia question info from the request body
     const { questionText, correctAnswer, language } = JSON.parse(event.body);
     const apiKey = process.env.OPENAI_API_KEY;
 
-    // Call OpenAI API
+    // Call the OpenAI API to get a fun fact related to the question/answer
     const openAiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
