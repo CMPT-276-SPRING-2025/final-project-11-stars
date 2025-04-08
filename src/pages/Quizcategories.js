@@ -11,17 +11,17 @@ import './Quizcategories.css';
 
 // Predefined quiz categories with icons and IDs
 const categories = [
-  { name: 'General', categoryName: 'general_knowledge', image: '/general_knowledge.svg', alt_text: 'General category icon' },
-  { name: 'Culture', categoryName: 'society_and_culture', image: '/culture.svg', alt_text: 'Culture category icon' },
-  { name: 'Geography', categoryName: 'geography', image: '/geography.svg', alt_text: 'Geography category icon' },
-  { name: 'Literature', categoryName: 'arts_and_literature', image: '/literature.svg', alt_text: 'Literature category icon' },
-  { name: 'Food', categoryName: 'food_and_drink', image: '/food.svg', alt_text: 'Food category icon ' },
-  { name: 'Film & TV', categoryName: 'film_and_tv', image: '/film_and_tv.svg', alt_text: 'Film and TV category ' },
-  { name: 'Music', categoryName: 'music', image: '/music.svg', alt_text: 'Music category icon' },
-  { name: 'Sports', categoryName: 'sport_and_leisure', image: '/sports.svg', alt_text: 'Sports category icon' },
-  { name: 'Science', categoryName: 'science', image: '/science.svg', alt_text: 'Science category icon' },
-  { name: 'History', categoryName: 'history', image: '/history.svg', alt_text: 'History category icon' },
-  { name: 'Build a Quiz', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'Custom category icon' }
+  { name: 'General', categoryName: 'general_knowledge', image: '/general_knowledge.svg', alt_text: 'An owl wearing a graduation cap sitting on a pencil, representing the General Knowledge category' },
+  { name: 'Culture', categoryName: 'society_and_culture', image: '/culture.svg', alt_text: 'A mosque with a minaret and crescent moon, representing the Culture category' },
+  { name: 'Geography', categoryName: 'geography', image: '/geography.svg', alt_text: 'A globe and compass illustration, representing the Geography category' },
+  { name: 'Literature', categoryName: 'arts_and_literature', image: '/literature.svg', alt_text: 'Two hands holding an open book, representing the Literature category' },
+  { name: 'Food', categoryName: 'food_and_drink', image: '/food.svg', alt_text: 'A pizza with a missing slice, representing the Food category' },
+  { name: 'Film & TV', categoryName: 'film_and_tv', image: '/film_and_tv.svg', alt_text: 'A television screen with a play button, representing the Film and TV category' },
+  { name: 'Music', categoryName: 'music', image: '/music.svg', alt_text: 'A piano with musical notes on a score, representing the Music category' },
+  { name: 'Sports', categoryName: 'sport_and_leisure', image: '/sports.svg', alt_text: 'A football, bat, and basketball representing Sports category' },
+  { name: 'Science', categoryName: 'science', image: '/science.svg', alt_text: 'Two chemistry flasks containing colorful liquids, representing the Science category' },
+  { name: 'History', categoryName: 'history', image: '/history.svg', alt_text: 'An ancient scroll with a clock in front, representing the History category' },
+  { name: 'Build a Quiz', categoryName: 'custom_ai_quiz', image: '/custom.svg', alt_text: 'A head with a glowing light bulb and gear, representing the Custom category' }
 ];
 
 // Language options for pre-made quizzes (from Trivia API)
@@ -226,6 +226,7 @@ const QuizCategory = () => {
                 src="/BudE_animation.html"
                 title="Bud-E Animation"
                 className="bud-e-frame"
+                aria-label="Animated robot named Bud-E with a sprouting plant looping around him to greet the user"
               />
               <h2 className="custom-quiz-title">Create your own quiz with Bud-E!</h2>
             </div>

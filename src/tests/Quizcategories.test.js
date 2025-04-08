@@ -45,21 +45,21 @@ describe("QuizCategory", () => {
 
   test("opens custom quiz popup on custom category click", () => {
     setup();
-    const customBox = screen.getByAltText("Custom category icon");
+    const customBox = screen.getByAltText("A head with a glowing light bulb and gear, representing the Custom category");
     fireEvent.click(customBox);
     expect(screen.getByText("Create your own quiz with Bud-E!")).toBeInTheDocument();
   });
 
   test("opens regular quiz popup on non-custom category click", () => {
     setup();
-    const generalBox = screen.getByAltText("General category icon");
+    const generalBox = screen.getByAltText("An owl wearing a graduation cap sitting on a pencil, representing the General Knowledge category");
     fireEvent.click(generalBox);
     expect(screen.getByText("General Quiz")).toBeInTheDocument();
   });
 
   test("shows error popup if difficulty/language not selected", () => {
     setup();
-    const generalBox = screen.getByAltText("General category icon");
+    const generalBox = screen.getByAltText("An owl wearing a graduation cap sitting on a pencil, representing the General Knowledge category");
     fireEvent.click(generalBox);
     fireEvent.click(screen.getByText("Start Quiz"));
     expect(screen.getByText(/Please choose your difficulty!/i)).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe("QuizCategory", () => {
   });
   test("custom quiz shows error if fields missing", () => {
     setup();
-    const customBox = screen.getByAltText("Custom category icon");
+    const customBox = screen.getByAltText("A head with a glowing light bulb and gear, representing the Custom category");
     fireEvent.click(customBox);
     fireEvent.click(screen.getByText("Start Quiz"));
     expect(screen.getByText(/Please choose a topic and a language!/i)).toBeInTheDocument();
