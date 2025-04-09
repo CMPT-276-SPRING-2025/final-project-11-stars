@@ -8,6 +8,13 @@
 
 Deployed at: [https://braingoated.netlify.app](https://braingoated.netlify.app)  
 
+[https://www.figma.com/design/qPQ5OmbuZX0GfM0ORjTRY7/BrainGoated-High-Fidelity?node-id=0-1&p=f&t=KEMegfNpdJHpnBcq-0](Med-fidelity Prototype)
+
+[Project Report](misc/Project_Final_Report_M2.pdf)
+
+[Project Presentation](https://www.youtube.com/watch?v=hO3A0SJO3FQ)
+
+[Project Repository](https://github.com/CMPT-276-SPRING-2025/final-project-11-stars.git)
 ---
 
 ## Description:
