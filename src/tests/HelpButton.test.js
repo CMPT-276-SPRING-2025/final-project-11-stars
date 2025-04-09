@@ -1,3 +1,7 @@
+// HelpButton.test.js
+// Tests HelpButton UI, renders icon, shows/hides help popup on click.
+
+
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import HelpButton from "../pages/HelpButton";
@@ -21,7 +25,7 @@ describe("HelpButton", () => {
 
   test("closes help popup when 'Got it!' is clicked", () => {
     render(<HelpButton />);
-    fireEvent.click(screen.getByRole("button")); // open help
+    fireEvent.click(screen.getByRole("button")); 
 
     const closeBtn = screen.getByText(/Got it!/i);
     fireEvent.click(closeBtn);

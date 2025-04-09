@@ -1,4 +1,8 @@
-// tests/Quizcategories.test.js
+//Quizcategories.test.js
+// This test suite checks how quiz categories load and behave.
+// It ensures popups open correctly and input validations work as expected.
+// Also verifies toggling between text/image quiz modes and button interactions.
+
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";

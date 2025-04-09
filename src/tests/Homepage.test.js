@@ -1,4 +1,8 @@
-// src/tests/Homepage.test.js
+// Homepage.test.js
+// Tests core HomePage features: heading, Bud-E animation, dark mode toggle, and scroll arrow.
+// Also checks that theme preference is saved to localStorage 
+// and the arrow appears after a delay using fake timers.
+
 
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
@@ -68,17 +72,21 @@ describe('HomePage', () => {
     expect(localStorage.getItem('darkMode')).toBe('false');
   });
 
-  test('scrolls to quiz-category-space after 3.5 seconds', async () => {
+  
+  test('shows arrow after 2.5 seconds and triggers scroll on click', async () => {
     const scrollIntoViewMock = jest.fn();
-    Element.prototype.scrollIntoView = scrollIntoViewMock;
+    document.getElementById = jest.fn(() => ({
+      scrollIntoView: scrollIntoViewMock,
+    }));
 
     render(<HomePage />);
 
     act(() => {
-      jest.advanceTimersByTime(3500);
+      jest.advanceTimersByTime(2500);
     });
 
     const arrow = await screen.findByAltText(/Scroll to Quiz Categories/i);
+    expect(arrow).toBeInTheDocument();
     fireEvent.click(arrow);
 
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth' });

@@ -1,3 +1,9 @@
+// Quizpage.test.js
+// This test suite checks how the quiz page behaves from a user's point of view.
+// It makes sure questions show up, answers trigger the right feedback, and navigation works smoothly.
+// We also mock things like sound effects, confetti, and API calls to focus just on user interaction.
+
+
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import QuizPage from "../pages/Quizpage";
