@@ -79,9 +79,9 @@ html, body {
 
 .header {
   display: flex;
-  justify-content: center; /* horizontally center */
-  align-items: center;     /* vertically center */
-  gap: 60px;               /* space between timer and score */
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
   margin-bottom: 5px;
   margin-top: 5px;
 }
@@ -96,7 +96,7 @@ html, body {
   font-weight: 700;
   padding: 12px 24px;
   min-width: 120px;
-  height: 50px; /* Ensure matching height */
+  height: 50px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,12 +111,12 @@ html, body {
   border: 4px solid #9A7E6F;
 
   width: 100%;
-  max-width: 1400px; /* updated to go wide! */
+  max-width: 1400px; 
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
 
-  flex: 1; /* this allows it to take up remaining space */
+  flex: 1;
   padding: 20px;
 }
 
@@ -281,13 +281,10 @@ body.dark-mode .image-options img.wrong-highlight {
 
 .option:hover {
   transform: scale(1.02);
-  max-height: 1000px; /* allow full expansion on hover */
+  max-height: 1000px; 
   background-color: #B0BA91;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
 }
-
-
-
 
 .option.correct-highlight {
   background-color: #C8E6C9 !important;
@@ -302,8 +299,6 @@ body.dark-mode .image-options img.wrong-highlight {
   border: 3px solid #C62828 !important;
   box-shadow: 0 0 10px 4px #C62828 !important;
 }
-
-
 
 .correct-popup {
 background: #CBD2A4;
@@ -361,6 +356,7 @@ box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 .complete-button:hover {
 background-color: #816656;
 }
+
 .next-button {
 background-color: #9A7E6F;
 color: white;
@@ -404,15 +400,16 @@ animation: fadeIn 0.4s ease-in-out;
 min-width: 100%; 
 font-family: 'Lucida Console', monospace;
 }
+
 @keyframes fadeIn{
-0%{
-opacity: 0;
-transform: scaleY(0.95);
-}
-100%{
-opacity: 1;
-transform: scaleY(1);
-}
+  0%{
+  opacity: 0;
+  transform: scaleY(0.95);
+  }
+  100%{
+  opacity: 1;
+  transform: scaleY(1);
+  }
 }
 .budE-message{
 margin-bottom: 8px;
@@ -445,7 +442,7 @@ align-self: flex-start;
 .budE-actions {
   display: flex;
   justify-content: center;
-  gap: 16px; /* ⬅️ Controls spacing between the buttons */
+  gap: 16px; 
   margin-top: 10px;
 }
 
@@ -805,7 +802,7 @@ body.dark-mode .text-options {
 .finish-button:hover {
   background-color: #816656;
 }
-/* ==== 🌑 DARK MODE DROPDOWNS FIX ==== */
+/* ==== DARK MODE DROPDOWNS FIX ==== */
 body.dark-mode select,
 body.dark-mode option {
   background-color: #2f2f2f !important;
@@ -922,7 +919,7 @@ body.dark-mode .bud-e-floating-icon {
   80% { transform: translateX(10px); }
   100% { transform: translateX(0); }
 }
-/* 🌵 Base Error Page */
+/* Base Error Page */
 .error-page {
   display: flex;
   justify-content: center;
@@ -942,7 +939,7 @@ body.dark-mode .bud-e-floating-icon {
   animation: popFade 0.4s ease-out;
 }
 
-/* 🌵 Cactus Icon */
+/* Cactus Icon */
 .error-icon {
   width: 100px;
   margin-bottom: 20px;
@@ -1257,7 +1254,7 @@ body.dark-mode .bud-e-tooltip::after {
   border-color: #E9EED9 transparent transparent transparent;
 }
 
-/* ✅ Prevent blue focus on iOS Safari and Android */
+/* Prevent blue focus on iOS Safari and Android */
 button,
 textarea,
 select,
@@ -1288,14 +1285,14 @@ body.dark-mode .ask-input {
 }
 
 
-/* ✅ Remove iOS default inner shadow from inputs */
+/* Remove iOS default inner shadow from inputs */
 input,
 textarea {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
 
-/* ✅ Specifically override iOS autofill background */
+/* Specifically override iOS autofill background */
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
@@ -1309,12 +1306,12 @@ select:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 32px;                 /* reduce unnecessary horizontal space */
+  gap: 32px;             
   max-width: 1200px;         /* reduced from 1600px for better centering */
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding: 20px;             /* gives equal side padding */
+  padding: 20px;            
   box-sizing: border-box;
   flex-wrap: nowrap;
 }
@@ -1328,9 +1325,9 @@ select:-webkit-autofill {
 
 @media screen and (max-width: 768px) {
   .quiz-container {
-    height: auto; /* allow it to shrink based on content */
-    padding: 10px 10px 40px 10px; /* more compact */
-    justify-content: flex-start; /* no extra bottom space */
+    height: auto; 
+    padding: 10px 10px 40px 10px; 
+    justify-content: flex-start; 
     gap: 12px;
     align-self: center;
     align-items: center;

@@ -22,79 +22,79 @@
 }
 
   
-  .theme-label {
-    color: inherit;
-  }
+.theme-label {
+  color: inherit;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #9A7E6F;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #54473F;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.light-mode {
+  background-color: #E9EED9;
+  color: #54473F;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #E9EED9;
+}
+
+.dark-mode .main-heading {
+  color: #CBD2A4;
+}
   
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
- 
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #9A7E6F;
-    transition: 0.4s;
-    border-radius: 24px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #54473F;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(20px);
-  }
-  
-  .light-mode {
-    background-color: #E9EED9;
-    color: #54473F;
-  }
-  
-  /* Dark Mode */
-  .dark-mode {
-    background-color: #1e1e1e;
-    color: #E9EED9;
-  }
-  
-  .dark-mode .main-heading {
-    color: #CBD2A4;
-  }
-  
-  .dark-mode .tagline {
-    color: #9A7E6F;
-  }
-  
-  .dark-mode .toggle-button {
-    background-color: #54473F;
-    color: #E9EED9;
-  }
+.dark-mode .tagline {
+  color: #9A7E6F;
+}
+
+.dark-mode .toggle-button {
+  background-color: #54473F;
+  color: #E9EED9;
+}
   
 .landing-page {
   display: flex;
@@ -119,15 +119,15 @@ html {
 @keyframes growShrinkFade{
     0% {
         opacity: 0;
-        transform: scale(2.5); /* Bigger */
+        transform: scale(2.5);
       }
       50% {
         opacity: 1;
-        transform: scale(2.8); /* Max grow */
+        transform: scale(2.8);
       }
       100% {
         opacity: 1;
-        transform: scale(2.5); /* Shrink to normal */
+        transform: scale(2.5);
     }
 }
 

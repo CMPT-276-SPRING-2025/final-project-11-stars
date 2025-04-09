@@ -31,8 +31,8 @@ label,
   border-radius: 12px;
   color: #54473F;
   background-color: #CBD2A4;
-  border: 2px solid #6F715B; /* defined border */
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /*  subtle pop */
+  border: 2px solid #6F715B;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -77,7 +77,7 @@ label,
   width: 230px;
   height: 230px;
   margin-bottom: 10px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15); /* ✅ Subtle image lift */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -116,7 +116,7 @@ label,
   color: #54473F;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* matches Quiz Categories */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -232,7 +232,7 @@ label,
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   vertical-align: middle;
   box-sizing: border-box;
-  appearance: none; /* Optional: make selects more consistent across browsers */
+  appearance: none;
 }
 
 .input-wrapper {
@@ -248,7 +248,7 @@ label,
   background-color: #CBD2A4;
   color: #54473F;
   border: 2px solid #54473F;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* ✅ add shadow */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -298,7 +298,7 @@ select {
   height: 20px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  z-index: 1; /* Ensure it's above Bud-E and modal contents */
+  z-index: 1;
 }
 
 
@@ -433,8 +433,8 @@ input:checked + .slider:before {
   background-color: #CBD2A4;
   color: #54473F;
   cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* ✅ new shadow */
-  border: 2px solid #54473F; /* ✅ bold border */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border: 2px solid #54473F;
 }
 
 .language-dropdown select:hover {
@@ -467,7 +467,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px; /* Make all wrappers equal width */
+  width: 200px;
 }
 
 /* Match label styles */
@@ -482,7 +482,7 @@ input:checked + .slider:before {
 /* Make dropdowns same width as the textbox */
 .custom-quiz-popup .input-wrapper select,
 .custom-quiz-popup .input-wrapper input {
-  width: 200px !important; /* Match the textbox */
+  width: 200px !important;
   max-width: 100%;
 }
 
@@ -572,7 +572,7 @@ body.dark-mode .quiz-category-title {
   color: #CBD2A4;
   background-color: #2f2f2f; 
   border: 2px solid #000000;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* softer + darker */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 
 }
 
@@ -730,7 +730,7 @@ body.dark-mode .error-popup span:hover {
 
 @media (max-width: 768px) {
   .quiz-category-grid {
-    grid-template-columns: repeat(2, 1fr); /* Keep 2 per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
     padding: 10px;
   }
@@ -762,7 +762,7 @@ body.dark-mode .error-popup span:hover {
     text-align: center;
   }
   .custom-quiz-popup{
-    width: calc(200vw - 40px); /* Leaves 20px margin on each side */
+    width: calc(200vw - 40px);
     max-width: 500px;
     max-height: 80vh;
     padding: 12px 16px;
@@ -792,7 +792,7 @@ body.dark-mode .error-popup span:hover {
 
 @media (max-width: 450px) {
   .quiz-category-grid {
-    grid-template-columns: repeat(2, 1fr); /* Keep 2 per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
     padding: 10px;
   }
@@ -834,7 +834,7 @@ body.dark-mode .error-popup span:hover {
 
 @media (max-width: 450px) {
   .custom-quiz-popup {
-    width: calc(100vw - 40px); /* Leaves 20px margin on each side */
+    width: calc(100vw - 40px);
     max-width: 360px;
     max-height: 96vh;
     padding: 12px 16px;
@@ -948,9 +948,6 @@ body.dark-mode .error-popup span:hover {
   .custom-quiz-popup .custom-quiz-inputs .input-wrapper{
     margin: -25px !important;
   }
-}
-
-@media screen and (max-width: 450px) {
   .start-popup {
     width: 88vw;
     max-width: 300px;
