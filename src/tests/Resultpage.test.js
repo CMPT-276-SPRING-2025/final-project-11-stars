@@ -1,3 +1,8 @@
+// Resultpage.test.js
+// This suite tests the ResultPage to ensure user scores, messages, and filters are rendered correctly.
+// It checks UI behavior for correct/incorrect answers, score messages, and "go back" navigation.
+// We mock context and routing to simulate different quiz outcomes.
+
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ResultPage from "../pages/Resultpage";

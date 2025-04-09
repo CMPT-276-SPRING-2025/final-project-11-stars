@@ -1,3 +1,7 @@
+// Footer.test.js
+// It checks for footer text, important links (About Us, Contact Us), current year copyright,
+// and the Bud-E mascot image.
+
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Footer from "../pages/Footer"; 

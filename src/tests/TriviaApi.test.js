@@ -1,3 +1,7 @@
+// TriviaApi.test.js
+// This test suite checks the Trivia API utility function.
+// It ensures quiz questions are fetched correctly and errors are handled when the API fails.
+
 import { getTriviaQuestions } from '../utils/triviaApi.js';
 
 beforeEach(() => {

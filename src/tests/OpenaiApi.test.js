@@ -1,3 +1,8 @@
+// OpenaiApi.test.js
+// Verifies that getExplanation() correctly fetches AI-generated responses.
+// Ensures it handles both valid and empty responses gracefully.
+
+
 import { getExplanation } from '../utils/openaiApi';
 
 beforeEach(() => {
@@ -30,5 +35,5 @@ test('handles error response gracefully', async () => {
     { text: "What is the capital of France?", answer: "Paris" },
   ];
   const result = await getExplanation(0, questions);
-  expect(result).toBe(undefined); // depends on your fallback
+  expect(result).toBe(undefined);
 });
