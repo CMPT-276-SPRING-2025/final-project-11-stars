@@ -1142,7 +1142,6 @@ body.dark-mode .no-questions-message .finish-button:hover {
   .timer-box, .score-box {
     flex: 1;
     height: 40px;
-    font-size: 0.9rem;
     padding: 6px;
     min-width: unset;
   }

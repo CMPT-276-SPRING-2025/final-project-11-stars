@@ -1,7 +1,19 @@
+// QuizContext.js
+//
+// This file defines a React Context and Provider for managing global quiz state 
+// across the BrainGoated app. It handles quiz settings (category, difficulty, language), 
+// fetches questions from either the Trivia API or OpenAI (custom AI mode), and 
+// manages quiz features like the chatbot and fun-facts
+//
+// Functions and state are exposed via context so they can be accessed from 
+// any component within the provider.
+
 import { createContext, useState, useEffect } from "react";
 
+// Create a global context for quiz-related data and logic
 export const QuizContext = createContext();
 
+// State variables to track quiz settings and progress
 export const QuizProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -15,6 +27,7 @@ export const QuizProvider = ({ children }) => {
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
 
+  // Resets all quiz state variables to initial values
   const resetQuiz = () => {
     setScore(0);
     setSelectedCategory(null);
@@ -38,15 +51,16 @@ export const QuizProvider = ({ children }) => {
       const isCustomAIQuiz = selectedCategory.id === "custom_ai_quiz";
 
       if (isCustomAIQuiz) {
+        // Block unsafe/inappropriate AI quiz topics
         const inappropriateCategories = ["violence", "hate speech", "adult content"];
         if (inappropriateCategories.includes(topic)) {
-          console.warn(`🚫 Flagged topic as inappropriate: "${topic}"`);
-          setErrorMessage("⚠️ This topic isn't suitable for a trivia quiz. Please choose another.");
+          setErrorMessage("This topic isn't suitable for a trivia quiz. Please choose another.");
           setQuestions([]);
           setLoading(false);
           return;
         }
 
+        // Retry loop to generate 10 valid AI questions
         const generateValidQuestions = async () => {
           const maxRetries = 5;
           let validQuestions = [];
@@ -70,6 +84,7 @@ export const QuizProvider = ({ children }) => {
             const data = await response.json();
             let rawContent = data.choices?.[0]?.message?.content?.trim();
 
+            // Remove markdown backticks if present
             if (rawContent?.startsWith("```")) {
               rawContent = rawContent.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
             }
@@ -78,16 +93,14 @@ export const QuizProvider = ({ children }) => {
             try {
               const parsed = JSON.parse(rawContent);
               if (parsed.status === "REJECTED") {
-                console.warn(`❌ GPT rejected topic as inappropriate: "${topic}"`);
-                setErrorMessage("⚠️ This topic isn't available for a quiz. Please try a different one.");
+                setErrorMessage("This topic isn't available for a quiz. Please try a different one.");
                 setQuestions([]);
                 setLoading(false);
                 return;
               }
               aiQuestions = parsed.questions;
             } catch (err) {
-              console.error("❌ Failed to parse AI JSON:", rawContent);
-              continue;
+              continue; // Try again on invalid JSON
             }
 
             const formatted = aiQuestions
@@ -102,7 +115,6 @@ export const QuizProvider = ({ children }) => {
                                 options.includes(correct);
             
                 if (!correct || !allValid) {
-                  console.warn("⚠️ Skipping question due to invalid format:", q);
                   return null;
                 }
             
@@ -119,11 +131,11 @@ export const QuizProvider = ({ children }) => {
             validQuestions = [...validQuestions, ...formatted];
           }
 
+          // Final check for success
           if (validQuestions.length === 10) {
             setQuestions(validQuestions);
           } else {
-            console.warn(`⚠️ Only ${validQuestions.length}/10 valid questions generated after retries.`);
-            setErrorMessage("⚠️ Not enough valid questions generated. Try rewording the topic.");
+            setErrorMessage("Not enough valid questions generated. Try rewording the topic.");
             setQuestions([]);
           }
 
@@ -133,6 +145,7 @@ export const QuizProvider = ({ children }) => {
         await generateValidQuestions();
       } else {
         try {
+          // Request for non-AI (Trivia API) questions
           const params = {
             categoryName: selectedCategory.categoryName,
             difficulty:difficulty||"easy",
@@ -152,6 +165,7 @@ export const QuizProvider = ({ children }) => {
 
           const formattedQuestions = data.map((question) => {
             if (questionType === "image") {
+               // Remove duplicates images and shuffle image options
               const flattenedIncorrect = question.incorrectAnswers.flat();
               const allOptions = [...flattenedIncorrect, ...question.correctAnswer];
 
@@ -168,8 +182,8 @@ export const QuizProvider = ({ children }) => {
                 explanation: null,
               };
             } 
-
             else {
+               // Standard text-based questions
               return {
                 text: question.question.text,
                 options: [...question.incorrectAnswers, question.correctAnswer].sort(() => Math.random() - 0.5),
@@ -181,9 +195,8 @@ export const QuizProvider = ({ children }) => {
 
           setQuestions(formattedQuestions);
         } catch (error) {
-          console.error("❌ Error fetching questions:", error);
           setQuestions([]);
-          setErrorMessage("⚠️ Something went wrong while fetching quiz questions.");
+          setErrorMessage("Something went wrong while fetching quiz questions.");
         } finally {
           setLoading(false);
         }
@@ -193,6 +206,7 @@ export const QuizProvider = ({ children }) => {
     fetchQuestions();
   }, [selectedCategory, difficulty, questionType, language]);
 
+  // Calls OpenAI to generate a fun explanation/fact for the current question
   const getExplanation = async (questionIndex) => {
     if (!questions[questionIndex] || questions[questionIndex].explanation) return;
 
@@ -223,14 +237,15 @@ export const QuizProvider = ({ children }) => {
         return updated;
       });
     } catch (error) {
-      console.error("❌ Error fetching fun fact:", error);
     }
   };
 
+  // Sends a conversation to OpenAI to get a chatbot response (Bud-E)
   const getBudEReply = async (userMessage, history = []) => {
     const question = questions[currentQuestion];
     if (!question) return [];
 
+    // Define rules and personality for Bud-E
     const baseMessages = [
       {
         role: "system",
@@ -283,7 +298,6 @@ export const QuizProvider = ({ children }) => {
 
       return [...history, { role: "user", content: userMessage }, { role: "assistant", content: reply }];
     } catch (error) {
-      console.error("Error in Bud-E chat:", error);
       return [
         ...history,
         { role: "user", content: userMessage },
@@ -292,6 +306,7 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  // Provide state and functions to all children components
   return (
     <QuizContext.Provider
       value={{
