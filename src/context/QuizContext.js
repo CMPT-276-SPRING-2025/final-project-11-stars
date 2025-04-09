@@ -3,7 +3,7 @@
 // This file defines a React Context and Provider for managing global quiz state 
 // across the BrainGoated app. It handles quiz settings (category, difficulty, language), 
 // fetches questions from either the Trivia API or OpenAI (custom AI mode), and 
-// manages quiz features like the chatbot and fun-facts
+// manages quiz features like the chatbot and fun-facts.
 //
 // Functions and state are exposed via context so they can be accessed from 
 // any component within the provider.
