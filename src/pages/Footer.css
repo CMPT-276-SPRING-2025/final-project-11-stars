@@ -54,18 +54,18 @@ body.dark-mode .quiz-footer {
 }
 
 .footer-note {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #6e705e;
-    opacity: 0.7;
-  }
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #6e705e;
+  opacity: 0.7;
+}
+
 body.dark-mode .footer-note{
   color: #A3A692;
 }
   
-
 .bude-footer-icon-inline {
   width: 70px;
   height: auto;

@@ -93,10 +93,10 @@ body.dark-mode .help-popup {
 }
 
 body.dark-mode .close-help {
-  background-color: #E9EED9;   /* light background for contrast */
-  color: #1e1e1e;              /* dark text to pop */
+  background-color: #E9EED9;
+  color: #1e1e1e;
   font-weight: bold;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2); /* subtle glow */
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
 }
 
 
@@ -118,7 +118,6 @@ body.dark-mode .close-help {
 }
 
 /* Mobile responsiveness */
-/* Medium screens (tablets and below) */
 @media (max-width: 768px) {
   .help-popup {
     width: 92vw;
